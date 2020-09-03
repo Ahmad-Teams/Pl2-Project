@@ -1,6 +1,6 @@
 # Our git guide
 
-## The branches names guid :
+## The branches names guide :
 
 | Tables          | branch name   |
 | --------------- | -------------:|

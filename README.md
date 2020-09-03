@@ -19,10 +19,25 @@ git clone https://github.com/Ahmad-Teams/Pl2-Project.git
 
 ## Before every task.
 
-git checkout -b yourBranchName
+git fetch -p
 
 git pull
 
+git branch
+
+if (your branch exsist) {
+
+git branch -d yourBranchName
+
+git checkout -b yourBranchName
+
+}
+
+else {
+
+git checkout -b yourBranchName
+
+}
 ***********************************************************************
 
 ## After each feature.

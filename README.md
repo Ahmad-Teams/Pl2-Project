@@ -11,6 +11,7 @@ git pull
 #After each feature.
 
 git add fileName.extension
+
 git commit -m "the commit describtion"
 ***********************************************************************
 #After the full task (mabey more than 1 commit).

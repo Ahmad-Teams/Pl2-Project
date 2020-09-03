@@ -1,20 +1,31 @@
-#Our git guide
+# Our git guide
 
-#In the first time only.
+## The branches names guid :
+
+| Tables          | branch name   |
+| --------------- | -------------:|
+| ahmad esay      | A             |
+| ahmad nagy      | B             |
+| ahmad ibrahim   | C             |
+| ahmad moohammed | D             |
+
+***********************************************************************
+
+## In the first time only.
 
 git clone https://github.com/Ahmad-Teams/Pl2-Project.git
 
 ***********************************************************************
 
-#Before every task.
+## Before every task.
 
-git checkout yourBranchName
+git checkout -b yourBranchName
 
 git pull
 
 ***********************************************************************
 
-#After each feature.
+## After each feature.
 
 git add fileName.extension
 
@@ -22,7 +33,7 @@ git commit -m "the commit describtion"
 
 ***********************************************************************
 
-#After the full task (mabey more than 1 commit).
+## After the full task (mabey more than 1 commit).
 
 git push origin yourBranchName
 

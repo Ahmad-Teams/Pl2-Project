@@ -2,12 +2,12 @@
 
 ## The branches names guide :
 
-| Tables          | branch name   |
+| Names           | Branch name   |
 | --------------- | -------------:|
 | ahmad esay      | A             |
 | ahmad nagy      | B             |
 | ahmad ibrahim   | C             |
-| ahmad mohammed | D             |
+| ahmad mohammed  | D             |
 
 ***********************************************************************
 

@@ -22,7 +22,7 @@ git checkout -b The_name_of_the_task
 
 git add fileName.extension
 
-git commit -m "The_name_of_the_feature"
+git commit -m "The name of the feature"
 
 ***********************************************************************
 

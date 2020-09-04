@@ -32,4 +32,4 @@ git push origin The_name_of_the_task
 
 ***********************************************************************
 open button();
-close button();
+close button(x);

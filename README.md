@@ -1,16 +1,5 @@
 # Our git guide
 
-## The branches names guide :
-
-| Names           | Branch name   |
-| --------------- | -------------:|
-| ahmad esay      | A             |
-| ahmad nagy      | B             |
-| ahmad ibrahim   | C             |
-| ahmad mohammed  | D             |
-
-***********************************************************************
-
 ## In the first time only.
 
 git clone https://github.com/Ahmad-Teams/Pl2-Project.git
@@ -19,37 +8,26 @@ git clone https://github.com/Ahmad-Teams/Pl2-Project.git
 
 ## Before every task.
 
+git checkout master
+
 git fetch -p
 
 git pull
 
-git branch
+git checkout -b The_name_of_the_task
 
-if (your branch exsist) {
-
-git branch -d yourBranchName
-
-git checkout -b yourBranchName
-
-}
-
-else {
-
-git checkout -b yourBranchName
-
-}
 ***********************************************************************
 
 ## After each feature.
 
 git add fileName.extension
 
-git commit -m "the commit describtion"
+git commit -m "The_name_of_the_feature"
 
 ***********************************************************************
 
 ## After the full task (mabey more than 1 commit).
 
-git push origin yourBranchName
+git push origin The_name_of_the_task 
 
 ***********************************************************************

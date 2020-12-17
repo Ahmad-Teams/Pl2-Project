@@ -10,20 +10,20 @@ package project;
  * @author ahmad
  */
 public class Order {
-    private int SN;
+    private int PSN;
     private int amount;
 
-    public Order(int SN, int amount) {
-        this.SN = SN;
+    public Order(int PSN, int amount) {
+        this.PSN = PSN;
         this.amount = amount;
     }
 
-    public int getSN() {
-        return SN;
+    public int getPSN() {
+        return PSN;
     }
 
-    public void setSN(int PSN) {
-        this.SN = PSN;
+    public void setPSN(int PSN) {
+        this.PSN = PSN;
     }
 
     public int getAmount() {

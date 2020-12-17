@@ -25,11 +25,11 @@ public class OrderDB {
     public static void add_order(Order ord) {
         try (
                 Connection con = connect();
-                PreparedStatement p = con.prepareStatement("insert into orders(SN,amount) values(?,?)");
+                PreparedStatement p = con.prepareStatement("insert into orders(PSN,amount) values(?,?)");
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
 
             p1.execute();
-            p.setInt(1, ord.getSN());
+            p.setInt(1, ord.getPSN());
             p.setInt(2, ord.getAmount());
             
             p.execute();
@@ -38,14 +38,14 @@ public class OrderDB {
         }
     }
 
-    public static void delete_order(int SN) {
+    public static void delete_order(int PSN) {
         try (
                 Connection con = connect();
-                PreparedStatement p = con.prepareStatement("delete from orders where SN = ?");
+                PreparedStatement p = con.prepareStatement("delete from orders where PSN = ?");
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
             p1.execute();
 
-            p.setInt(1, SN);
+            p.setInt(1, PSN);
 
             p.execute();
         } catch (SQLException ee) {
@@ -53,14 +53,14 @@ public class OrderDB {
         }
     }
 
-    public static void update_order(int SN,int amount) {
+    public static void update_order(int PSN,int amount) {
         try (
                 Connection con = connect();
-                PreparedStatement p = con.prepareStatement("UPDATE orders SET amount = ? WHERE SN = ?");
+                PreparedStatement p = con.prepareStatement("UPDATE orders SET amount = ? WHERE PSN = ?");
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
             p1.execute();
             p.setInt(1, amount);
-            p.setInt(2, SN);
+            p.setInt(2, PSN);
 
             
             p.execute();
@@ -77,7 +77,7 @@ public class OrderDB {
             {
                 ResultSet r = p.executeQuery();
                 while (r.next()) {
-                    list.add(new Order(r.getInt("SN"), r.getInt("amount")));
+                    list.add(new Order(r.getInt("PSN"), r.getInt("amount")));
                 }
             }
         } catch (SQLException ee) {

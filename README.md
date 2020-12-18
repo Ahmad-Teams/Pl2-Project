@@ -18,15 +18,13 @@ git checkout -b The_name_of_the_task
 
 ***********************************************************************
 
-## After each feature.
+## After every task.
 
-git add fileName.extension
+git status
+
+git add fileName.extension             (here you will put all files pathes that appear after the last command (git status))
 
 git commit -m "The name of the feature"
-
-***********************************************************************
-
-## After the full task (mabey more than 1 commit).
 
 git push origin The_name_of_the_task 
 

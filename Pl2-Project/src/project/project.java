@@ -29,7 +29,7 @@ public class project {
         do {
             System.out.printf("\nMain Menu:\nLogin (Enter L)\nExit (Enter E)\n?:");
             c = input.nextLine().charAt(0);
-            
+            c=Character.toUpperCase(c);
             if (c == 'E')break;
 
             System.out.printf("\nEnter User-Name: ");

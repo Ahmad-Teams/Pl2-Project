@@ -55,7 +55,7 @@ public class InventoryEmployee extends Employee {
             }
 
         } while (c != '8');
-        System.out.println("bey bey ," + this.getfName() + "!");
+        System.out.printf("bey bey ,%s!",this.getfName());
         return 0;
     }
     public  void newProduct(){
@@ -74,16 +74,17 @@ public class InventoryEmployee extends Employee {
         String State=input.nextLine();
         Product d=new Product(name,OP,diss,amount,EPD,State);
        ProductDB.add_product(d);
+       System.out.println("Added!");
     }
     public void deleteProduct(){
         int sn;
         System.out.printf("Enter Product Serial Number:");
         sn=input.nextInt();
         ProductDB.delete_product(sn);
+        System.out.println("Deleted!");
     }
     public void updateProduct(){
-        System.out.printf("Enter 1 if you want to update discount"
-                + " only and 2 for update all product info: ");
+        System.out.print("Enter 1 if you want to update discount only and 2 for update all product info:");
         int choice=input.nextInt();
         if(choice==1){
         System.out.printf("Enter Product Serial Number:");
@@ -111,16 +112,19 @@ public class InventoryEmployee extends Employee {
         System.out.printf("Enter Product Sate:");
         String State=input.nextLine();
         ProductDB.update_product(sn, name, OP, diss, amount, EPD, State);
+
     }
         else System.out.printf("Invaild Input");
+        
+        System.out.println("Updated!");
     }
     public void listProduct(){
        ArrayList<Product> list = new ArrayList<>();
      list= ProductDB.get_products();
-     System.out.printf("%5s  %5s %5s  %6s %12s  %8s\n","Name","price","disscount","amount","expier data" ,"state");
+     System.out.printf("%-10s%-10s%-15s%-10s%-10s%-15s%-10s\n","Name","price","orignal price","disscount","amount","expier data" ,"state");
      for(int i=0;i<list.size();i++){
-        System.out.printf("%5s  %4d",list.get(i).getName(),list.get(i).getOrignalPrice());
-        System.out.printf("%7d  %8d",list.get(i).getDiscount(),list.get(i).getAmount());
-        System.out.printf("%14s  %7s\n",list.get(i).getEPD(),list.get(i).getpState());
+        System.out.printf("%-10s%-10d",list.get(i).getName(),list.get(i).getPrice());
+        System.out.printf("%-15d%-10d%-10d",list.get(i).getOrignalPrice(),list.get(i).getDiscount(),list.get(i).getAmount());
+        System.out.printf("%-15s%-10s\n",list.get(i).getEPD(),list.get(i).getpState());
     }
     }}

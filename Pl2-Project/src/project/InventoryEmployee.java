@@ -35,7 +35,7 @@ public class InventoryEmployee extends Employee {
                     + "\nAdd a new product.                          (Enter 1)"
                     + "\nDelete a product.                           (Enter 2)"
                     + "\nUpdate a product information                (Enter 3)"
-                    + "\nlist all products.                          (Enter 4)"
+                    + "\nList all products.                          (Enter 4)"
                     + "\nSearch for a product.                       (Enter 5)"
                     + "\nManage the Damages items and sales Return.  (Enter 6)"//delete order
                     + "\nAlter your information.                     (Enter 7)"

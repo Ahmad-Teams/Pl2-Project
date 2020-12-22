@@ -148,6 +148,5 @@ public class InventoryEmployee extends Employee {
             System.out.printf("%-15s%-10s\n", list.get(i).getEPD(), list.get(i).getpState());
         }
     }
-         void test2(){}
 
 }

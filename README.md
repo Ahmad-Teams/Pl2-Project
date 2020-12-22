@@ -14,18 +14,16 @@ git fetch -p
 
 git pull
 
-git checkout -b The_name_of_the_task
-
 ***********************************************************************
 
 ## After every task.
 
 git status
 
-git add fileName.extension             (here you will put all files pathes that appear after the last command (git status))
+git add fileName.extension
 
-git commit -m "The name of the feature"
+git commit -m "The name of the task"
 
-git push origin The_name_of_the_task 
+git push
 
 ***********************************************************************

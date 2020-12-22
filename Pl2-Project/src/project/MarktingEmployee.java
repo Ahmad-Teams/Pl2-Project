@@ -9,8 +9,12 @@ import java.util.Scanner;
 
 public class MarktingEmployee extends Employee {
 
-    public MarktingEmployee(int id, String fName, String lName, String userName, String password, String eType) {
-        super(id, fName, lName, userName, password, eType);
+    public MarktingEmployee(int id, String fName, String lName, String userName, String password) {
+        super(id, fName, lName, userName, password, "M");
+    }
+
+    public MarktingEmployee(String fName, String lName, String userName, String password) {
+        super(fName, lName, userName, password, "M");
     }
 
     public int openList() {

@@ -15,8 +15,12 @@ import project.Product;
 
 public class SalesEmployee extends Employee {
 
-    public SalesEmployee(int id, String fName, String lName, String userName, String password, String eType) {
-        super(id, fName, lName, userName, password, eType);
+    public SalesEmployee(int id, String fName, String lName, String userName, String password) {
+        super(id, fName, lName, userName, password, "S");
+    }
+
+    public SalesEmployee(String fName, String lName, String userName, String password) {
+        super(fName, lName, userName, password, "S");
     }
 
     public int openList() {

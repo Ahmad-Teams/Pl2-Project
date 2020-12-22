@@ -11,8 +11,12 @@ import java.util.Scanner;
 
 public class AdminEmployee extends Employee {
 
-    public AdminEmployee(int id, String fName, String lName, String userName, String password, String eType) {
-        super(id, fName, lName, userName, password, eType);
+    public AdminEmployee(int id, String fName, String lName, String userName, String password) {
+        super(id, fName, lName, userName, password, "A");
+    }
+
+    public AdminEmployee(String fName, String lName, String userName, String password) {
+        super(fName, lName, userName, password, "A");
     }
 
     public int openList() {
@@ -74,19 +78,27 @@ public class AdminEmployee extends Employee {
         String eType;
         Scanner input = new Scanner(System.in);
         System.out.print("Enter employee's first name: ");
-        fName = input.next();
+        fName = input.nextLine();
         System.out.print("Enter employee's last name: ");
-        lName = input.next();
+        lName = input.nextLine();
         fullName = fName + lName;
         System.out.print("Enter employee's username: ");
-        userName = input.next();
+        userName = input.nextLine();
         System.out.print("Enter employee's password: ");
-        password = input.next();
-        System.out.print("Enter employee's type: ");
-        eType = input.next();
+        password = input.nextLine();
+        System.out.print("Enter employee's type (A , M , S , I): ");
+        eType = input.nextLine();
 
-        Employee new_emp = new Employee(fName, lName, userName, password, eType.toUpperCase());
-        EmployeeDB.add_employee(new_emp);
+        if (eType.equals("A")) {
+            EmployeeDB.add_employee(new AdminEmployee(fName, lName, userName, password));
+        } else if (eType.equals("M")) {
+            EmployeeDB.add_employee(new MarktingEmployee(fName, lName, userName, password));
+        } else if (eType.equals("S")) {
+            EmployeeDB.add_employee(new SalesEmployee(fName, lName, userName, password));
+        } else if (eType.equals("I")) {
+            EmployeeDB.add_employee(new InventoryEmployee(fName, lName, userName, password));
+        }
+        System.out.printf("\n%s\nAdded!", fName);
     }
 
     private void Delete_an_employee() {
@@ -125,9 +137,9 @@ public class AdminEmployee extends Employee {
     private void list_all_employees() {
         ArrayList<Employee> list = new ArrayList<>();
         list = EmployeeDB.get_employees();
-        System.out.printf("%-5s %-15s %-15s %-15s %-15s %-10s \n", "ID", "First Name", "Last Name", "User Name", "Password", "Employee Type");
+        System.out.printf("%-5s %-15s %-15s %-15s %-15s %-15s %-10s \n", "ID", "Name", "First Name", "Last Name", "User Name", "Password", "Employee Type");
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-5d %-15s %-15s %-15s %-15s %-10s \n", list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword(), list.get(i).getEType());
+            System.out.printf("%-5d %-15s %-15s %-15s %-15s %-15s %-10s \n", list.get(i).getId(), list.get(i).getFullName(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword(), list.get(i).getEType());
         }
     }
 

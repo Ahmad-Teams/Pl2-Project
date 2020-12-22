@@ -25,7 +25,6 @@ public class Employee {
         this.userName = userName;
         this.password = password;
         this.eType = eType;
-        this.fullName = fName + lName;
     }
 
     public Employee(int id, String fName, String lName, String userName, String password, String eType) {
@@ -35,7 +34,6 @@ public class Employee {
         this.userName = userName;
         this.password = password;
         this.eType = eType;
-        this.fullName = fName + lName;
     }
 
     public int getId() {
@@ -44,6 +42,14 @@ public class Employee {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = this.fName + this.lName;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public String getfName() {

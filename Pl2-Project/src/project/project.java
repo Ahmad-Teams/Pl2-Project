@@ -48,19 +48,19 @@ public class project {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getUserName().equals(username) && list.get(i).getPassword().equals(password)) {
                     if (list.get(i).getEType().equals("A")) {
-                        AdminEmployee admin = new AdminEmployee(list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword(), list.get(i).getEType());
+                        AdminEmployee admin = new AdminEmployee(list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword());
                         admin.openList();
                     }
                     if (list.get(i).getEType().equals("M")) {
-                        MarktingEmployee marktingEmp = new MarktingEmployee(list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword(), list.get(i).getEType());
+                        MarktingEmployee marktingEmp = new MarktingEmployee(list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword());
                         marktingEmp.openList();
                     }
                     if (list.get(i).getEType().equals("I")) {
-                        InventoryEmployee inventoryEmp = new InventoryEmployee(list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword(), list.get(i).getEType());
+                        InventoryEmployee inventoryEmp = new InventoryEmployee(list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword());
                         inventoryEmp.openList();
                     }
                     if (list.get(i).getEType().equals("S")) {
-                        SalesEmployee salesEmp = new SalesEmployee(list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword(), list.get(i).getEType());
+                        SalesEmployee salesEmp = new SalesEmployee(list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword());
                         salesEmp.openList();
                     }
                 }

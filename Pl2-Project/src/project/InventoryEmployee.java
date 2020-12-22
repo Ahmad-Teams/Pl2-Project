@@ -13,8 +13,12 @@ public class InventoryEmployee extends Employee {
 
     Scanner input = new Scanner(System.in);
 
-    public InventoryEmployee(int id, String fName, String lName, String userName, String password, String eType) {
-        super(id, fName, lName, userName, password, eType);
+    public InventoryEmployee(int id, String fName, String lName, String userName, String password) {
+        super(id, fName, lName, userName, password, "I");
+    }
+
+    public InventoryEmployee(String fName, String lName, String userName, String password) {
+        super(fName, lName, userName, password, "I");
     }
 
     public int openList() {

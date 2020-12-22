@@ -170,4 +170,6 @@ public class AdminEmployee extends Employee {
 
 
     }
+     
+     void test1(){}
 }

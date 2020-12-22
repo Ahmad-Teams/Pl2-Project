@@ -43,5 +43,6 @@ public class MarktingEmployee extends Employee {
         System.out.println("bey bey ," + this.getfName() + "!");
         return 0;
     }
+     void test3(){}
 
 }

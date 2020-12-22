@@ -10,6 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import project.Employee;
 import java.util.ArrayList;
+import project.AdminEmployee;
+import project.InventoryEmployee;
+import project.MarktingEmployee;
+import project.SalesEmployee;
 
 public class EmployeeDB {
 
@@ -111,8 +115,18 @@ public class EmployeeDB {
                 PreparedStatement p = con.prepareStatement("select * from employee");) {
             {
                 ResultSet r = p.executeQuery();
+                String c;
                 while (r.next()) {
-                    list.add(new Employee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password"), r.getString("type")));
+                    c = r.getString("type");
+                    if (c.equals("A")) {
+                        list.add(new AdminEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password")));
+                    } else if (c.equals("M")) {
+                        list.add(new MarktingEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password")));
+                    } else if (c.equals("I")) {
+                        list.add(new InventoryEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password")));
+                    } else if (c.equals("S")) {
+                        list.add(new SalesEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password")));
+                    }
                 }
             }
         } catch (SQLException ee) {

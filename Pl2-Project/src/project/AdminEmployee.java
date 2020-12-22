@@ -19,6 +19,11 @@ public class AdminEmployee extends Employee {
         super(fName, lName, userName, password, "A");
     }
 
+    @Override
+    public String getFullName() {
+        return "AD." + super.getFullName();
+    }
+
     public int openList() {
         Scanner input = new Scanner(System.in);
         char c;
@@ -137,9 +142,21 @@ public class AdminEmployee extends Employee {
     private void list_all_employees() {
         ArrayList<Employee> list = new ArrayList<>();
         list = EmployeeDB.get_employees();
-        System.out.printf("%-5s %-15s %-15s %-15s %-15s %-15s %-10s \n", "ID", "Name", "First Name", "Last Name", "User Name", "Password", "Employee Type");
+        System.out.printf("\n%-5s %-20s %-15s %-15s %-15s %-15s %-10s \n", "ID", "Name", "First Name", "Last Name", "User Name", "Password", "Employee Type");
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-5d %-15s %-15s %-15s %-15s %-15s %-10s \n", list.get(i).getId(), list.get(i).getFullName(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword(), list.get(i).getEType());
+            if (list.get(i) instanceof AdminEmployee) {
+                AdminEmployee emp = (AdminEmployee) list.get(i);
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+            } else if (list.get(i) instanceof SalesEmployee) {
+                SalesEmployee emp = (SalesEmployee) list.get(i);
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+            } else if (list.get(i) instanceof MarktingEmployee) {
+                MarktingEmployee emp = (MarktingEmployee) list.get(i);
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+            } else if (list.get(i) instanceof InventoryEmployee) {
+                InventoryEmployee emp = (InventoryEmployee) list.get(i);
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+            }
         }
     }
 

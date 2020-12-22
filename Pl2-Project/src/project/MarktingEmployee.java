@@ -17,6 +17,11 @@ public class MarktingEmployee extends Employee {
         super(fName, lName, userName, password, "M");
     }
 
+    @Override
+    public String getFullName() {
+        return "ME." + super.getFullName();
+    }
+
     public int openList() {
         Scanner input = new Scanner(System.in);
         char c;

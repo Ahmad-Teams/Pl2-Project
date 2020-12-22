@@ -21,6 +21,11 @@ public class InventoryEmployee extends Employee {
         super(fName, lName, userName, password, "I");
     }
 
+    @Override
+    public String getFullName() {
+        return "IE." + super.getFullName();
+    }
+
     public int openList() {
         Scanner input = new Scanner(System.in);
         char c;

@@ -23,6 +23,11 @@ public class SalesEmployee extends Employee {
         super(fName, lName, userName, password, "S");
     }
 
+    @Override
+    public String getFullName() {
+        return "SE." + super.getFullName();
+    }
+
     public int openList() {
         Scanner input = new Scanner(System.in);
         char c;

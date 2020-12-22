@@ -20,6 +20,8 @@ git add fileName.extension
 
 git commit -m "The name of the task"
 
-git push
+git pull --rebase origin master
+
+git push origin master
 
 ***********************************************************************

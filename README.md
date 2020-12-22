@@ -8,10 +8,6 @@ git clone https://github.com/Ahmad-Teams/Pl2-Project.git
 
 ## Before every task.
 
-git checkout master
-
-git fetch -p
-
 git pull
 
 ***********************************************************************

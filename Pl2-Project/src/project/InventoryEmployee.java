@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InventoryEmployee extends Employee {
-     Scanner input=new Scanner(System.in);
+
+    Scanner input = new Scanner(System.in);
+
     public InventoryEmployee(int id, String fName, String lName, String userName, String password, String eType) {
         super(id, fName, lName, userName, password, eType);
     }
@@ -37,13 +39,17 @@ public class InventoryEmployee extends Employee {
             }
 
             switch (c) {
-                case '1':newProduct();
+                case '1':
+                    newProduct();
                     break;
-                case '2':deleteProduct();
+                case '2':
+                    deleteProduct();
                     break;
-                case '3':updateProduct();
+                case '3':
+                    updateProduct();
                     break;
-                case '4':listProduct();
+                case '4':
+                    listProduct();
                     break;
                 case '5':
                     break;
@@ -55,76 +61,91 @@ public class InventoryEmployee extends Employee {
             }
 
         } while (c != '8');
-        System.out.printf("bey bey ,%s!",this.getfName());
+        System.out.printf("bey bey ,%s!", this.getfName());
         return 0;
     }
-    public  void newProduct(){
+
+    public void newProduct() {
         System.out.printf("Enter Product Name:");
-        String name=input.nextLine();
+        String name = input.nextLine();
         System.out.printf("Enter Original Price:");
-        int OP=input.nextInt();
+        int OP = input.nextInt();
         System.out.printf("Enter Discount:");
-        int diss=input.nextInt();
+        int diss = input.nextInt();
         System.out.printf("Enter Amount:");
-        int amount=input.nextInt();
+        int amount = input.nextInt();
         input.nextLine();
         System.out.printf("Enter Expierd Date:");
-        String EPD=input.nextLine();
+        String EPD = input.nextLine();
         System.out.printf("Enter Product State:");
-        String State=input.nextLine();
-        Product d=new Product(name,OP,diss,amount,EPD,State);
-       ProductDB.add_product(d);
-       System.out.println("Added!");
+        String State = input.nextLine();
+        Product d = new Product(name, OP, diss, amount, EPD, State);
+        ProductDB.add_product(d);
+        System.out.println("Added!");
     }
-    public void deleteProduct(){
+
+    public void deleteProduct() {
         int sn;
         System.out.printf("Enter Product Serial Number:");
-        sn=input.nextInt();
+        sn = input.nextInt();
         ProductDB.delete_product(sn);
         System.out.println("Deleted!");
     }
-    public void updateProduct(){
-        System.out.print("Enter 1 if you want to update discount only and 2 for update all product info:");
-        int choice=input.nextInt();
-        if(choice==1){
-        System.out.printf("Enter Product Serial Number:");
-        int sn=input.nextInt();
-            System.out.printf("Enter  Discount:");
-        int diss=input.nextInt();
-        ProductDB.update_product(sn, diss);
-        }
-        else if(choice==2){
-        int sn;
-        System.out.printf("Enter Product Serial Number:");
-        sn=input.nextInt();
-        input.nextLine();
-        System.out.printf("Enter new Name:");
-        String name=input.nextLine();
-        System.out.printf("Enter  Original Price:");
-        int OP=input.nextInt();
-        System.out.printf("Enter  Discount:");
-        int diss=input.nextInt();
-        System.out.printf("Enter Amount:");
-        int amount=input.nextInt();
-         input.nextLine();
-        System.out.printf("Enter Expiera Date:");
-        String EPD=input.nextLine();
-        System.out.printf("Enter Product Sate:");
-        String State=input.nextLine();
-        ProductDB.update_product(sn, name, OP, diss, amount, EPD, State);
 
+    public void updateProduct() {
+        System.out.printf("if you want to update discount only (Enter 1)\n"
+                + "for update all product info:        (Enter 2)\n?:");
+        int choice = input.nextInt();
+        System.out.printf("Enter Product Serial Number:");
+        int sn = input.nextInt();
+
+        boolean Check = foundInProducts(sn);
+        if (Check) {
+            if (choice == 1) {
+
+                System.out.printf("Enter  Discount:");
+                int diss = input.nextInt();
+                
+                ProductDB.update_product(sn, diss);
+                System.out.println("Updated!");
+            } else if (choice == 2) {
+                input.nextLine();
+                System.out.printf("Enter new Name:");
+                String name = input.nextLine();
+                System.out.printf("Enter  Original Price:");
+                int OP = input.nextInt();
+                System.out.printf("Enter  Discount:");
+                int diss = input.nextInt();
+                System.out.printf("Enter Amount:");
+                int amount = input.nextInt();
+                input.nextLine();
+                System.out.printf("Enter Expier Date:");
+                String EPD = input.nextLine();
+                System.out.printf("Enter Product Sate:");
+                String State = input.nextLine();
+                ProductDB.update_product(sn, name, OP, diss, amount, EPD, State);
+                System.out.println("Updated!");
+            }
+        }
+        else System.out.println("Product not found!");
     }
-        else System.out.printf("Invaild Input");
-        
-        System.out.println("Updated!");
+
+    public boolean foundInProducts(int sn) {
+        ArrayList<Product> list = ProductDB.get_products();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getSN() == sn) return true;
+        }
+        return false;
     }
-    public void listProduct(){
-       ArrayList<Product> list = new ArrayList<>();
-     list= ProductDB.get_products();
-     System.out.printf("%-10s%-10s%-15s%-10s%-10s%-15s%-10s\n","Name","price","orignal price","disscount","amount","expier data" ,"state");
-     for(int i=0;i<list.size();i++){
-        System.out.printf("%-10s%-10d",list.get(i).getName(),list.get(i).getPrice());
-        System.out.printf("%-15d%-10d%-10d",list.get(i).getOrignalPrice(),list.get(i).getDiscount(),list.get(i).getAmount());
-        System.out.printf("%-15s%-10s\n",list.get(i).getEPD(),list.get(i).getpState());
+
+    public void listProduct() {
+        ArrayList<Product> list = new ArrayList<>();
+        list = ProductDB.get_products();
+        System.out.printf("%-10s%-10s%-15s%-10s%-10s%-15s%-10s\n", "Name", "price", "orignal price", "disscount", "amount", "expier data", "state");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.printf("%-10s%-10d", list.get(i).getName(), list.get(i).getPrice());
+            System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+            System.out.printf("%-15s%-10s\n", list.get(i).getEPD(), list.get(i).getpState());
+        }
     }
-    }}
+}

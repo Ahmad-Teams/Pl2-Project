@@ -6,6 +6,7 @@
 package project;
 
 import database.EmployeeDB;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdminEmployee extends Employee {
@@ -44,11 +45,11 @@ public class AdminEmployee extends Employee {
                     break;
                 case '4':
                     break;
-                case '5':
+                case '5': search();
                     break;
-                case '6':
-                    break;
-                case '7':
+                case '6': update_general_info();
+                    break; 
+                case '7': update_general();
                     break;
             }
 
@@ -56,5 +57,62 @@ public class AdminEmployee extends Employee {
         System.out.println("bey bey ," + this.getfName() + "!");
         return 0;
     }
+    
+   void update_general_info()
+   {
+   Scanner input=new Scanner(System.in);
+       System.out.println("Enter first name : ");
+       String fname=input.next();
+       System.out.println("Enter last name : ");
+       String lname=input.next();
+       System.out.println("Enter ID : ");
+       int ID=input.nextInt();
+       EmployeeDB.update_employee_info(ID, fname, lname);
+   }
    
+    void update_general()
+   {
+       
+       Scanner input=new Scanner(System.in);
+       System.out.println("Enter ID : ");
+       int ID=input.nextInt();
+       System.out.println("Enter first name : ");
+       String fname=input.next();
+       System.out.println("Enter last name : ");
+       String lname=input.next();
+       System.out.println("Enter user name : ");
+       String username=input.next();
+       System.out.println("Enter password : ");
+       String password=input.next();
+       System.out.println("Enter type : ");
+       String type=input.next();       
+       EmployeeDB.update_employee(ID, fname, lname, username, password, type);
+       
+   }
+   
+ 
+     public  void search() {
+        Scanner input=new Scanner(System.in); 
+        ArrayList<Employee> list = new ArrayList<>();
+        list = EmployeeDB.get_employees();
+         System.out.println("Enter id : ");
+        int id =input.nextInt();
+        
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId()==id ){
+                System.out.println("id : \t"+list.get(i).getId());
+                System.out.println("first name : \t"+list.get(i).getfName());
+                System.out.println("last name : \t"+list.get(i).getlName());
+                System.out.println("user name : \t"+list.get(i).getUserName());
+                System.out.println("password : \t"+list.get(i).getfName());
+                System.out.println("employee type : "+list.get(i).getEType());
+                
+            }
+        }
+        
+        
+    }
+       
+  
+
 }

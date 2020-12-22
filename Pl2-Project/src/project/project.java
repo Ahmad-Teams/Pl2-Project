@@ -23,7 +23,7 @@ public class project {
      */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        System.out.printf("Hyper Market Management System\n");
+        System.out.printf("\nHyper Market Management System\n");
         String username, password;
         char c;
         do {

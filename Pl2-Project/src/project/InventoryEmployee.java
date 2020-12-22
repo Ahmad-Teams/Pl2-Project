@@ -57,7 +57,6 @@ public class InventoryEmployee extends Employee {
                     break;
                 case '7':
                     break;
-
             }
 
         } while (c != '8');
@@ -105,7 +104,7 @@ public class InventoryEmployee extends Employee {
 
                 System.out.printf("Enter  Discount:");
                 int diss = input.nextInt();
-                
+
                 ProductDB.update_product(sn, diss);
                 System.out.println("Updated!");
             } else if (choice == 2) {
@@ -126,14 +125,17 @@ public class InventoryEmployee extends Employee {
                 ProductDB.update_product(sn, name, OP, diss, amount, EPD, State);
                 System.out.println("Updated!");
             }
+        } else {
+            System.out.println("Product not found!");
         }
-        else System.out.println("Product not found!");
     }
 
     public boolean foundInProducts(int sn) {
         ArrayList<Product> list = ProductDB.get_products();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getSN() == sn) return true;
+            if (list.get(i).getSN() == sn) {
+                return true;
+            }
         }
         return false;
     }

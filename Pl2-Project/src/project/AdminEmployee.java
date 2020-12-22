@@ -55,7 +55,7 @@ public class AdminEmployee extends Employee {
                 case '6':
                     update_general_info();
                     break;
-                case '7': 
+                case '7':
                     update_general();
                     break;
             }
@@ -64,7 +64,8 @@ public class AdminEmployee extends Employee {
         System.out.println("bey bey ," + this.getfName() + "!");
         return 0;
     }
-    private void Add_new_employee(){
+
+    private void Add_new_employee() {
         String fName;
         String lName;
         String fullName;
@@ -76,26 +77,28 @@ public class AdminEmployee extends Employee {
         fName = input.next();
         System.out.print("Enter employee's last name: ");
         lName = input.next();
-        fullName=fName+lName;
+        fullName = fName + lName;
         System.out.print("Enter employee's username: ");
         userName = input.next();
         System.out.print("Enter employee's password: ");
         password = input.next();
         System.out.print("Enter employee's type: ");
         eType = input.next();
-        
-        Employee new_emp = new Employee(fName,lName,userName,password,eType.toUpperCase());
+
+        Employee new_emp = new Employee(fName, lName, userName, password, eType.toUpperCase());
         EmployeeDB.add_employee(new_emp);
     }
-    private void Delete_an_employee(){
+
+    private void Delete_an_employee() {
         int id;
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the id of the employee you want to delete: ");
         id = input.nextInt();
         EmployeeDB.delete_employee(id);
     }
-    private void Update_an_employee_information(){
-        int id ;
+
+    private void Update_an_employee_information() {
+        int id;
         String fName;
         String lName;
         //String fullName;
@@ -118,57 +121,54 @@ public class AdminEmployee extends Employee {
         eType = input.next();
         EmployeeDB.update_employee(id, fName, lName, userName, password, eType.toUpperCase());
     }
-    private void list_all_employees(){
+
+    private void list_all_employees() {
         ArrayList<Employee> list = new ArrayList<>();
         list = EmployeeDB.get_employees();
-        System.out.printf("%-5s %-15s %-15s %-15s %-15s %-10s \n","ID","First Name","Last Name","User Name","Password","Employee Type");
+        System.out.printf("%-5s %-15s %-15s %-15s %-15s %-10s \n", "ID", "First Name", "Last Name", "User Name", "Password", "Employee Type");
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-5d %-15s %-15s %-15s %-15s %-10s \n",list.get(i).getId(),list.get(i).getfName(),list.get(i).getlName(),list.get(i).getUserName(),list.get(i).getPassword(),list.get(i).getEType());
+            System.out.printf("%-5d %-15s %-15s %-15s %-15s %-10s \n", list.get(i).getId(), list.get(i).getfName(), list.get(i).getlName(), list.get(i).getUserName(), list.get(i).getPassword(), list.get(i).getEType());
         }
     }
-    
-     void update_general_info()
-   {
-   Scanner input=new Scanner(System.in);
-       System.out.printf("Enter first name : ");
-       String fname=input.next();
-       System.out.printf("Enter last name : ");
-       String lname=input.next();
-       EmployeeDB.update_employee_info(this.getId(), fname, lname);
-   }
 
-    void update_general()
-   {
+    void update_general_info() {
+        Scanner input = new Scanner(System.in);
+        System.out.printf("Enter first name : ");
+        String fname = input.next();
+        System.out.printf("Enter last name : ");
+        String lname = input.next();
+        EmployeeDB.update_employee_info(this.getId(), fname, lname);
+    }
 
-       Scanner input=new Scanner(System.in);
-       System.out.printf("Enter user name : ");
-       String username=input.next();
-       System.out.printf("Enter password : ");
-       String password=input.next(); 
-       EmployeeDB.update_employee(this.getId(), username, password);
-   }
+    void update_general() {
 
+        Scanner input = new Scanner(System.in);
+        System.out.printf("Enter user name : ");
+        String username = input.next();
+        System.out.printf("Enter password : ");
+        String password = input.next();
+        EmployeeDB.update_employee(this.getId(), username, password);
+    }
 
-     public  void search() {
-        Scanner input=new Scanner(System.in); 
+    public void search() {
+        Scanner input = new Scanner(System.in);
         ArrayList<Employee> list = new ArrayList<>();
         list = EmployeeDB.get_employees();
-         System.out.printf("Enter id : ");
-        int id =input.nextInt();
+        System.out.printf("Enter id : ");
+        int id = input.nextInt();
 
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId()==id ){
-                System.out.println("id : \t"+list.get(i).getId());
-                System.out.println("first name : \t"+list.get(i).getfName());
-                System.out.println("last name : \t"+list.get(i).getlName());
-                System.out.println("user name : \t"+list.get(i).getUserName());
-                System.out.println("password : \t"+list.get(i).getfName());
-                System.out.println("employee type : "+list.get(i).getEType());
+            if (list.get(i).getId() == id) {
+                System.out.println("id : \t" + list.get(i).getId());
+                System.out.println("first name : \t" + list.get(i).getfName());
+                System.out.println("last name : \t" + list.get(i).getlName());
+                System.out.println("user name : \t" + list.get(i).getUserName());
+                System.out.println("password : \t" + list.get(i).getfName());
+                System.out.println("employee type : " + list.get(i).getEType());
 
             }
         }
 
-
     }
-     
+
 }

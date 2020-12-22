@@ -67,14 +67,14 @@ public class ProductDB {
             p.setString(5, EPD);
             p.setString(6, state);
             p.setInt(7, SN);
-            
+
             p.execute();
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here
         }
     }
-    
-    public static void update_product(int SN,int discount) {
+
+    public static void update_product(int SN, int discount) {
         try (
                 Connection con = connect();
                 PreparedStatement p = con.prepareStatement("UPDATE product SET discount = ? WHERE SN = ?");
@@ -82,7 +82,7 @@ public class ProductDB {
             p1.execute();
             p.setInt(1, discount);
             p.setInt(2, SN);
-            
+
             p.execute();
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here
@@ -97,7 +97,7 @@ public class ProductDB {
             {
                 ResultSet r = p.executeQuery();
                 while (r.next()) {
-                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount") , r.getInt("amount"), r.getString("EPD"), r.getString("state")));
+                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"), r.getString("state")));
                 }
             }
         } catch (SQLException ee) {

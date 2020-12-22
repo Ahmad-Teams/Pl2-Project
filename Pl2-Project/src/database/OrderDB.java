@@ -31,7 +31,7 @@ public class OrderDB {
             p1.execute();
             p.setInt(1, ord.getPSN());
             p.setInt(2, ord.getAmount());
-            
+
             p.execute();
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here
@@ -53,7 +53,7 @@ public class OrderDB {
         }
     }
 
-    public static void update_order(int PSN,int amount) {
+    public static void update_order(int PSN, int amount) {
         try (
                 Connection con = connect();
                 PreparedStatement p = con.prepareStatement("UPDATE orders SET amount = ? WHERE PSN = ?");
@@ -62,7 +62,6 @@ public class OrderDB {
             p.setInt(1, amount);
             p.setInt(2, PSN);
 
-            
             p.execute();
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here

@@ -65,13 +65,13 @@ public class EmployeeDB {
             p.setString(4, password);
             p.setString(5, type);
             p.setInt(6, id);
-            
+
             p.execute();
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here
         }
     }
-    
+
     public static void update_employee_info(int id, String fname, String lname) {
         try (
                 Connection con = connect();
@@ -81,13 +81,13 @@ public class EmployeeDB {
             p.setString(1, fname);
             p.setString(2, lname);
             p.setInt(3, id);
-            
+
             p.execute();
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here
         }
     }
-    
+
     public static void update_employee(int id, String username, String password) {
         try (
                 Connection con = connect();
@@ -97,13 +97,13 @@ public class EmployeeDB {
             p.setString(1, username);
             p.setString(2, password);
             p.setInt(3, id);
-            
+
             p.execute();
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here
         }
     }
-    
+
     public static ArrayList<Employee> get_employees() {
         ArrayList<Employee> list = new ArrayList<>();
         try (
@@ -112,7 +112,7 @@ public class EmployeeDB {
             {
                 ResultSet r = p.executeQuery();
                 while (r.next()) {
-                    list.add(new Employee(r.getInt("id"),r.getString("fname"),r.getString("lname"),r.getString("username"),r.getString("password"),r.getString("type")));
+                    list.add(new Employee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password"), r.getString("type")));
                 }
             }
         } catch (SQLException ee) {

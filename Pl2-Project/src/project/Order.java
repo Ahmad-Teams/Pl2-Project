@@ -10,6 +10,7 @@ package project;
  * @author ahmad
  */
 public class Order {
+
     private int PSN;
     private int amount;
 
@@ -33,6 +34,5 @@ public class Order {
     public void setAmount(int amount) {
         this.amount = amount;
     }
-    
-    
+
 }

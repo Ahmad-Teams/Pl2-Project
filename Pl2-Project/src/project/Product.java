@@ -9,7 +9,6 @@ package project;
  *
  * @author ahmad
  */
-
 public class Product {
 
     private int SN;
@@ -20,7 +19,7 @@ public class Product {
     private int amount;
     private String EPD;
     private String pState;
-    
+
     public Product(String name, int orignalPrice, int discount, int amount, String EPD, String pState) {
         this.name = name;
         this.orignalPrice = orignalPrice;
@@ -31,7 +30,7 @@ public class Product {
         this.pState = pState;//R for in-return S for in-sale E for Expired
     }
 
-    public Product(int SN ,String name, int orignalPrice, int discount, int amount, String EPD, String pState) {
+    public Product(int SN, String name, int orignalPrice, int discount, int amount, String EPD, String pState) {
         this.SN = SN;
         this.name = name;
         this.orignalPrice = orignalPrice;
@@ -97,7 +96,5 @@ public class Product {
     public void setpState(String pState) {
         this.pState = pState;
     }
-
-
 
 }

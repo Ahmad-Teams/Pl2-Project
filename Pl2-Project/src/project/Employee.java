@@ -9,10 +9,9 @@ package project;
  *
  * @author ahmad
  */
-
-
 public class Employee {
-    private int id ;
+
+    private int id;
     private String fName;
     private String lName;
     private String fullName;
@@ -26,9 +25,9 @@ public class Employee {
         this.userName = userName;
         this.password = password;
         this.eType = eType;
-        this.fullName = fName + lName ;
+        this.fullName = fName + lName;
     }
-    
+
     public Employee(int id, String fName, String lName, String userName, String password, String eType) {
         this.id = id;
         this.fName = fName;
@@ -36,7 +35,7 @@ public class Employee {
         this.userName = userName;
         this.password = password;
         this.eType = eType;
-        this.fullName = fName + lName ;
+        this.fullName = fName + lName;
     }
 
     public int getId() {

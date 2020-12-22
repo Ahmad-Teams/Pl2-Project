@@ -29,8 +29,10 @@ public class project {
         do {
             System.out.printf("\nMain Menu:\nLogin (Enter L)\nExit (Enter E)\n?:");
             c = input.nextLine().charAt(0);
-            
-            if (c == 'E')break;
+
+            if (c == 'E') {
+                break;
+            }
 
             System.out.printf("\nEnter User-Name: ");
             username = input.nextLine();
@@ -42,7 +44,7 @@ public class project {
 
             ArrayList<Employee> list = new ArrayList<>();
             list = EmployeeDB.get_employees();
-            
+
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getUserName().equals(username) && list.get(i).getPassword().equals(password)) {
                     if (list.get(i).getEType().equals("A")) {

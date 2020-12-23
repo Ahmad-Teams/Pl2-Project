@@ -40,6 +40,7 @@ public class AdminEmployee extends Employee {
                     + "\nLogOut                              (Enter 8)\n");
             System.out.printf("?: ");
             c = input.nextInt();
+            input.nextLine();
 
             if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 & c != 8) {
                 System.out.println("Invaild Input!");
@@ -80,7 +81,7 @@ public class AdminEmployee extends Employee {
         String fullName;
         String userName;
         String password;
-        String eType;
+        String eType = "";
         Scanner input = new Scanner(System.in);
         System.out.print("Enter employee's first name: ");
         fName = input.nextLine();
@@ -91,8 +92,37 @@ public class AdminEmployee extends Employee {
         userName = input.nextLine();
         System.out.print("Enter employee's password: ");
         password = input.nextLine();
-        System.out.print("Enter employee's type (A , M , S , I): ");
-        eType = input.nextLine();
+        int c;
+        do {
+            System.out.printf("\nEmployee Type:"
+                    + "\nAminstration Departement.   (Enter 1)"
+                    + "\nMarkting Departement.       (Enter 2)"
+                    + "\nInventory Departement.      (Enter 3)"
+                    + "\nSales Departement.          (Enter 4)\n"
+            );
+            System.out.printf("?: ");
+            c = input.nextInt();
+            input.nextLine();
+
+            if (c != 1 && c != 2 && c != 3 && c != 4) {
+                System.out.println("Invaild Input!");
+            }
+
+            switch (c) {
+                case 1:
+                    eType = "A";
+                    break;
+                case 2:
+                    eType = "M";
+                    break;
+                case 3:
+                    eType = "I";
+                    break;
+                case 4:
+                    eType = "S";
+                    break;
+            }
+        } while (c != 1 && c != 2 && c != 3 && c != 4);
 
         if (eType.equals("A")) {
             EmployeeDB.add_employee(new AdminEmployee(fName, lName, userName, password));
@@ -103,7 +133,7 @@ public class AdminEmployee extends Employee {
         } else if (eType.equals("I")) {
             EmployeeDB.add_employee(new InventoryEmployee(fName, lName, userName, password));
         }
-        System.out.printf("\n%s\nAdded!", fName);
+        System.out.printf("\n%sAdded!\n", fName);
     }
 
     private void Delete_an_employee() {
@@ -121,22 +151,55 @@ public class AdminEmployee extends Employee {
         //String fullName;
         String userName;
         String password;
-        String eType;
+        String eType = "";
         Scanner input = new Scanner(System.in);
         System.out.print("Enter employee's id: ");
         id = input.nextInt();
-        System.out.print("Enter employee's first name: ");
-        fName = input.next();
-        System.out.print("Enter employee's last name: ");
-        lName = input.next();
-        //fullName=fName+lName;
-        System.out.print("Enter employee's username: ");
-        userName = input.next();
-        System.out.print("Enter employee's password: ");
-        password = input.next();
-        System.out.print("Enter employee's type: ");
-        eType = input.next();
-        EmployeeDB.update_employee(id, fName, lName, userName, password, eType.toUpperCase());
+        if (EmployeeDB.isExisit(id)) {
+            System.out.print("Enter employee's first name: ");
+            fName = input.next();
+            System.out.print("Enter employee's last name: ");
+            lName = input.next();
+            //fullName=fName+lName;
+            System.out.print("Enter employee's username: ");
+            userName = input.next();
+            System.out.print("Enter employee's password: ");
+            password = input.next();
+            int c;
+            do {
+                System.out.printf("\nEmployee Type:"
+                        + "\nAminstration Departement.   (Enter 1)"
+                        + "\nMarkting Departement.       (Enter 2)"
+                        + "\nInventory Departement.      (Enter 3)"
+                        + "\nSales Departement.          (Enter 4)\n"
+                );
+                System.out.printf("?: ");
+                c = input.nextInt();
+                input.nextLine();
+
+                if (c != 1 && c != 2 && c != 3 && c != 4) {
+                    System.out.println("Invaild Input!");
+                }
+
+                switch (c) {
+                    case 1:
+                        eType = "A";
+                        break;
+                    case 2:
+                        eType = "M";
+                        break;
+                    case 3:
+                        eType = "I";
+                        break;
+                    case 4:
+                        eType = "S";
+                        break;
+                }
+            } while (c != 1 && c != 2 && c != 3 && c != 4);
+            EmployeeDB.update_employee(id, fName, lName, userName, password, eType);
+        } else {
+            System.out.println("\nNot Found!");
+        }
     }
 
     private void list_all_employees() {

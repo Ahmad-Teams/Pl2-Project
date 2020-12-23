@@ -18,19 +18,21 @@ public class Product {
     private int price;
     private int amount;
     private String EPD;
+    private int minRange;
     private String pState;
 
-    public Product(String name, int orignalPrice, int discount, int amount, String EPD, String pState) {
+    public Product(String name, int orignalPrice, int discount, int amount, String EPD, int minRange) {
         this.name = name;
         this.orignalPrice = orignalPrice;
         this.discount = discount;
         this.price = this.orignalPrice - this.discount;
         this.amount = amount;
         this.EPD = EPD;
+        this.minRange = minRange;
         this.pState = pState;//R for in-return S for in-sale E for Expired
     }
 
-    public Product(int SN, String name, int orignalPrice, int discount, int amount, String EPD, String pState) {
+    public Product(int SN, String name, int orignalPrice, int discount, int amount, String EPD, int minRange, String pState) {
         this.SN = SN;
         this.name = name;
         this.orignalPrice = orignalPrice;
@@ -38,7 +40,11 @@ public class Product {
         this.price = orignalPrice - discount;
         this.amount = amount;
         this.EPD = EPD;
+        this.minRange = minRange;
         this.pState = pState;//R for in-return S for in-sale E for Expired
+    }
+
+    public Product() {
     }
 
     public int getSN() {
@@ -87,6 +93,14 @@ public class Product {
 
     public void setEPD(String EPD) {
         this.EPD = EPD;
+    }
+
+    public int getMinRange() {
+        return minRange;
+    }
+
+    public void setMinRange(int minRange) {
+        this.minRange = minRange;
     }
 
     public String getpState() {

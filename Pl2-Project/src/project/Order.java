@@ -15,6 +15,9 @@ public class Order {
     private int PSN;
     private int amount;
 
+    public Order() {
+    }
+
     public int getId() {
         return id;
     }

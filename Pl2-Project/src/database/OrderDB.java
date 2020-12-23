@@ -1,5 +1,6 @@
 package database;
 
+import static database.EmployeeDB.connect;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,6 +11,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import project.Order;
 import java.util.ArrayList;
+import project.AdminEmployee;
+import project.Employee;
+import project.InventoryEmployee;
+import project.MarktingEmployee;
+import project.Product;
+import project.SalesEmployee;
 
 public class OrderDB {
 
@@ -76,12 +83,50 @@ public class OrderDB {
             {
                 ResultSet r = p.executeQuery();
                 while (r.next()) {
-                    list.add(new Order(r.getInt("id"),r.getInt("PSN"), r.getInt("amount")));
+                    list.add(new Order(r.getInt("id"), r.getInt("PSN"), r.getInt("amount")));
                 }
             }
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here
         }
         return list;
+    }
+
+    public static Order get_order(int id) {
+        ArrayList<Order> list = new ArrayList<>();
+        try (
+                Connection con = connect();
+                PreparedStatement p = con.prepareStatement("select * from orders where id = ?");) {
+            {
+                p.setInt(1, id);
+                ResultSet r = p.executeQuery();
+                while (r.next()) {
+                    return new Order(r.getInt("id"), r.getInt("PSN"), r.getInt("amount"));
+                }
+            }
+        } catch (SQLException ee) {
+            System.out.println(ee.getMessage());// we will put out custimize exption massages here
+        }
+        return new Order();
+    }
+
+    public static boolean isExisit(int id) {
+        ArrayList<Order> list = OrderDB.get_orders();
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isEmpty() {
+        ArrayList<Order> list = OrderDB.get_orders();
+
+        if (list.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }

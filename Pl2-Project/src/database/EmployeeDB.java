@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import project.AdminEmployee;
 import project.InventoryEmployee;
 import project.MarktingEmployee;
+import project.Order;
 import project.SalesEmployee;
 
 public class EmployeeDB {
@@ -133,5 +134,53 @@ public class EmployeeDB {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here
         }
         return list;
+    }
+
+    public static Employee get_employee(int id) {
+        ArrayList<Employee> list = new ArrayList<>();
+        try (
+                Connection con = connect();
+                PreparedStatement p = con.prepareStatement("select * from employee where id = ?");) {
+            {
+                p.setInt(1, id);
+                ResultSet r = p.executeQuery();
+                String c;
+                while (r.next()) {
+                    c = r.getString("type");
+                    if (c.equals("A")) {
+                        return new AdminEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password"));
+                    } else if (c.equals("M")) {
+                        return new MarktingEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password"));
+                    } else if (c.equals("I")) {
+                        return new InventoryEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password"));
+                    } else if (c.equals("S")) {
+                        return new SalesEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password"));
+                    }
+                }
+            }
+        } catch (SQLException ee) {
+            System.out.println(ee.getMessage());// we will put out custimize exption massages here
+        }
+        return new Employee();
+    }
+
+    public static boolean isExisit(int id) {
+        ArrayList<Employee> list = EmployeeDB.get_employees();
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isEmpty() {
+        ArrayList<Employee> list = EmployeeDB.get_employees();
+
+        if (list.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }

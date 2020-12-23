@@ -19,6 +19,9 @@ public class Employee {
     private String password;
     private String eType;//A for Admin M for Markting I for inventory S for sales 
 
+    public Employee() {
+    }
+
     public Employee(String fName, String lName, String userName, String password, String eType) {
         this.fName = fName;
         this.lName = lName;

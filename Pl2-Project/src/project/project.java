@@ -25,12 +25,12 @@ public class project {
         Scanner input = new Scanner(System.in);
         System.out.printf("\nHyper Market Management System\n");
         String username, password;
-        char c;
+        int c;
         do {
-            System.out.printf("\nMain Menu:\nLogin (Enter L)\nExit (Enter E)\n?:");
-            c = input.nextLine().charAt(0);
-
-            if (c == 'E') {
+            System.out.printf("\nMain Menu:\nLogin (Enter 1)\nExit  (Enter 0)\n?:");
+            c = input.nextInt();
+            input.nextLine();
+            if (c == 0) {
                 break;
             }
 
@@ -66,7 +66,7 @@ public class project {
                 }
             }
 
-        } while (c == 'L');
+        } while (c == 1);
 
         System.out.println("Exit!");
     }

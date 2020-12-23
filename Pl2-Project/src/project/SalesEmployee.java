@@ -8,6 +8,7 @@ package project;
 import database.EmployeeDB;
 import database.ProductDB;
 import database.OrderDB;
+import database.RProductDB;
 import java.util.ArrayList;
 import java.util.Scanner;
 import project.Order;
@@ -31,6 +32,9 @@ public class SalesEmployee extends Employee {
     }
 
     public int openList() {
+        ProductDB.update_products_states();
+        RProductDB.update_RProducts_states();
+
         int c;
         System.out.println("\nHello ," + this.getfName() + "!");
         do {
@@ -44,6 +48,7 @@ public class SalesEmployee extends Employee {
                     + "\nLogOut                             (Enter 7)\n");
             System.out.printf("?: ");
             c = input.nextInt();
+            input.nextLine();
 
             if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7) {
                 System.out.println("Invaild Input!");
@@ -83,10 +88,10 @@ public class SalesEmployee extends Employee {
         int c = 0;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getSN() == sn) {
-                System.out.printf("\n%-5s %-15s %-15s %-15s %-15s %-15s %-10s\n", "SN", "NAME", "ORIGNAL_price", "discount", "price", "amount", "epd", "state");
-                System.out.printf("%-5s %-15s %-15s %-15s %-15s %-15s %-10s\n", list.get(i).getSN(), list.get(i).getName(), list.get(i).getOrignalPrice(), list.get(i).getDiscount(),
-                        list.get(i).getPrice(), list.get(i).getAmount(), list.get(i).getEPD(), list.get(i).getpState());
-                c++;
+                System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+                System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+                System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+                System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
             }
 
         }
@@ -99,11 +104,11 @@ public class SalesEmployee extends Employee {
     void print_list_Product() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
-        System.out.printf("\n%-5s %-15s %-15s %-15s %-15s %-15s %-10s\n", "SN", "NAME", "ORIGNAL_price", "discount", "price", "amount", "epd", "state");
+        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-5s %-15s %-15s %-15s %-15s %-15s %-10s\n", list.get(i).getSN(), list.get(i).getName(), list.get(i).getOrignalPrice(), list.get(i).getDiscount(),
-                    list.get(i).getPrice(), list.get(i).getAmount(), list.get(i).getEPD(), list.get(i).getpState());
-            System.out.println();
+            System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+            System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+            System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
         }
     }
 
@@ -141,23 +146,12 @@ public class SalesEmployee extends Employee {
         list = OrderDB.get_orders();
         System.out.printf("Enter the order id: ");
         int id = input.nextInt();
-        if (check_order(id)) {
+        if (OrderDB.isExisit(id)) {
             OrderDB.delete_order(id);
             System.out.println("\nDeleted!");
         } else {
             System.out.println("\nOrder not found!");
         }
-    }
-
-    private boolean check_order(int id) {
-        ArrayList<Order> list = new ArrayList<>();
-        list = OrderDB.get_orders();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId() == id) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

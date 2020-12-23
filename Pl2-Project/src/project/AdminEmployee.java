@@ -26,7 +26,7 @@ public class AdminEmployee extends Employee {
 
     public int openList() {
         Scanner input = new Scanner(System.in);
-        char c;
+        int c;
         System.out.println("\nHello ," + this.getfName() + "!");
         do {
             System.out.printf("\nAdminstration Menu:"
@@ -39,37 +39,37 @@ public class AdminEmployee extends Employee {
                     + "\nAlter your User-Name and Password.  (Enter 7)"
                     + "\nLogOut                              (Enter 8)\n");
             System.out.printf("?: ");
-            c = input.nextLine().charAt(0);
+            c = input.nextInt();
 
-            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6' && c != '7' & c != '8') {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 & c != 8) {
                 System.out.println("Invaild Input!");
             }
 
             switch (c) {
-                case '1':
+                case 1:
                     Add_new_employee();
                     break;
-                case '2':
+                case 2:
                     Delete_an_employee();
                     break;
-                case '3':
+                case 3:
                     Update_an_employee_information();
                     break;
-                case '4':
+                case 4:
                     list_all_employees();
                     break;
-                case '5':
+                case 5:
                     search();
                     break;
-                case '6':
+                case 6:
                     update_general_info();
                     break;
-                case '7':
+                case 7:
                     update_general();
                     break;
             }
 
-        } while (c != '8');
+        } while (c != 8);
         System.out.println("bey bey ," + this.getfName() + "!");
         return 0;
     }

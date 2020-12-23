@@ -38,14 +38,14 @@ public class OrderDB {
         }
     }
 
-    public static void delete_order(int PSN) {
+    public static void delete_order(int id) {
         try (
                 Connection con = connect();
-                PreparedStatement p = con.prepareStatement("delete from orders where PSN = ?");
+                PreparedStatement p = con.prepareStatement("delete from orders where id = ?");
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
             p1.execute();
 
-            p.setInt(1, PSN);
+            p.setInt(1, id);
 
             p.execute();
         } catch (SQLException ee) {
@@ -76,7 +76,7 @@ public class OrderDB {
             {
                 ResultSet r = p.executeQuery();
                 while (r.next()) {
-                    list.add(new Order(r.getInt("PSN"), r.getInt("amount")));
+                    list.add(new Order(r.getInt("id"),r.getInt("PSN"), r.getInt("amount")));
                 }
             }
         } catch (SQLException ee) {

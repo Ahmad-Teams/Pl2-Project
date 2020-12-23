@@ -28,7 +28,7 @@ public class InventoryEmployee extends Employee {
 
     public int openList() {
         Scanner input = new Scanner(System.in);
-        char c;
+        int c;
         System.out.println("\nHello ," + this.getfName() + "!");
         do {
             System.out.printf("\nInventory Menu:"
@@ -37,38 +37,38 @@ public class InventoryEmployee extends Employee {
                     + "\nUpdate a product information                (Enter 3)"
                     + "\nList all products.                          (Enter 4)"
                     + "\nSearch for a product.                       (Enter 5)"
-                    + "\nManage the Damages items and sales Return.  (Enter 6)"//delete order
+                    + "\nManage the Damages items and sales Return.  (Enter 6)"
                     + "\nAlter your information.                     (Enter 7)"
                     + "\nLogOut                                      (Enter 8)\n");
             System.out.printf("?: ");
-            c = input.nextLine().charAt(0);
+            c = input.nextInt();
 
-            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6' && c != '7' && c != '8') {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8) {
                 System.out.println("Invaild Input!");
             }
 
             switch (c) {
-                case '1':
+                case 1:
                     newProduct();
                     break;
-                case '2':
+                case 2:
                     deleteProduct();
                     break;
-                case '3':
+                case 3:
                     updateProduct();
                     break;
-                case '4':
+                case 4:
                     listProduct();
                     break;
-                case '5':
+                case 5:
                     break;
-                case '6':
+                case 6:
                     break;
-                case '7':
+                case 7:
                     break;
             }
 
-        } while (c != '8');
+        } while (c != 8);
         System.out.printf("bey bey ,%s!", this.getfName());
         return 0;
     }
@@ -137,6 +137,10 @@ public class InventoryEmployee extends Employee {
         } else {
             System.out.println("Product not found!");
         }
+    }
+    
+    public static void add_offer(int sn , int discount){
+        ProductDB.update_product(sn, discount);
     }
 
     public boolean foundInProducts(int sn) {

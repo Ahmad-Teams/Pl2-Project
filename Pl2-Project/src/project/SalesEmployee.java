@@ -15,6 +15,8 @@ import project.Product;
 
 public class SalesEmployee extends Employee {
 
+    Scanner input = new Scanner(System.in);
+
     public SalesEmployee(int id, String fName, String lName, String userName, String password) {
         super(id, fName, lName, userName, password, "S");
     }
@@ -29,8 +31,7 @@ public class SalesEmployee extends Employee {
     }
 
     public int openList() {
-        Scanner input = new Scanner(System.in);
-        char c;
+        int c;
         System.out.println("\nHello ," + this.getfName() + "!");
         do {
             System.out.printf("\nSales Menu:"
@@ -38,37 +39,38 @@ public class SalesEmployee extends Employee {
                     + "\nList all products.                 (Enter 2)"
                     + "\nList all orders.                   (Enter 3)"
                     + "\nMake an order.                     (Enter 4)"
-                    + "\nDelete an order.                   (Enter 5)"//in return
+                    + "\nDelete an order.                   (Enter 5)"
                     + "\nAlter your information.            (Enter 6)"//fname lname
                     + "\nLogOut                             (Enter 7)\n");
             System.out.printf("?: ");
-            c = input.nextLine().charAt(0);
+            c = input.nextInt();
 
-            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6' && c != '7') {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7) {
                 System.out.println("Invaild Input!");
             }
 
             switch (c) {
-                case '1':
+                case 1:
                     search();
                     break;
-                case '2':
+                case 2:
                     print_list_Product();
                     break;
-                case '3':
+                case 3:
                     print_list_Order();
                     break;
-                case '4':
+                case 4:
                     make_an_order();
                     break;
-                case '5':
+                case 5:
+                    delete_an_order();
                     break;
-                case '6':
+                case 6:
                     update_info();
                     break;
             }
 
-        } while (c != '7');
+        } while (c != 7);
         System.out.println("bey bey ," + this.getfName() + "!");
         return 0;
     }
@@ -76,7 +78,6 @@ public class SalesEmployee extends Employee {
     void search() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
-        Scanner input = new Scanner(System.in);
         System.out.print("Enter the serial number : ");
         int sn = input.nextInt();
         int c = 0;
@@ -117,7 +118,6 @@ public class SalesEmployee extends Employee {
     }
 
     void make_an_order() {
-        Scanner input = new Scanner(System.in);
         System.out.print("Enter the amount: ");
         int amount = input.nextInt();
         System.out.print("Enter the product serial number: ");
@@ -127,7 +127,6 @@ public class SalesEmployee extends Employee {
     }
 
     void update_info() {
-        Scanner input = new Scanner(System.in);
         System.out.print("Enter the ID: ");
         int id = input.nextInt();
         System.out.print("Enter the frist name: ");
@@ -136,4 +135,29 @@ public class SalesEmployee extends Employee {
         String lname = input.next();
         EmployeeDB.update_employee_info(id, fname, lname);
     }
+
+    void delete_an_order() {
+        ArrayList<Order> list = new ArrayList<>();
+        list = OrderDB.get_orders();
+        System.out.printf("Enter the order id: ");
+        int id = input.nextInt();
+        if (check_order(id)) {
+            OrderDB.delete_order(id);
+            System.out.println("\nDeleted!");
+        } else {
+            System.out.println("\nOrder not found!");
+        }
+    }
+
+    private boolean check_order(int id) {
+        ArrayList<Order> list = new ArrayList<>();
+        list = OrderDB.get_orders();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

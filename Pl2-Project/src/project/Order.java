@@ -11,9 +11,24 @@ package project;
  */
 public class Order {
 
+    private int id;
     private int PSN;
     private int amount;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Order(int id ,int PSN, int amount) {
+        this.id = id;
+        this.PSN = PSN;
+        this.amount = amount;
+    }
+    
     public Order(int PSN, int amount) {
         this.PSN = PSN;
         this.amount = amount;

@@ -5,6 +5,7 @@
  */
 package project;
 
+import database.EmployeeDB;
 import database.ProductDB;
 import database.RProductDB;
 import java.text.ParseException;
@@ -84,7 +85,7 @@ public class InventoryEmployee extends Employee {
                 case 8:
                     ManageSalesReturn();
                     break;
-                case 9:
+                case 9: AlterInformation();
 
                     break;
             }
@@ -224,7 +225,7 @@ public class InventoryEmployee extends Employee {
     public void listEProduct() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_Eproducts();
-         
+
         System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getpState().equals("E")) {
@@ -236,7 +237,7 @@ public class InventoryEmployee extends Employee {
     public void SearchProduct(){
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
-         
+
         System.out.println("Search a product by its Name:          (Enter 1)");
         System.out.print("Search a product by its Serial number: (Enter 2)\n?:");
         
@@ -372,5 +373,13 @@ public class InventoryEmployee extends Employee {
             } while (c != 3);
         }
     }
-
+    void AlterInformation() {
+        System.out.print("Enter the ID: ");
+        int id = input.nextInt();
+        System.out.print("Enter the frist name: ");
+        String fname = input.next();
+        System.out.print("Enter the last name: ");
+        String lname = input.next();
+        EmployeeDB.update_employee_info(id, fname, lname);
+    }
 }

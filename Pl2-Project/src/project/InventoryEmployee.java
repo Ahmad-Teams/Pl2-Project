@@ -240,13 +240,17 @@ public class InventoryEmployee extends Employee {
 
         System.out.println("Search a product by its Name:          (Enter 1)");
         System.out.print("Search a product by its Serial number: (Enter 2)\n?:");
-        
         int choice=input.nextInt();
         if(choice==1){
-            int i;
+            int i,serial=-1;
             input.nextLine();
             System.out.print("Enter Product Name:");
             String name=input.nextLine();
+            for ( i = 0; i < list.size(); i++) {
+               if(name.equals(list.get(i).getName())){
+                 serial=list.get(i).getSN();
+               }}
+            if(ProductDB.isExsist(serial)){
             for ( i = 0; i < list.size(); i++) {
                if(name.equals(list.get(i).getName())){
                    System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
@@ -254,12 +258,14 @@ public class InventoryEmployee extends Employee {
                   System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
                   System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
         }
-            }if(i>=list.size())System.out.println("Product didn't Found!!");
+            }}
+            else System.out.println("Product didn't Found!!");
         }
         else if(choice==2){
             int i;
         System.out.print("Enter Product Serial Number:");
             int Serial=input.nextInt();
+            if(ProductDB.isExsist(Serial)){
             for ( i = 0; i < list.size(); i++) {
                 if(Serial==list.get(i).getSN()){
                    System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
@@ -267,7 +273,7 @@ public class InventoryEmployee extends Employee {
                   System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
                   System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
         }
-            }if(i>=list.size())System.out.println("Product didn't Found!!");
+            }}else System.out.println("Product didn't Found!!");
         }
         else{System.out.println("Invaild Input!");SearchProduct();}
     }

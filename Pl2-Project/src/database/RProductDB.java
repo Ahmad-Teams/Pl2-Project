@@ -19,7 +19,7 @@ public class RProductDB {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RProductDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return DriverManager.getConnection("jdbc:sqlite:system.db");
     }
@@ -56,7 +56,7 @@ public class RProductDB {
         }
     }
 
-    public static void update_RProduct(int SN, String name, int orignalPrice, int discount, int amount, String EPD, String state,int minRange) {
+    public static void update_RProduct(int SN, String name, int orignalPrice, int discount, int amount, String EPD, int minRange) {
         try (
                 Connection con = connect();
                 PreparedStatement p = con.prepareStatement("UPDATE RProduct SET name = ?, orignal_price = ?, discount = ?, amount = ?,EPD = ?,minRange = ? ,state = ? WHERE SN = ?");
@@ -98,10 +98,10 @@ public class RProductDB {
                 PreparedStatement p = con.prepareStatement("UPDATE RProduct SET state = ? WHERE SN = ?");
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
             p1.execute();
-            
+
             ArrayList<Product> list = RProductDB.get_RProducts();
 
-            for (int i = 0; i < list.size() ; i++) {
+            for (int i = 0; i < list.size(); i++) {
                 p.setString(1, InventoryEmployee.updateProductState(list.get(i).getEPD()));
                 p.setInt(2, list.get(i).getSN());
                 p.execute();
@@ -120,7 +120,7 @@ public class RProductDB {
             {
                 ResultSet r = p.executeQuery();
                 while (r.next()) {
-                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"),r.getInt("minRange"), r.getString("state")));
+                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state")));
                 }
             }
         } catch (SQLException ee) {
@@ -128,7 +128,43 @@ public class RProductDB {
         }
         return list;
     }
-    
+
+    public static Product get_RProduct(int SN) {
+        ArrayList<Product> list = new ArrayList<>();
+        try (
+                Connection con = connect();
+                PreparedStatement p = con.prepareStatement("select * from RProduct where SN = ?");) {
+            {
+                p.setInt(1, SN);
+                ResultSet r = p.executeQuery();
+
+                while (r.next()) {
+                    return new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state"));
+                }
+            }
+        } catch (SQLException ee) {
+            System.out.println(ee.getMessage());// we will put out custimize exption massages here
+        }
+        return new Product();
+    }
+
+    public static ArrayList<Product> get_ERProducts() {
+        ArrayList<Product> list = new ArrayList<>();
+        try (
+                Connection con = connect();
+                PreparedStatement p = con.prepareStatement("select * from RProduct where state = 'E'");) {
+            {
+                ResultSet r = p.executeQuery();
+                while (r.next()) {
+                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state")));
+                }
+            }
+        } catch (SQLException ee) {
+            System.out.println(ee.getMessage());// we will put out custimize exption massages here
+        }
+        return list;
+    }
+
     public static boolean isExsist(int sn) {
         ArrayList<Product> list = RProductDB.get_RProducts();
         for (int i = 0; i < list.size(); i++) {
@@ -138,25 +174,7 @@ public class RProductDB {
         }
         return false;
     }
-    
-    public static Product get_RProduct(int SN) {
-        ArrayList<Product> list = new ArrayList<>();
-        try (
-                Connection con = connect();
-                PreparedStatement p = con.prepareStatement("select * from RProduct where SN = ?");) {
-            {
-                p.setInt(1, SN);
-                ResultSet r = p.executeQuery();
-                while (r.next()) {
-                    return new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"),r.getInt("minRange"), r.getString("state"));
-                }
-            }
-        } catch (SQLException ee) {
-            System.out.println(ee.getMessage());// we will put out custimize exption massages here
-        }
-        return new Product();
-    }
-    
+
     public static boolean isEmpty() {
         ArrayList<Product> list = RProductDB.get_RProducts();
 

@@ -27,7 +27,7 @@ public class AdminEmployee extends Employee {
     public int openList() {
         Scanner input = new Scanner(System.in);
         int c;
-        System.out.println("\nHello ," + this.getfName() + "!");
+        System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
             System.out.printf("\nAdminstration Menu:"
                     + "\nAdd a new employee.                 (Enter 1)"
@@ -71,7 +71,7 @@ public class AdminEmployee extends Employee {
             }
 
         } while (c != 8);
-        System.out.println("bey bey ," + this.getfName() + "!");
+        System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }
 

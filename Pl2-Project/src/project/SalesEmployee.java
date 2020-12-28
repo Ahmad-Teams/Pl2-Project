@@ -36,11 +36,11 @@ public class SalesEmployee extends Employee {
         RProductDB.update_RProducts_states();
 
         int c;
-        System.out.println("\nHello ," + this.getfName() + "!");
+        System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
             System.out.printf("\nSales Menu:"
-                    + "\nSearch for a product.              (Enter 1)"
-                    + "\nList all products.                 (Enter 2)"
+                    + "\nSearch for a RProduct.              (Enter 1)"
+                    + "\nList all RProducts.                 (Enter 2)"
                     + "\nList all orders.                   (Enter 3)"
                     + "\nMake an order.                     (Enter 4)"
                     + "\nDelete an order.                   (Enter 5)"
@@ -76,7 +76,7 @@ public class SalesEmployee extends Employee {
             }
 
         } while (c != 7);
-        System.out.println("bey bey ," + this.getfName() + "!");
+        System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }
 
@@ -88,10 +88,10 @@ public class SalesEmployee extends Employee {
         int c = 0;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getSN() == sn) {
-                System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
-                System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+                System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+                System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+                System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
             }
 
         }
@@ -104,11 +104,11 @@ public class SalesEmployee extends Employee {
     void print_list_Product() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
-        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-            System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-            System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+            System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+            System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+            System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
         }
     }
 
@@ -125,20 +125,18 @@ public class SalesEmployee extends Employee {
     void make_an_order() {
         System.out.print("Enter the amount: ");
         int amount = input.nextInt();
-        System.out.print("Enter the product serial number: ");
+        System.out.print("Enter the RProduct serial number: ");
         int psn = input.nextInt();
         Order O = new Order(psn, amount);
         OrderDB.add_order(O);
     }
 
     void update_info() {
-        System.out.print("Enter the ID: ");
-        int id = input.nextInt();
         System.out.print("Enter the frist name: ");
         String fname = input.next();
         System.out.print("Enter the last name: ");
         String lname = input.next();
-        EmployeeDB.update_employee_info(id, fname, lname);
+        EmployeeDB.update_employee_info(this.getId(), fname, lname);
     }
 
     void delete_an_order() {

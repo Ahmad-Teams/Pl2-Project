@@ -32,7 +32,7 @@ public class MarktingEmployee extends Employee {
         RProductDB.update_RProducts_states();
 
         int c;
-        System.out.println("\nHello ," + this.getfName() + "!");
+        System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
             System.out.printf("\nMarkting Menu:"
                     + "\nMake products reports.              (Enter 1)"
@@ -59,7 +59,7 @@ public class MarktingEmployee extends Employee {
             }
 
         } while (c != 4);
-        System.out.println("bey bey ," + this.getfName() + "!");
+        System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }
 
@@ -100,12 +100,12 @@ public class MarktingEmployee extends Employee {
     private void makeReportByOffers() {
         ArrayList<Product> list = ProductDB.get_products();
 
-        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getDiscount() > 0) {
-                System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+                System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+                System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
             }
         }
 
@@ -116,12 +116,12 @@ public class MarktingEmployee extends Employee {
         int price = input.nextInt();
         ArrayList<Product> list = ProductDB.get_products();
 
-        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getPrice() > price) {
-                System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+                System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+                System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
             }
         }
 
@@ -131,13 +131,13 @@ public class MarktingEmployee extends Employee {
         System.out.printf("Enter the price : ");
         int price = input.nextInt();
         ArrayList<Product> list = ProductDB.get_products();
-        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getPrice() < price) {
-                System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+                System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+                System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
             }
         }
 

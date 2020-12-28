@@ -39,7 +39,7 @@ public class InventoryEmployee extends Employee {
 
         Scanner input = new Scanner(System.in);
         int c;
-        System.out.println("\nHello ," + this.getfName() + "!");
+        System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
             System.out.printf("\nInventory Menu:"
                     + "\nAdd a new product.                          (Enter 1)"
@@ -85,7 +85,8 @@ public class InventoryEmployee extends Employee {
                 case 8:
                     ManageSalesReturn();
                     break;
-                case 9: AlterInformation();
+                case 9:
+                    AlterInformation();
 
                     break;
             }
@@ -202,11 +203,11 @@ public class InventoryEmployee extends Employee {
     public void listProduct() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
-        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-            System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-            System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+            System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+            System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+            System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
         }
     }
 
@@ -214,11 +215,11 @@ public class InventoryEmployee extends Employee {
         ArrayList<Product> list = new ArrayList<>();
         list = RProductDB.get_RProducts();
 
-        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-            System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-            System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+            System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+            System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+            System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
         }
     }
 
@@ -226,56 +227,65 @@ public class InventoryEmployee extends Employee {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_Eproducts();
 
-        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getpState().equals("E")) {
-                System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+                System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+            System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+            System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
             }
         }
     }
-    public void SearchProduct(){
+
+    public void SearchProduct() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
 
         System.out.println("Search a product by its Name:          (Enter 1)");
         System.out.print("Search a product by its Serial number: (Enter 2)\n?:");
-        int choice=input.nextInt();
-        if(choice==1){
-            int i,serial=-1;
+        int choice = input.nextInt();
+        if (choice == 1) {
+            int i, serial = -1;
             input.nextLine();
             System.out.print("Enter Product Name:");
-            String name=input.nextLine();
-            for ( i = 0; i < list.size(); i++) {
-               if(name.equals(list.get(i).getName())){
-                 serial=list.get(i).getSN();
-               }}
-            if(ProductDB.isExsist(serial)){
-            for ( i = 0; i < list.size(); i++) {
-               if(name.equals(list.get(i).getName())){
-                   System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
-                  System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                  System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                  System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
-        }
-            }}
-            else System.out.println("Product didn't Found!!");
-        }
-        else if(choice==2){
+            String name = input.nextLine();
+            for (i = 0; i < list.size(); i++) {
+                if (name.equals(list.get(i).getName())) {
+                    serial = list.get(i).getSN();
+                }
+            }
+            if (ProductDB.isExsist(serial)) {
+                for (i = 0; i < list.size(); i++) {
+                    if (name.equals(list.get(i).getName())) {
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+                        System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+            System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+            System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                    }
+                }
+            } else {
+                System.out.println("Product didn't Found!!");
+            }
+        } else if (choice == 2) {
             int i;
-        System.out.print("Enter Product Serial Number:");
-            int Serial=input.nextInt();
-            if(ProductDB.isExsist(Serial)){
-            for ( i = 0; i < list.size(); i++) {
-                if(Serial==list.get(i).getSN()){
-                   System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
-                  System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                  System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                  System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+            System.out.print("Enter Product Serial Number:");
+            int Serial = input.nextInt();
+            if (ProductDB.isExsist(Serial)) {
+                for (i = 0; i < list.size(); i++) {
+                    if (Serial == list.get(i).getSN()) {
+        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+                        System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
+            System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
+            System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                    }
+                }
+            } else {
+                System.out.println("Product didn't Found!!");
+            }
+        } else {
+            System.out.println("Invaild Input!");
+            SearchProduct();
         }
-            }}else System.out.println("Product didn't Found!!");
-        }
-        else{System.out.println("Invaild Input!");SearchProduct();}
     }
 
     public static String updateProductState(String EPDate) {
@@ -379,6 +389,7 @@ public class InventoryEmployee extends Employee {
             } while (c != 3);
         }
     }
+
     void AlterInformation() {
         System.out.print("Enter the ID: ");
         int id = input.nextInt();

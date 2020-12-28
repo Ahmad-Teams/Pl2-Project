@@ -197,6 +197,7 @@ public class AdminEmployee extends Employee {
                 }
             } while (c != 1 && c != 2 && c != 3 && c != 4);
             EmployeeDB.update_employee(id, fName, lName, userName, password, eType);
+            System.out.println("\nUpdated!\n");
         } else {
             System.out.println("\nNot Found!");
         }
@@ -230,6 +231,7 @@ public class AdminEmployee extends Employee {
         System.out.printf("Enter last name : ");
         String lname = input.next();
         EmployeeDB.update_employee_info(this.getId(), fname, lname);
+        System.out.println("\nUpdated!\n");
     }
 
     void update_general() {
@@ -240,6 +242,7 @@ public class AdminEmployee extends Employee {
         System.out.printf("Enter password : ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), username, password);
+        System.out.println("\nUpdated!\n");
     }
 
     public void search() {

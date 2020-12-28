@@ -71,11 +71,13 @@ public class MarktingEmployee extends Employee {
                     + "\nHas price greater than.              (Enter 2)"
                     + "\nHas price less than.                 (Enter 3)"
                     + "\nNumber of products.                  (Enter 4)"
-                    + "\nExit.                                (Enter 5)\n");
+                    + "\nList products ordered by the EPD.    (Enter 5)"
+                    + "\nList products ordered by the Price.  (Enter 6)"
+                    + "\nExit.                                (Enter 7)\n");
             System.out.printf("?: ");
             c = input.nextInt();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5) {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7) {
                 System.out.println("Invaild Input!");
             }
 
@@ -92,20 +94,25 @@ public class MarktingEmployee extends Employee {
                 case 4:
                     makeReportByNumberOfProducts();
                     break;
+                case 5:
+                    makeReportOrderedByEPD();
+                    break;
+                case 6:
+                    makeReportOrderedByPrice();
+                    break;
             }
 
-        } while (c != 5);
+        } while (c != 7);
     }
 
     private void makeReportByOffers() {
         ArrayList<Product> list = ProductDB.get_products();
 
-        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        Util.PrintProductHeader();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getDiscount() > 0) {
-                System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                Util.PrintProduct(list.get(i));
+
             }
         }
 
@@ -116,12 +123,11 @@ public class MarktingEmployee extends Employee {
         int price = input.nextInt();
         ArrayList<Product> list = ProductDB.get_products();
 
-        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        Util.PrintProductHeader();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getPrice() > price) {
-                System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                Util.PrintProduct(list.get(i));
+
             }
         }
 
@@ -131,13 +137,12 @@ public class MarktingEmployee extends Employee {
         System.out.printf("Enter the price : ");
         int price = input.nextInt();
         ArrayList<Product> list = ProductDB.get_products();
-        System.out.printf("\n%-6s%-10s%-10s%-15s%-10s%-8s%-14s%-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        Util.PrintProductHeader();
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getPrice() < price) {
-                System.out.printf("%-6d%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                System.out.printf("%-15d%-10d%-8d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                System.out.printf("%-14s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+                Util.PrintProduct(list.get(i));
+
             }
         }
 
@@ -155,5 +160,51 @@ public class MarktingEmployee extends Employee {
         int discount = input.nextInt();
         InventoryEmployee.add_offer(sn, discount);
         System.out.println("\nOffer Sent and Accepted!");
+    }
+
+    private void sortByPrice(ArrayList<Product> list) {
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i; j < list.size(); j++) {
+                if (InventoryEmployee.comparePrice(list.get(i).getPrice(), list.get(j).getPrice())) {
+                    Product temp = list.get(j);
+                    list.set(j, list.get(i));
+                    list.set(i, temp);
+                }
+            }
+        }
+    }
+
+    private void sortByEPD(ArrayList<Product> list) {
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i; j < list.size(); j++) {
+                if (InventoryEmployee.compareEPD(list.get(i).getEPD(), list.get(j).getEPD())) {
+                    Product temp = list.get(j);
+                    list.set(j, list.get(i));
+                    list.set(i, temp);
+                }
+            }
+        }
+    }
+
+    private void makeReportOrderedByEPD() {
+        ArrayList<Product> list = ProductDB.get_products();
+        this.sortByEPD(list);
+        Util.PrintProductHeader();
+
+        for (int i = 0; i < list.size(); i++) {
+            Util.PrintProduct(list.get(i));
+
+        }
+    }
+
+    private void makeReportOrderedByPrice() {
+        ArrayList<Product> list = ProductDB.get_products();
+        this.sortByPrice(list);
+        Util.PrintProductHeader();
+
+        for (int i = 0; i < list.size(); i++) {
+            Util.PrintProduct(list.get(i));
+
+        }
     }
 }

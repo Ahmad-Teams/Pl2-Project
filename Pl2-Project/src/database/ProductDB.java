@@ -31,9 +31,9 @@ public class ProductDB {
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
             p1.execute();
             p.setString(1, prod.getName());
-            p.setInt(2, prod.getOrignalPrice());
-            p.setInt(3, prod.getDiscount());
-            p.setInt(4, prod.getAmount());
+            p.setDouble(2, prod.getOrignalPrice());
+            p.setDouble(3, prod.getDiscount());
+            p.setDouble(4, prod.getAmount());
             p.setString(5, prod.getEPD());
             p.setString(6, InventoryEmployee.updateProductState(prod.getEPD()));
             p.execute();
@@ -56,15 +56,15 @@ public class ProductDB {
         }
     }
 
-    public static void update_product(int SN, String name, int orignalPrice, int discount, int amount, String EPD, int minRange) {
+    public static void update_product(int SN, String name, double orignalPrice, double discount, int amount, String EPD, int minRange) {
         try (
                 Connection con = connect();
                 PreparedStatement p = con.prepareStatement("UPDATE product SET name = ?, orignal_price = ?, discount = ?, amount = ?,EPD = ?,minRange = ? ,state = ? WHERE SN = ?");
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
             p1.execute();
             p.setString(1, name);
-            p.setInt(2, orignalPrice);
-            p.setInt(3, discount);
+            p.setDouble(2, orignalPrice);
+            p.setDouble(3, discount);
             p.setInt(4, amount);
             p.setString(5, EPD);
             p.setInt(6, minRange);
@@ -77,13 +77,13 @@ public class ProductDB {
         }
     }
 
-    public static void update_product(int SN, int discount) {
+    public static void update_product(int SN, double discount) {
         try (
                 Connection con = connect();
                 PreparedStatement p = con.prepareStatement("UPDATE product SET discount = ? WHERE SN = ?");
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
             p1.execute();
-            p.setInt(1, discount);
+            p.setDouble(1, discount);
             p.setInt(2, SN);
 
             p.execute();
@@ -120,7 +120,7 @@ public class ProductDB {
             {
                 ResultSet r = p.executeQuery();
                 while (r.next()) {
-                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state")));
+                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getDouble("orignal_price"), r.getDouble("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state")));
                 }
             }
         } catch (SQLException ee) {
@@ -139,7 +139,7 @@ public class ProductDB {
                 ResultSet r = p.executeQuery();
 
                 while (r.next()) {
-                    return new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state"));
+                    return new Product(r.getInt("SN"), r.getString("name"), r.getDouble("orignal_price"), r.getDouble("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state"));
                 }
             }
         } catch (SQLException ee) {
@@ -156,7 +156,7 @@ public class ProductDB {
             {
                 ResultSet r = p.executeQuery();
                 while (r.next()) {
-                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getInt("orignal_price"), r.getInt("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state")));
+                    list.add(new Product(r.getInt("SN"), r.getString("name"), r.getDouble("orignal_price"), r.getDouble("discount"), r.getInt("amount"), r.getString("EPD"), r.getInt("minRange"), r.getString("state")));
                 }
             }
         } catch (SQLException ee) {

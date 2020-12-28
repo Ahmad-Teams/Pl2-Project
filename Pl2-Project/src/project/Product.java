@@ -13,15 +13,15 @@ public class Product {
 
     private int SN;
     private String name;
-    private int orignalPrice;
-    private int discount;
-    private int price;
+    private double orignalPrice;
+    private double discount;
+    private double price;
     private int amount;
     private String EPD;
     private int minRange;
     private String pState;
 
-    public Product(String name, int orignalPrice, int discount, int amount, String EPD, int minRange) {
+    public Product(String name, double orignalPrice, double discount, int amount, String EPD, int minRange) {
         this.name = name;
         this.orignalPrice = orignalPrice;
         this.discount = discount;
@@ -32,7 +32,7 @@ public class Product {
         this.pState = pState;//R for in-return S for in-sale E for Expired
     }
 
-    public Product(int SN, String name, int orignalPrice, int discount, int amount, String EPD, int minRange, String pState) {
+    public Product(int SN, String name, double orignalPrice, double discount, int amount, String EPD, int minRange, String pState) {
         this.SN = SN;
         this.name = name;
         this.orignalPrice = orignalPrice;
@@ -59,7 +59,7 @@ public class Product {
         this.name = name;
     }
 
-    public int getOrignalPrice() {
+    public double getOrignalPrice() {
         return orignalPrice;
     }
 
@@ -67,7 +67,7 @@ public class Product {
         this.orignalPrice = orignalPrice;
     }
 
-    public int getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
@@ -79,7 +79,7 @@ public class Product {
         return amount;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

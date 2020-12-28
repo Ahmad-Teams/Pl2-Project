@@ -22,7 +22,7 @@ public class project {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+
         Scanner input = new Scanner(System.in);
         System.out.printf("\nHyper Market Management System\n");
         String username, password;

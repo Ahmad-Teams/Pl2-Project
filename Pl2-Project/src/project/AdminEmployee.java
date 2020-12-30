@@ -20,8 +20,8 @@ public class AdminEmployee extends Employee {
     }
 
     @Override
-    public String getFullName() {
-        return "AD." + super.getFullName();
+    public String getTitle() {
+        return "AD." + super.getTitle();
     }
 
     public int openList() {
@@ -133,7 +133,6 @@ public class AdminEmployee extends Employee {
         } else if (eType.equals("I")) {
             EmployeeDB.add_employee(new InventoryEmployee(fName, lName, userName, password));
         }
-        System.out.printf("\n%sAdded!\n", fName);
     }
 
     private void Delete_an_employee() {
@@ -197,7 +196,6 @@ public class AdminEmployee extends Employee {
                 }
             } while (c != 1 && c != 2 && c != 3 && c != 4);
             EmployeeDB.update_employee(id, fName, lName, userName, password, eType);
-            System.out.println("\nUpdated!\n");
         } else {
             System.out.println("\nNot Found!");
         }
@@ -206,20 +204,20 @@ public class AdminEmployee extends Employee {
     private void list_all_employees() {
         ArrayList<Employee> list = new ArrayList<>();
         list = EmployeeDB.get_employees();
-        System.out.printf("\n%-5s %-20s %-15s %-15s %-15s %-15s %-10s \n", "ID", "Name", "First Name", "Last Name", "User Name", "Password", "Employee Type");
+        System.out.printf("\n%-5s %-20s %-15s %-15s %-15s %-15s %-10s \n", "ID", "Title", "First Name", "Last Name", "User Name", "Password", "Employee Type");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) instanceof AdminEmployee) {
                 AdminEmployee emp = (AdminEmployee) list.get(i);
-                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getTitle(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
             } else if (list.get(i) instanceof SalesEmployee) {
                 SalesEmployee emp = (SalesEmployee) list.get(i);
-                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getTitle(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
             } else if (list.get(i) instanceof MarktingEmployee) {
                 MarktingEmployee emp = (MarktingEmployee) list.get(i);
-                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getTitle(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
             } else if (list.get(i) instanceof InventoryEmployee) {
                 InventoryEmployee emp = (InventoryEmployee) list.get(i);
-                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getTitle(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
             }
         }
     }
@@ -231,7 +229,6 @@ public class AdminEmployee extends Employee {
         System.out.printf("Enter the new last name : ");
         String lname = input.next();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
-        System.out.println("\nUpdated!\n");
     }
 
     void update_userName_password() {
@@ -242,7 +239,6 @@ public class AdminEmployee extends Employee {
         System.out.printf("Enter password : ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
-        System.out.println("\nUpdated!\n");
     }
 
     public void search() {

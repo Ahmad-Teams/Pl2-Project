@@ -27,8 +27,8 @@ public class SalesEmployee extends Employee {
     }
 
     @Override
-    public String getFullName() {
-        return "SE." + super.getFullName();
+    public String getTitle() {
+        return "SE." + super.getTitle();
     }
 
     public int openList() {
@@ -39,8 +39,8 @@ public class SalesEmployee extends Employee {
         System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
             System.out.printf("\nSales Menu:"
-                    + "\nSearch for a RProduct.              (Enter 1)"
-                    + "\nList all RProducts.                 (Enter 2)"
+                    + "\nSearch for a Product.               (Enter 1)"
+                    + "\nList all Products.                  (Enter 2)"
                     + "\nList all orders.                    (Enter 3)"
                     + "\nMake an order.                      (Enter 4)"
                     + "\nDelete an order.                    (Enter 5)"
@@ -92,7 +92,6 @@ public class SalesEmployee extends Employee {
             if (list.get(i).getSN() == sn) {
                 Util.PrintProductHeader();
                 Util.PrintProduct(list.get(i));
-
             }
 
         }
@@ -108,7 +107,6 @@ public class SalesEmployee extends Employee {
         Util.PrintProductHeader();
         for (int i = 0; i < list.size(); i++) {
             Util.PrintProduct(list.get(i));
-
         }
     }
 
@@ -128,7 +126,6 @@ public class SalesEmployee extends Employee {
         System.out.print("Enter the RProduct serial number: ");
         int psn = input.nextInt();
         OrderDB.add_order(new Order(psn, amount));
-        System.out.println("\nOrder maked!\n");
     }
 
     void delete_an_order() {
@@ -138,7 +135,6 @@ public class SalesEmployee extends Employee {
         int id = input.nextInt();
         if (OrderDB.isExisit(id)) {
             OrderDB.delete_order(id);
-            System.out.println("\nDeleted!");
         } else {
             System.out.println("\nOrder not found!");
         }
@@ -151,13 +147,11 @@ public class SalesEmployee extends Employee {
         String lname = input.next();
         String password = this.getPassword();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
-        System.out.println("\nUpdated!\n");
     }
 
     public void AlterPassword() {
         System.out.print("Enter the new password: ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
-        System.out.println("\nUpdated!\n");
     }
 }

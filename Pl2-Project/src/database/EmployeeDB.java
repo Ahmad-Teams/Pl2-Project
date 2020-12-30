@@ -79,14 +79,16 @@ public class EmployeeDB {
 
     public static ArrayList<Employee> get_employees() {
         ArrayList<Employee> list = new ArrayList<>();
+        String c = "A";
         try (
                 Connection con = connect();
                 PreparedStatement p = con.prepareStatement("select * from employee");) {
             {
                 ResultSet r = p.executeQuery();
-                String c;
                 while (r.next()) {
-                    c = r.getString("type");
+                    if (r.getString("type") != null) {
+                        c = r.getString("type");
+                    }
                     if (c.equals("A")) {
                         list.add(new AdminEmployee(r.getInt("id"), r.getString("fname"), r.getString("lname"), r.getString("username"), r.getString("password")));
                     } else if (c.equals("M")) {

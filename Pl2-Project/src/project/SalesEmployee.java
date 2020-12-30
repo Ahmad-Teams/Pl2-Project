@@ -41,11 +41,12 @@ public class SalesEmployee extends Employee {
             System.out.printf("\nSales Menu:"
                     + "\nSearch for a RProduct.              (Enter 1)"
                     + "\nList all RProducts.                 (Enter 2)"
-                    + "\nList all orders.                   (Enter 3)"
-                    + "\nMake an order.                     (Enter 4)"
-                    + "\nDelete an order.                   (Enter 5)"
-                    + "\nAlter your information.            (Enter 6)"//fname lname
-                    + "\nLogOut                             (Enter 7)\n");
+                    + "\nList all orders.                    (Enter 3)"
+                    + "\nMake an order.                      (Enter 4)"
+                    + "\nDelete an order.                    (Enter 5)"
+                    + "\nAlter your information.             (Enter 6)"
+                    + "\nAlter your password.                (Enter 7)"
+                    + "\nLogOut                              (Enter 8)\n");
             System.out.printf("?: ");
             c = input.nextInt();
             input.nextLine();
@@ -70,8 +71,9 @@ public class SalesEmployee extends Employee {
                 case 5:
                     delete_an_order();
                     break;
-                case 6:
-                    update_info();
+                case 6:AlterInformation();
+                    break;
+                case 7:AlterPassword();
                     break;
             }
 
@@ -129,15 +131,6 @@ public class SalesEmployee extends Employee {
         System.out.println("\nOrder maked!\n");
     }
 
-    void update_info() {
-        System.out.print("Enter the frist name: ");
-        String fname = input.next();
-        System.out.print("Enter the last name: ");
-        String lname = input.next();
-        EmployeeDB.update_employee_info(this.getId(), fname, lname);
-        System.out.println("\nUpdated!\n");
-    }
-
     void delete_an_order() {
         ArrayList<Order> list = new ArrayList<>();
         list = OrderDB.get_orders();
@@ -151,4 +144,20 @@ public class SalesEmployee extends Employee {
         }
     }
 
+    public void AlterInformation() {
+        System.out.print("Enter the new frist name: ");
+        String fname = input.next();
+        System.out.print("Enter the new last name: ");
+        String lname = input.next();
+        String password = this.getPassword();
+        EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
+        System.out.println("\nUpdated!\n");
+    }
+
+    public void AlterPassword() {
+        System.out.print("Enter the new password: ");
+        String password = input.next();
+        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+        System.out.println("\nUpdated!\n");
+    }
 }

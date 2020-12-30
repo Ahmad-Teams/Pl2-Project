@@ -51,12 +51,13 @@ public class InventoryEmployee extends Employee {
                     + "\nManage the Damages items.                   (Enter 7)"
                     + "\nManage the Sales Return.                    (Enter 8)"
                     + "\nAlter your information.                     (Enter 9)"
-                    + "\nLogOut                                      (Enter 10)\n");
+                    + "\nAlter your password.                        (Enter 10)"
+                    + "\nLogOut                                      (Enter 11)\n");
             System.out.printf("?: ");
             c = input.nextInt();
             input.nextLine();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10) {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11) {
                 System.out.println("Invaild Input!");
             }
 
@@ -87,11 +88,13 @@ public class InventoryEmployee extends Employee {
                     break;
                 case 9:
                     AlterInformation();
+                case 10:
+                    AlterPassword();
 
                     break;
             }
 
-        } while (c != 10);
+        } while (c != 11);
         System.out.printf("bey bey ,%s!\n", this.getfName());
         return 0;
     }
@@ -416,11 +419,20 @@ public class InventoryEmployee extends Employee {
         }
     }
 
-    void AlterInformation() {
-        System.out.print("Enter the frist name: ");
+    public void AlterInformation() {
+        System.out.print("Enter the new frist name: ");
         String fname = input.next();
-        System.out.print("Enter the last name: ");
+        System.out.print("Enter the new last name: ");
         String lname = input.next();
-        EmployeeDB.update_employee_info(this.getId(), fname, lname);
+        String password = this.getPassword();
+        EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
+        System.out.println("\nUpdated!\n");
+    }
+
+    public void AlterPassword() {
+        System.out.print("Enter the new password: ");
+        String password = input.next();
+        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+        System.out.println("\nUpdated!\n");
     }
 }

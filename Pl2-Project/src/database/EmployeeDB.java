@@ -77,38 +77,6 @@ public class EmployeeDB {
         }
     }
 
-    public static void update_employee_info(int id, String fname, String lname) {
-        try (
-                Connection con = connect();
-                PreparedStatement p = con.prepareStatement("UPDATE employee SET fname = ?, lname = ? WHERE id = ?");
-                PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
-            p1.execute();
-            p.setString(1, fname);
-            p.setString(2, lname);
-            p.setInt(3, id);
-
-            p.execute();
-        } catch (SQLException ee) {
-            System.out.println(ee.getMessage());// we will put out custimize exption massages here
-        }
-    }
-
-    public static void update_employee(int id, String username, String password) {
-        try (
-                Connection con = connect();
-                PreparedStatement p = con.prepareStatement("UPDATE employee SET username = ?, password = ? WHERE id = ?");
-                PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
-            p1.execute();
-            p.setString(1, username);
-            p.setString(2, password);
-            p.setInt(3, id);
-
-            p.execute();
-        } catch (SQLException ee) {
-            System.out.println(ee.getMessage());// we will put out custimize exption massages here
-        }
-    }
-
     public static ArrayList<Employee> get_employees() {
         ArrayList<Employee> list = new ArrayList<>();
         try (

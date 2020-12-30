@@ -66,7 +66,7 @@ public class AdminEmployee extends Employee {
                     update_general_info();
                     break;
                 case 7:
-                    update_general();
+                    update_userName_password();
                     break;
             }
 
@@ -226,22 +226,22 @@ public class AdminEmployee extends Employee {
 
     void update_general_info() {
         Scanner input = new Scanner(System.in);
-        System.out.printf("Enter first name : ");
+        System.out.printf("Enter the new first name : ");
         String fname = input.next();
-        System.out.printf("Enter last name : ");
+        System.out.printf("Enter the new last name : ");
         String lname = input.next();
-        EmployeeDB.update_employee_info(this.getId(), fname, lname);
+        EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
         System.out.println("\nUpdated!\n");
     }
 
-    void update_general() {
+    void update_userName_password() {
 
         Scanner input = new Scanner(System.in);
         System.out.printf("Enter user name : ");
         String username = input.next();
         System.out.printf("Enter password : ");
         String password = input.next();
-        EmployeeDB.update_employee(this.getId(), username, password);
+        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
         System.out.println("\nUpdated!\n");
     }
 

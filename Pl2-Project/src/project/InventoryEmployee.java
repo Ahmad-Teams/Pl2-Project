@@ -49,15 +49,14 @@ public class InventoryEmployee extends Employee {
                     + "\nManage the Sales Return.                    (Enter 8)"
                     + "\nAlter your information.                     (Enter 9)"
                     + "\nAlter your password.                        (Enter 10)"
-                    + "\nGenerate Random Products.                   (Enter 11)"
-                    + "\nLogOut                                      (Enter 12)\n");
+                    + "\nLogOut                                      (Enter 11)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
             c = input.nextInt();
             input.nextLine();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11 && c != 12) {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11) {
                 System.out.println("Invaild Input!");
             }
 
@@ -88,14 +87,13 @@ public class InventoryEmployee extends Employee {
                     break;
                 case 9:
                     alterInformation();
+                    break;
                 case 10:
                     alterPassword();
-                case 11:
-                    generateRandomProducts();
                     break;
             }
 
-        } while (c != 12);
+        } while (c != 11);
         System.out.printf("bey bey ,%s!\n", this.getfName());
         return 0;
     }
@@ -426,24 +424,4 @@ public class InventoryEmployee extends Employee {
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
     }
 
-    void generateRandomProducts() {
-        int num;
-        do {
-            System.out.println("Enter the number of random products (Between 1 - 20) : ");
-            num = input.nextInt();
-            if (num < 0 && num > 20) {
-                System.out.println("\nThe number MUST be (Between 1 - 20)\n");
-            }
-        } while (num >= 0 && num <= 20);
-
-        for (int i = 0; i < num; i++) {
-//            String name = genrateRandomName();
-//            double originalPrice = genrateRandomOriginalPrice();
-//            double discount = generateRandomDiscount(originalPrice);
-//            int amount = generateRandomAmount();
-//            String EPD = generateEPD();
-//            int minRange = generateMinRange();
-//            ProductDB.add_product(new Product(name,originalPrice,discount,amount,EPD,minRange));
-        }
-    }
 }

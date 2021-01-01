@@ -34,9 +34,6 @@ public class InventoryEmployee extends Employee {
     }
 
     public int openList() {
-        ProductDB.update_products_states();
-        RProductDB.update_RProducts_states();
-
         Scanner input = new Scanner(System.in);
         int c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
@@ -52,12 +49,15 @@ public class InventoryEmployee extends Employee {
                     + "\nManage the Sales Return.                    (Enter 8)"
                     + "\nAlter your information.                     (Enter 9)"
                     + "\nAlter your password.                        (Enter 10)"
-                    + "\nLogOut                                      (Enter 11)\n");
+                    + "\nGenerate Random Products.                   (Enter 11)"
+                    + "\nLogOut                                      (Enter 12)\n");
             System.out.printf("?: ");
+            ProductDB.update_products_states();
+            RProductDB.update_RProducts_states();
             c = input.nextInt();
             input.nextLine();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11) {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11 && c != 12) {
                 System.out.println("Invaild Input!");
             }
 
@@ -78,23 +78,24 @@ public class InventoryEmployee extends Employee {
                     listProduct();
                     break;
                 case 6:
-                    SearchProduct();
+                    searchProduct();
                     break;
                 case 7:
-                    ManageDamagesItems();
+                    manageDamagesItems();
                     break;
                 case 8:
-                    ManageSalesReturn();
+                    manageSalesReturn();
                     break;
                 case 9:
-                    AlterInformation();
+                    alterInformation();
                 case 10:
-                    AlterPassword();
-
+                    alterPassword();
+                case 11:
+                    generateRandomProducts();
                     break;
             }
 
-        } while (c != 11);
+        } while (c != 12);
         System.out.printf("bey bey ,%s!\n", this.getfName());
         return 0;
     }
@@ -167,7 +168,7 @@ public class InventoryEmployee extends Employee {
             if (choice == 1) {
 
                 System.out.printf("Enter  Discount: ");
-                int diss = input.nextInt();
+                double diss = input.nextDouble();
 
                 ProductDB.update_product(sn, diss);
             } else if (choice == 2) {
@@ -175,9 +176,9 @@ public class InventoryEmployee extends Employee {
                 System.out.printf("Enter new Name: ");
                 String name = input.nextLine();
                 System.out.printf("Enter  Original Price: ");
-                int OP = input.nextInt();
+                double OP = input.nextDouble();
                 System.out.printf("Enter  Discount: ");
-                int diss = input.nextInt();
+                double diss = input.nextDouble();
                 System.out.printf("Enter Amount: ");
                 int amount = input.nextInt();
                 input.nextLine();
@@ -229,7 +230,7 @@ public class InventoryEmployee extends Employee {
         }
     }
 
-    public void SearchProduct() {
+    public void searchProduct() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
 
@@ -274,7 +275,7 @@ public class InventoryEmployee extends Employee {
             }
         } else {
             System.out.println("Invaild Input!");
-            SearchProduct();
+            searchProduct();
         }
     }
 
@@ -331,7 +332,7 @@ public class InventoryEmployee extends Employee {
         return false;
     }
 
-    public void ManageDamagesItems() {
+    public void manageDamagesItems() {
         System.out.println("\nExpired Items :");
         listEProduct();
         ArrayList<Product> list = ProductDB.get_Eproducts();
@@ -379,7 +380,7 @@ public class InventoryEmployee extends Employee {
         RProductDB.delete_RProduct(sn);
     }
 
-    public void ManageSalesReturn() {
+    public void manageSalesReturn() {
         System.out.println("\nSales Return :");
         listRProduct();
         if (!RProductDB.isEmpty()) {
@@ -410,7 +411,7 @@ public class InventoryEmployee extends Employee {
         }
     }
 
-    public void AlterInformation() {
+    public void alterInformation() {
         System.out.print("Enter the new frist name: ");
         String fname = input.next();
         System.out.print("Enter the new last name: ");
@@ -419,9 +420,30 @@ public class InventoryEmployee extends Employee {
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
     }
 
-    public void AlterPassword() {
+    public void alterPassword() {
         System.out.print("Enter the new password: ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+    }
+
+    void generateRandomProducts() {
+        int num;
+        do {
+            System.out.println("Enter the number of random products (Between 1 - 20) : ");
+            num = input.nextInt();
+            if (num < 0 && num > 20) {
+                System.out.println("\nThe number MUST be (Between 1 - 20)\n");
+            }
+        } while (num >= 0 && num <= 20);
+
+        for (int i = 0; i < num; i++) {
+//            String name = genrateRandomName();
+//            double originalPrice = genrateRandomOriginalPrice();
+//            double discount = generateRandomDiscount(originalPrice);
+//            int amount = generateRandomAmount();
+//            String EPD = generateEPD();
+//            int minRange = generateMinRange();
+//            ProductDB.add_product(new Product(name,originalPrice,discount,amount,EPD,minRange));
+        }
     }
 }

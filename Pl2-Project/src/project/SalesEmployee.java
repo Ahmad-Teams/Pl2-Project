@@ -32,9 +32,6 @@ public class SalesEmployee extends Employee {
     }
 
     public int openList() {
-        ProductDB.update_products_states();
-        RProductDB.update_RProducts_states();
-
         int c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
@@ -48,6 +45,8 @@ public class SalesEmployee extends Employee {
                     + "\nAlter your password.                (Enter 7)"
                     + "\nLogOut                              (Enter 8)\n");
             System.out.printf("?: ");
+            ProductDB.update_products_states();
+            RProductDB.update_RProducts_states();
             c = input.nextInt();
             input.nextLine();
 
@@ -71,9 +70,11 @@ public class SalesEmployee extends Employee {
                 case 5:
                     delete_an_order();
                     break;
-                case 6:AlterInformation();
+                case 6:
+                    AlterInformation();
                     break;
-                case 7:AlterPassword();
+                case 7:
+                    AlterPassword();
                     break;
             }
 

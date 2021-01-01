@@ -29,9 +29,6 @@ public class MarktingEmployee extends Employee {
     Scanner input = new Scanner(System.in);
 
     public int openList() {
-        ProductDB.update_products_states();
-        RProductDB.update_RProducts_states();
-
         int c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
@@ -42,6 +39,8 @@ public class MarktingEmployee extends Employee {
                     + "\nAlter your password.                (Enter 4)"
                     + "\nLogOut                              (Enter 5)\n");
             System.out.printf("?: ");
+            ProductDB.update_products_states();
+            RProductDB.update_RProducts_states();
             c = input.nextInt();
             input.nextLine();
 
@@ -56,9 +55,11 @@ public class MarktingEmployee extends Employee {
                 case 2:
                     Make_offers_and_send_them();
                     break;
-                case 3:AlterInformation();
+                case 3:
+                    AlterInformation();
                     break;
-                case 4:AlterPassword();
+                case 4:
+                    AlterPassword();
                     break;
             }
 

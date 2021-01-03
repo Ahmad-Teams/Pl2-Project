@@ -13,11 +13,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class InventoryEmployee extends Employee {
 
+    final static int numOfDaysToGetCloseToExpire = 3; //to use it later in notifications
+    
     Scanner input = new Scanner(System.in);
 
     public InventoryEmployee(int id, String fName, String lName, String userName, String password) {
@@ -38,6 +41,7 @@ public class InventoryEmployee extends Employee {
         int c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
+            numOfNotifications();
             System.out.printf("\nInventory Menu:"
                     + "\nAdd a new product.                          (Enter 1)"
                     + "\nAdd a product to the Sales Return List.     (Enter 2)"
@@ -56,11 +60,14 @@ public class InventoryEmployee extends Employee {
             c = input.nextInt();
             input.nextLine();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11) {
+            if (c != 0 && c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11) {
                 System.out.println("Invaild Input!");
             }
 
             switch (c) {
+                case 0:
+                    displayNotifications();
+                    break;
                 case 1:
                     newProduct();
                     break;
@@ -323,6 +330,45 @@ public class InventoryEmployee extends Employee {
         return false;
     }
 
+    public static ArrayList<Product> closeToExpProducts() {
+        ArrayList<Product> allProducts = ProductDB.get_products();
+        ArrayList<Product> closeToExpProducts = new ArrayList<Product>();
+
+        SimpleDateFormat EPFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date productDate;
+        long Pmillis = 0;//assign to 0 only to avoid not initialized var excption
+
+        try {
+            for (int i = 0; i < allProducts.size(); i++) {
+                Product p = allProducts.get(i);
+                productDate = EPFormat.parse(p.getEPD());
+                Pmillis = productDate.getTime();
+                
+                if (Pmillis <= TimeUnit.DAYS.toMillis(InventoryEmployee.numOfDaysToGetCloseToExpire) + System.currentTimeMillis() && !(System.currentTimeMillis() > Pmillis)) {
+                    closeToExpProducts.add(p);
+                }
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(InventoryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return closeToExpProducts;
+    }
+
+    public static ArrayList<Product> ReducedProducts() {
+        ArrayList<Product> allProducts = ProductDB.get_products();
+        ArrayList<Product> ReducedProducts = new ArrayList<Product>();
+
+        for (int i = 0; i < allProducts.size(); i++) {
+            Product p = allProducts.get(i);
+            if (p.getAmount() <= p.getMinRange()) {
+                ReducedProducts.add(p);
+            }
+        }
+        return ReducedProducts;
+    }
+
     public static boolean comparePrice(double price1, double price2) {
         if (price1 > price2) {
             return true;
@@ -422,6 +468,50 @@ public class InventoryEmployee extends Employee {
         System.out.print("Enter the new password: ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+    }
+
+    private void numOfNotifications() {
+        int numOfNotifications = 0;
+        ArrayList closeToExpProducts = closeToExpProducts();
+        ArrayList ReducedProducts = ReducedProducts();
+
+        numOfNotifications += closeToExpProducts.size();
+        numOfNotifications += ReducedProducts.size();
+
+        if (numOfNotifications > 0) {
+            System.out.printf("\nYou Have (%d) Notifications!    (Enter (0) To Display)\n", numOfNotifications);
+        }
+        if (numOfNotifications == 0) {
+            System.out.printf("\nYou Don`t Have Any Notifications!.\n", numOfNotifications);
+        }
+    }
+
+    private void displayNotifications() {
+        ArrayList<Product> closeToExpProducts = closeToExpProducts();
+        ArrayList<Product> ReducedProducts = ReducedProducts();
+
+        if (closeToExpProducts.size() + ReducedProducts.size() == 0) {
+            return;
+        }
+
+        if (! closeToExpProducts.isEmpty()) {
+            System.out.printf("\nGet close to Expire Products (Will Expire in %d Day/s!) : \n",InventoryEmployee.numOfDaysToGetCloseToExpire);
+            Util.PrintProductHeader();
+            for (int i = 0; i < closeToExpProducts.size(); i++) {
+                Product P = closeToExpProducts.get(i);
+                Util.PrintProduct(P);
+            }
+        }
+
+        if (! ReducedProducts.isEmpty()) {
+            System.out.println("\nReduced To Minmim Range Products : ");
+            Util.PrintProductHeader();
+            for (int i = 0; i < closeToExpProducts.size(); i++) {
+                Product P = closeToExpProducts.get(i);
+                Util.PrintProduct(P);
+            }
+        }
+
     }
 
 }

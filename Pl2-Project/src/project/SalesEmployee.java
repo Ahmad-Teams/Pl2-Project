@@ -35,6 +35,7 @@ public class SalesEmployee extends Employee {
         int c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
+
             System.out.printf("\nSales Menu:"
                     + "\nSearch for a Product.               (Enter 1)"
                     + "\nList all Products.                  (Enter 2)"
@@ -43,14 +44,15 @@ public class SalesEmployee extends Employee {
                     + "\nDelete an order.                    (Enter 5)"
                     + "\nAlter your information.             (Enter 6)"
                     + "\nAlter your password.                (Enter 7)"
-                    + "\nLogOut                              (Enter 8)\n");
+                    + "\nLogOut.                             (Enter 8)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
+
             c = input.nextInt();
             input.nextLine();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7) {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8) {
                 System.out.println("Invaild Input!");
             }
 
@@ -78,7 +80,7 @@ public class SalesEmployee extends Employee {
                     break;
             }
 
-        } while (c != 7);
+        } while (c != 8);
         System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }

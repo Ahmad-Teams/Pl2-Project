@@ -27,7 +27,7 @@ public class RProductDB {
     public static void add_RProduct(Product prod) {
         try (
                 Connection con = connect();
-                PreparedStatement p = con.prepareStatement("insert into RProduct(name,orignal_price,discount,amount,EPD,state) values(?,?,?,?,?,?)");
+                PreparedStatement p = con.prepareStatement("insert into RProduct(name,orignal_price,discount,amount,EPD,minRange,state) values(?,?,?,?,?,?,?)");
                 PreparedStatement p1 = con.prepareStatement("PRAGMA foreign_keys = ON;");) {
             p1.execute();
             p.setString(1, prod.getName());
@@ -35,7 +35,8 @@ public class RProductDB {
             p.setDouble(3, prod.getDiscount());
             p.setInt(4, prod.getAmount());
             p.setString(5, prod.getEPD());
-            p.setString(6, InventoryEmployee.updateProductState(prod.getEPD()));
+            p.setInt(6, prod.getMinRange());
+            p.setString(7, InventoryEmployee.updateProductState(prod.getEPD()));
             p.execute();
         } catch (SQLException ee) {
             System.out.println(ee.getMessage());// we will put out custimize exption massages here

@@ -32,15 +32,17 @@ public class MarktingEmployee extends Employee {
         int c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
+
             System.out.printf("\nMarkting Menu:"
                     + "\nMake products reports.              (Enter 1)"
                     + "\nMake offers and send them.          (Enter 2)"
                     + "\nAlter your information.             (Enter 3)"
                     + "\nAlter your password.                (Enter 4)"
-                    + "\nLogOut                              (Enter 5)\n");
+                    + "\nLogOut.                             (Enter 5)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
+
             c = input.nextInt();
             input.nextLine();
 

@@ -29,7 +29,6 @@ public class Product {
         this.amount = amount;
         this.EPD = EPD;
         this.minRange = minRange;
-        this.pState = pState;//R for in-return S for in-sale E for Expired
     }
 
     public Product(int SN, String name, double orignalPrice, double discount, int amount, String EPD, int minRange, String pState) {

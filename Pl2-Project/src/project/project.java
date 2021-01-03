@@ -26,12 +26,11 @@ public class project {
         Scanner input = new Scanner(System.in);
         System.out.printf("\nHyper Market Management System\n");
         String username, password;
-        int c;
+        char c;
         do {
             System.out.printf("\nMain Menu:\nLogin (Enter 1)\nExit  (Enter 0)\n?:");
-            c = input.nextInt();
-            input.nextLine();
-            if (c == 0) {
+            c = input.nextLine().charAt(0);
+            if (c == '0') {
                 break;
             }
 
@@ -67,7 +66,7 @@ public class project {
                 }
             }
 
-        } while (c == 1);
+        } while (c == '1');
 
         System.out.println("Exit!");
     }

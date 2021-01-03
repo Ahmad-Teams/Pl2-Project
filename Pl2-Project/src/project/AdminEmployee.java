@@ -26,7 +26,7 @@ public class AdminEmployee extends Employee {
 
     public int openList() {
         Scanner input = new Scanner(System.in);
-        int c;
+        char c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
             System.out.printf("\nAdminstration Menu:"
@@ -39,38 +39,36 @@ public class AdminEmployee extends Employee {
                     + "\nAlter your User-Name and Password.  (Enter 7)"
                     + "\nLogOut                              (Enter 8)\n");
             System.out.printf("?: ");
-            c = input.nextInt();
-            input.nextLine();
-
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 & c != 8) {
+            c = input.nextLine().charAt(0);
+            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6' && c != '7' & c != '8') {
                 System.out.println("Invaild Input!");
             }
 
             switch (c) {
-                case 1:
+                case '1':
                     Add_new_employee();
                     break;
-                case 2:
+                case '2':
                     Delete_an_employee();
                     break;
-                case 3:
+                case '3':
                     Update_an_employee_information();
                     break;
-                case 4:
+                case '4':
                     list_all_employees();
                     break;
-                case 5:
+                case '5':
                     search();
                     break;
-                case 6:
+                case '6':
                     update_general_info();
                     break;
-                case 7:
+                case '7':
                     update_userName_password();
                     break;
             }
 
-        } while (c != 8);
+        } while (c != '8');
         System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }
@@ -92,7 +90,7 @@ public class AdminEmployee extends Employee {
         userName = input.nextLine();
         System.out.print("Enter employee's password: ");
         password = input.nextLine();
-        int c;
+        char c;
         do {
             System.out.printf("\nEmployee Type:"
                     + "\nAminstration Departement.   (Enter 1)"
@@ -101,28 +99,26 @@ public class AdminEmployee extends Employee {
                     + "\nSales Departement.          (Enter 4)\n"
             );
             System.out.printf("?: ");
-            c = input.nextInt();
-            input.nextLine();
-
-            if (c != 1 && c != 2 && c != 3 && c != 4) {
+            c = input.nextLine().charAt(0);
+            if (c != '1' && c != '2' && c != '3' && c != '4') {
                 System.out.println("Invaild Input!");
             }
 
             switch (c) {
-                case 1:
+                case '1':
                     eType = "A";
                     break;
-                case 2:
+                case '2':
                     eType = "M";
                     break;
-                case 3:
+                case '3':
                     eType = "I";
                     break;
-                case 4:
+                case '4':
                     eType = "S";
                     break;
             }
-        } while (c != 1 && c != 2 && c != 3 && c != 4);
+        } while (c != '1' && c != '2' && c != '3' && c != '4');
 
         if (eType.equals("A")) {
             EmployeeDB.add_employee(new AdminEmployee(fName, lName, userName, password));
@@ -164,7 +160,7 @@ public class AdminEmployee extends Employee {
             userName = input.next();
             System.out.print("Enter employee's password: ");
             password = input.next();
-            int c;
+            char c;
             do {
                 System.out.printf("\nEmployee Type:"
                         + "\nAminstration Departement.   (Enter 1)"
@@ -173,28 +169,27 @@ public class AdminEmployee extends Employee {
                         + "\nSales Departement.          (Enter 4)\n"
                 );
                 System.out.printf("?: ");
-                c = input.nextInt();
-                input.nextLine();
+                c = input.nextLine().charAt(0);
 
                 if (c != 1 && c != 2 && c != 3 && c != 4) {
                     System.out.println("Invaild Input!");
                 }
 
                 switch (c) {
-                    case 1:
+                    case '1':
                         eType = "A";
                         break;
-                    case 2:
+                    case '2':
                         eType = "M";
                         break;
-                    case 3:
+                    case '3':
                         eType = "I";
                         break;
-                    case 4:
+                    case '4':
                         eType = "S";
                         break;
                 }
-            } while (c != 1 && c != 2 && c != 3 && c != 4);
+            } while (c != '1' && c != '2' && c != '3' && c != '4');
             EmployeeDB.update_employee(id, fName, lName, userName, password, eType);
         } else {
             System.out.println("\nNot Found!");

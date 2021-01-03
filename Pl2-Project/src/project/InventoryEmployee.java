@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class InventoryEmployee extends Employee {
 
     final static int numOfDaysToGetCloseToExpire = 3; //to use it later in notifications
-    
+
     Scanner input = new Scanner(System.in);
 
     public InventoryEmployee(int id, String fName, String lName, String userName, String password) {
@@ -38,7 +38,7 @@ public class InventoryEmployee extends Employee {
 
     public int openList() {
         Scanner input = new Scanner(System.in);
-        int c;
+        String c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
             numOfNotifications();
@@ -53,54 +53,52 @@ public class InventoryEmployee extends Employee {
                     + "\nManage the Sales Return.                    (Enter 8)"
                     + "\nAlter your information.                     (Enter 9)"
                     + "\nAlter your password.                        (Enter 10)"
-                    + "\nLogOut                                      (Enter 11)\n");
+                    + "\nLogOut.                                     (Enter 11)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
-            c = input.nextInt();
-            input.nextLine();
-
-            if (c != 0 && c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11) {
+            c = input.nextLine();
+            if (!"0".equals(c) && !"1".equals(c) && !"2".equals(c) && !"3".equals(c) && !"4".equals(c) && !"5".equals(c) && !"6".equals(c) && !"7".equals(c) && !"8".equals(c) && !"9".equals(c) && !"10".equals(c) && !"11".equals(c)) {
                 System.out.println("Invaild Input!");
             }
 
             switch (c) {
-                case 0:
+                case "0":
                     displayNotifications();
                     break;
-                case 1:
+                case "1":
                     newProduct();
                     break;
-                case 2:
+                case "2":
                     newRProduct();
                     break;
-                case 3:
+                case "3":
                     deleteProduct();
                     break;
-                case 4:
+                case "4":
                     updateProduct();
                     break;
-                case 5:
+                case "5":
                     listProduct();
                     break;
-                case 6:
+                case "6":
                     searchProduct();
                     break;
-                case 7:
+                case "7":
                     manageDamagesItems();
                     break;
-                case 8:
+                case "8":
                     manageSalesReturn();
                     break;
-                case 9:
+                case "9":
                     alterInformation();
                     break;
-                case 10:
+                case "10":
                     alterPassword();
                     break;
             }
 
-        } while (c != 11);
+        } while (!"11".equals(c));
         System.out.printf("bey bey ,%s!\n", this.getfName());
         return 0;
     }
@@ -110,6 +108,7 @@ public class InventoryEmployee extends Employee {
         String name = input.nextLine();
         System.out.printf("Enter Original Price: ");
         int OP = input.nextInt();
+        input.nextLine();
         System.out.printf("Enter Discount: ");
         int diss = input.nextInt();
         System.out.printf("Enter Amount: ");
@@ -128,6 +127,7 @@ public class InventoryEmployee extends Employee {
         String name = input.nextLine();
         System.out.printf("Enter Original Price: ");
         int OP = input.nextInt();
+        input.nextLine();
         System.out.printf("Enter Discount: ");
         int diss = input.nextInt();
         System.out.printf("Enter Amount: ");
@@ -344,7 +344,7 @@ public class InventoryEmployee extends Employee {
                 Product p = allProducts.get(i);
                 productDate = EPFormat.parse(p.getEPD());
                 Pmillis = productDate.getTime();
-                
+
                 if (Pmillis <= TimeUnit.DAYS.toMillis(InventoryEmployee.numOfDaysToGetCloseToExpire) + System.currentTimeMillis() && !(System.currentTimeMillis() > Pmillis)) {
                     closeToExpProducts.add(p);
                 }
@@ -494,8 +494,8 @@ public class InventoryEmployee extends Employee {
             return;
         }
 
-        if (! closeToExpProducts.isEmpty()) {
-            System.out.printf("\nGet close to Expire Products (Will Expire in %d Day/s!) : \n",InventoryEmployee.numOfDaysToGetCloseToExpire);
+        if (!closeToExpProducts.isEmpty()) {
+            System.out.printf("\nGet close to Expire Products (Will Expire in %d Day/s!) : \n", InventoryEmployee.numOfDaysToGetCloseToExpire);
             Util.PrintProductHeader();
             for (int i = 0; i < closeToExpProducts.size(); i++) {
                 Product P = closeToExpProducts.get(i);
@@ -503,11 +503,11 @@ public class InventoryEmployee extends Employee {
             }
         }
 
-        if (! ReducedProducts.isEmpty()) {
+        if (!ReducedProducts.isEmpty()) {
             System.out.println("\nReduced To Minmim Range Products : ");
             Util.PrintProductHeader();
-            for (int i = 0; i < closeToExpProducts.size(); i++) {
-                Product P = closeToExpProducts.get(i);
+            for (int i = 0; i < ReducedProducts.size(); i++) {
+                Product P = ReducedProducts.get(i);
                 Util.PrintProduct(P);
             }
         }

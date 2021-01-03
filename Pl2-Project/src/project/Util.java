@@ -12,7 +12,7 @@ public class Util {
 
         System.out.printf("%-6d%-10s%-8.2f", p.getSN(), p.getName(), p.getPrice());
         System.out.printf("%-15.2f%-11.2f%-8d", p.getOrignalPrice(), p.getDiscount(), p.getAmount());
-        System.out.printf("%-14s%-10s%-10s\n", p.getEPD(), p.getMinRange(), p.getpState());
+        System.out.printf("%-14s%-10d%-10s\n", p.getEPD(), p.getMinRange(), p.getpState());
 
     }
 }

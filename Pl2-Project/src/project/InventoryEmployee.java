@@ -9,6 +9,7 @@ import database.EmployeeDB;
 import database.PreviousActionsDB;
 import database.ProductDB;
 import database.RProductDB;
+import database.SentOffersDB;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,10 +53,11 @@ public class InventoryEmployee extends Employee {
                     + "\nSearch for a product.                       (Enter 6)"
                     + "\nManage the Damages items.                   (Enter 7)"
                     + "\nManage the Sales Return.                    (Enter 8)"
-                    + "\nAlter your information.                     (Enter 9)"
-                    + "\nAlter your password.                        (Enter 10)"
-                    + "\nDisplay all your previous actions.          (Enter 11)"
-                    + "\nLogOut.                                     (Enter 12)\n");
+                    + "\nShow All Sent Offers by Markting Dep.       (Enter 9)"
+                    + "\nAlter your information.                     (Enter 10)"
+                    + "\nAlter your password.                        (Enter 11)"
+                    + "\nDisplay all your previous actions.          (Enter 12)"
+                    + "\nLogOut.                                     (Enter 13)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
@@ -93,17 +95,20 @@ public class InventoryEmployee extends Employee {
                     manageSalesReturn();
                     break;
                 case "9":
-                    alterInformation();
+                    manageSentOffers();
                     break;
                 case "10":
-                    alterPassword();
+                    alterInformation();
                     break;
                 case "11":
+                    alterPassword();
+                    break;
+                case "12":
                     displayPreviousActions();
                     break;
             }
 
-        } while (!"12".equals(c));
+        } while (!"13".equals(c));
         System.out.printf("bey bey ,%s!\n", this.getfName());
         return 0;
     }
@@ -179,8 +184,8 @@ public class InventoryEmployee extends Employee {
     }
 
     public void updateProduct() {
-        System.out.printf("if you want to update discount only. (Enter 1)\n"
-                + "for update all product info.         (Enter 2)\n?: ");
+        System.out.printf("If you want to update discount only. (Enter 1)\n"
+                + "For update all product info.         (Enter 2)\n?: ");
         int choice = input.nextInt();
         System.out.printf("Enter Product Serial Number: ");
         int sn = input.nextInt();
@@ -260,7 +265,7 @@ public class InventoryEmployee extends Employee {
         list = ProductDB.get_products();
 
         System.out.println("Search a product by its Name:          (Enter 1)");
-        System.out.print("Search a product by its Serial number: (Enter 2)\n?:");
+        System.out.println("Search a product by its Serial number: (Enter 2)\n?:");
         int choice = input.nextInt();
         if (choice == 1) {
             int i, serial = -1;
@@ -548,6 +553,94 @@ public class InventoryEmployee extends Employee {
         for (int i = 0; i < list.size(); i++) {
             Util.PrintAction(list.get(i));
         }
+    }
+
+    private void manageSentOffers() {
+        System.out.println("\nSent Offers :");
+        displayAllSentOffers();
+        if (!SentOffersDB.isEmpty()) {
+            int c;
+            do {
+                System.out.printf("\nSent Offers Operations:"
+                        + "\nAccept All.                            (Enter 1)"
+                        + "\nReject All.                            (Enter 2)"
+                        + "\nAccept Selected One.                   (Enter 3)"
+                        + "\nReject Selected One.                   (Enter 4)"
+                        + "\nExit                                   (Enter 5)\n"
+                );
+                System.out.printf("?: ");
+                c = input.nextInt();
+                if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5) {
+                    System.out.println("\nInvaild Input!\n");
+                }
+
+                switch (c) {
+                    case 1:
+                        AcceptAllSentOffers();
+                        break;
+                    case 2:
+                        RejectAllSentOffers();
+                        break;
+                    case 3:
+                        AcceptSelectedSentOffer();
+                        break;
+                    case 4:
+                        RejectSelectedSentOffer();
+                        break;
+                }
+            } while (c != 5);
+        }
+    }
+
+    private void displayAllSentOffers() {
+        ArrayList<Offer> list = SentOffersDB.get_sent_offers();
+        Util.PrintOfferHeader();
+        for (int i = 0; i < list.size(); i++) {
+            Util.PrintOffer(list.get(i));
+        }
+    }
+
+    private void AcceptAllSentOffers() {
+        ArrayList<Offer> list = SentOffersDB.get_sent_offers();
+        for (int i = 0; i < list.size(); i++) {
+            Offer o = list.get(i);
+            Product p = ProductDB.get_Product(o.getPSN());
+            ProductDB.update_product(o.getPSN(), p.getDiscount() + o.getDiscount());
+            SentOffersDB.delete_sent_offer(o.getId());
+            Util.registerAction(this.getId(), "Accept-Offer SN :(" + o.getPSN() + ") Discount :(" + o.getDiscount() + ").");
+        }
+        System.out.println("\nAll Accepted!\n");
+    }
+
+    private void RejectAllSentOffers() {
+        ArrayList<Offer> list = SentOffersDB.get_sent_offers();
+        for (int i = 0; i < list.size(); i++) {
+            Offer o = list.get(i);
+            SentOffersDB.delete_sent_offer(o.getId());
+            Util.registerAction(this.getId(), "Reject-Offer SN :(" + o.getPSN() + ") Discount :(" + o.getDiscount() + ").");
+        }
+        System.out.println("\nAll Rejected!\n");
+    }
+
+    private void AcceptSelectedSentOffer() {
+        System.out.printf("Enter The Offer ID: ");
+        int id = input.nextInt();
+        Offer o = SentOffersDB.get_sent_offer(id);
+        Product p = ProductDB.get_Product(o.getPSN());
+        ProductDB.update_product(o.getPSN(), p.getDiscount() + o.getDiscount());
+        SentOffersDB.delete_sent_offer(o.getId());
+        System.out.println("\nAccepted!\n");
+        Util.registerAction(this.getId(), "Accept-Offer SN :(" + o.getPSN() + ") Discount :(" + o.getDiscount() + ").");
+    }
+
+    private void RejectSelectedSentOffer() {
+        int id;
+        System.out.printf("Enter The Offer ID: ");
+        id = input.nextInt();
+        Offer o = SentOffersDB.get_sent_offer(id);
+        SentOffersDB.delete_sent_offer(o.getId());
+        System.out.println("\nRejected!\n");
+        Util.registerAction(this.getId(), "Reject-Offer SN :(" + o.getPSN() + ") Discount :(" + o.getDiscount() + ").");
     }
 
 }

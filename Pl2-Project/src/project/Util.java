@@ -21,15 +21,23 @@ public class Util {
     }
 
     public static void PrintActionHeader() {
-        System.out.printf("\n%-40s%-13s\n", "Action_Name", "Date");
+        System.out.printf("\n%-60s%-13s\n", "Action_Name", "Date");
     }
 
     public static void PrintAction(Action ac) {
-        System.out.printf("%-40s%-13s\n", ac.getActionName(), ac.getActionDate());
+        System.out.printf("%-60s%-13s\n", ac.getActionName(), ac.getActionDate());
     }
 
     public static void registerAction(int eId, String actionName) {
     	DateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
         PreviousActionsDB.add_action(new Action(eId, actionName, format.format(new Date())));
+    }
+    
+    public static void PrintOfferHeader() {
+        System.out.printf("\n%-6s%-6s%-6s\n", "ID", "PSN" , "Discount");
+    }
+
+    public static void PrintOffer(Offer o) {
+        System.out.printf("%-6d%-6d%-6.2f\n", o.getId() , o.getPSN() , o.getDiscount());
     }
 }

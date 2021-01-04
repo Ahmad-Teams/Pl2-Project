@@ -9,6 +9,7 @@ import database.EmployeeDB;
 import database.PreviousActionsDB;
 import database.ProductDB;
 import database.RProductDB;
+import database.SentOffersDB;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -35,12 +36,12 @@ public class MarktingEmployee extends Employee {
         do {
 
             System.out.printf("\nMarkting Menu:"
-                    + "\nMake products reports.                (Enter 1)"
-                    + "\nMake offers and send them.            (Enter 2)"
-                    + "\nAlter your information.               (Enter 3)"
-                    + "\nAlter your password.                  (Enter 4)"
-                    + "\nDisplay all your previous actions.    (Enter 5)"
-                    + "\nLogOut.                               (Enter 6)\n");
+                    + "\nMake products reports.                       (Enter 1)"
+                    + "\nMake offer and send it to the Inventory Dep. (Enter 2)"
+                    + "\nAlter your information.                      (Enter 3)"
+                    + "\nAlter your password.                         (Enter 4)"
+                    + "\nDisplay all your previous actions.           (Enter 5)"
+                    + "\nLogOut.                                      (Enter 6)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
@@ -57,7 +58,7 @@ public class MarktingEmployee extends Employee {
                     makeReports();
                     break;
                 case 2:
-                    Make_offers_and_send_them();
+                    Make_offer_and_send_it();
                     break;
                 case 3:
                     AlterInformation();
@@ -165,14 +166,14 @@ public class MarktingEmployee extends Employee {
         System.out.println("\nNumber of products = " + list.size());
     }
 
-    private void Make_offers_and_send_them() {
+    private void Make_offer_and_send_it() {
         System.out.printf("Enter the SN of the product : ");
-        int sn = input.nextInt();
+        int psn = input.nextInt();
         System.out.printf("Enter the discount : ");
-        int discount = input.nextInt();
-        InventoryEmployee.add_offer(sn, discount);
-        System.out.println("\nOffer Sent and Accepted!");
-        Util.registerAction(this.getId(), "Add-Product_Offer SN :(" + sn + ").");
+        double discount = input.nextDouble();
+        System.out.println("\nOffer Sent!");
+        SentOffersDB.add_sent_offer(new Offer(psn,discount));
+        Util.registerAction(this.getId(), "Sent-Offer SN :(" + psn + ") Discount :(" + discount + ").");
     }
 
     private void sortByPrice(ArrayList<Product> list) {

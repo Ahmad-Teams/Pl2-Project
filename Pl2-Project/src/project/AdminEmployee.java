@@ -250,7 +250,7 @@ public class AdminEmployee extends Employee {
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
         System.out.println("\nUpdated!\n");
-        Util.registerAction(this.getId(), "Update-Your Password.");
+        Util.registerAction(this.getId(), "Update-Your User-Name & Password.");
     }
 
     public void search() {

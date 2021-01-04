@@ -6,6 +6,7 @@
 package project;
 
 import database.EmployeeDB;
+import database.PreviousActionsDB;
 import database.ProductDB;
 import database.RProductDB;
 import java.util.ArrayList;
@@ -34,11 +35,12 @@ public class MarktingEmployee extends Employee {
         do {
 
             System.out.printf("\nMarkting Menu:"
-                    + "\nMake products reports.              (Enter 1)"
-                    + "\nMake offers and send them.          (Enter 2)"
-                    + "\nAlter your information.             (Enter 3)"
-                    + "\nAlter your password.                (Enter 4)"
-                    + "\nLogOut.                             (Enter 5)\n");
+                    + "\nMake products reports.                (Enter 1)"
+                    + "\nMake offers and send them.            (Enter 2)"
+                    + "\nAlter your information.               (Enter 3)"
+                    + "\nAlter your password.                  (Enter 4)"
+                    + "\nDisplay all your previous actions.    (Enter 5)"
+                    + "\nLogOut.                               (Enter 6)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
@@ -46,7 +48,7 @@ public class MarktingEmployee extends Employee {
             c = input.nextInt();
             input.nextLine();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5) {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6) {
                 System.out.println("Invaild Input!");
             }
 
@@ -63,9 +65,12 @@ public class MarktingEmployee extends Employee {
                 case 4:
                     AlterPassword();
                     break;
+                case 5:
+                    displayPreviousActions();
+                    break;
             }
 
-        } while (c != 5);
+        } while (c != 6);
         System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }
@@ -167,6 +172,7 @@ public class MarktingEmployee extends Employee {
         int discount = input.nextInt();
         InventoryEmployee.add_offer(sn, discount);
         System.out.println("\nOffer Sent and Accepted!");
+        Util.registerAction(this.getId(), "Add-Product_Offer SN :(" + sn + ").");
     }
 
     private void sortByPrice(ArrayList<Product> list) {
@@ -223,6 +229,7 @@ public class MarktingEmployee extends Employee {
         String password = this.getPassword();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
         System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
 
     public void AlterPassword() {
@@ -230,5 +237,15 @@ public class MarktingEmployee extends Employee {
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
         System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
+
+    private void displayPreviousActions() {
+        ArrayList<Action> list = PreviousActionsDB.get_actions(this.getId());
+        Util.PrintActionHeader();
+        for (int i = 0; i < list.size(); i++) {
+            Util.PrintAction(list.get(i));
+        }
+    }
+
 }

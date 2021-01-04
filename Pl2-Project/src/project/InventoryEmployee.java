@@ -6,6 +6,7 @@
 package project;
 
 import database.EmployeeDB;
+import database.PreviousActionsDB;
 import database.ProductDB;
 import database.RProductDB;
 import java.text.ParseException;
@@ -53,12 +54,13 @@ public class InventoryEmployee extends Employee {
                     + "\nManage the Sales Return.                    (Enter 8)"
                     + "\nAlter your information.                     (Enter 9)"
                     + "\nAlter your password.                        (Enter 10)"
-                    + "\nLogOut.                                     (Enter 11)\n");
+                    + "\nDisplay all your previous actions.          (Enter 11)"
+                    + "\nLogOut.                                     (Enter 12)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
             c = input.nextLine();
-            if (!"0".equals(c) && !"1".equals(c) && !"2".equals(c) && !"3".equals(c) && !"4".equals(c) && !"5".equals(c) && !"6".equals(c) && !"7".equals(c) && !"8".equals(c) && !"9".equals(c) && !"10".equals(c) && !"11".equals(c)) {
+            if (!"0".equals(c) && !"1".equals(c) && !"2".equals(c) && !"3".equals(c) && !"4".equals(c) && !"5".equals(c) && !"6".equals(c) && !"7".equals(c) && !"8".equals(c) && !"9".equals(c) && !"10".equals(c) && !"11".equals(c) && !"12".equals(c)) {
                 System.out.println("Invaild Input!");
             }
 
@@ -96,9 +98,12 @@ public class InventoryEmployee extends Employee {
                 case "10":
                     alterPassword();
                     break;
+                case "11":
+                    displayPreviousActions();
+                    break;
             }
 
-        } while (!"11".equals(c));
+        } while (!"12".equals(c));
         System.out.printf("bey bey ,%s!\n", this.getfName());
         return 0;
     }
@@ -121,6 +126,7 @@ public class InventoryEmployee extends Employee {
         Product d = new Product(name, OP, diss, amount, EPD, minRange);
         ProductDB.add_product(d);
         System.out.println("\nAdded!\n");
+        Util.registerAction(this.getId(), "Add-New_Product:(" + name + ").");
     }
 
     public void newRProduct() {
@@ -141,6 +147,7 @@ public class InventoryEmployee extends Employee {
         Product d = new Product(name, OP, diss, amount, EPD, minRange);
         RProductDB.add_RProduct(d);
         System.out.println("\nAdded!\n");
+        Util.registerAction(this.getId(), "Add-New_Product To Sales Return List:(" + name + ").");
     }
 
     public void deleteProduct() {
@@ -149,6 +156,7 @@ public class InventoryEmployee extends Employee {
         sn = input.nextInt();
         ProductDB.delete_product(sn);
         System.out.println("\nDeleted!\n");
+        Util.registerAction(this.getId(), "Delete-Product SN :(" + sn + ").");
     }
 
     public void deleteEProduct() {
@@ -157,12 +165,15 @@ public class InventoryEmployee extends Employee {
         sn = input.nextInt();
         ProductDB.delete_product(sn);
         System.out.println("\nDeleted!\n");
+        Util.registerAction(this.getId(), "Delete-Expired Product SN :(" + sn + ").");
     }
 
     public void deleteAllEProduct() {
         ArrayList<Product> list = ProductDB.get_Eproducts();
         for (int i = 0; i < list.size(); i++) {
-            ProductDB.delete_product(list.get(i).getSN());
+            int sn = list.get(i).getSN();
+            ProductDB.delete_product(sn);
+            Util.registerAction(this.getId(), "Delete-Expired Product SN :(" + sn + ").");
         }
         System.out.println("\nAll Deleted!\n");
     }
@@ -182,6 +193,7 @@ public class InventoryEmployee extends Employee {
 
                 ProductDB.update_product(sn, diss);
                 System.out.println("\nUpdated!\n");
+                Util.registerAction(this.getId(), "Update-Product SN :(" + sn + ").");
             } else if (choice == 2) {
                 input.nextLine();
                 System.out.printf("Enter new Name: ");
@@ -199,6 +211,7 @@ public class InventoryEmployee extends Employee {
                 int minRange = input.nextInt();
                 ProductDB.update_product(sn, name, OP, diss, amount, EPD, minRange);
                 System.out.println("\nUpdated!\n");
+                Util.registerAction(this.getId(), "Update-Product SN :(" + sn + ").");
             }
         } else {
             System.out.println("\nProduct not found!\n");
@@ -422,6 +435,7 @@ public class InventoryEmployee extends Employee {
             ProductDB.add_product(RProductDB.get_RProduct(sn));
             RProductDB.delete_RProduct(sn);
             System.out.println("\nAll Returend!\n");
+            Util.registerAction(this.getId(), "Return-Product_to_Inventory SN :(" + sn + ").");
         }
     }
 
@@ -431,6 +445,7 @@ public class InventoryEmployee extends Employee {
         ProductDB.add_product(RProductDB.get_RProduct(sn));
         RProductDB.delete_RProduct(sn);
         System.out.println("\nReturend!\n");
+        Util.registerAction(this.getId(), "Return-Product_to_Inventory SN :(" + sn + ").");
     }
 
     public void manageSalesReturn() {
@@ -472,6 +487,7 @@ public class InventoryEmployee extends Employee {
         String password = this.getPassword();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
         System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
 
     public void alterPassword() {
@@ -479,6 +495,7 @@ public class InventoryEmployee extends Employee {
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
         System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your Password.");
     }
 
     private void numOfNotifications() {
@@ -523,6 +540,14 @@ public class InventoryEmployee extends Employee {
             }
         }
 
+    }
+
+    private void displayPreviousActions() {
+        ArrayList<Action> list = PreviousActionsDB.get_actions(this.getId());
+        Util.PrintActionHeader();
+        for (int i = 0; i < list.size(); i++) {
+            Util.PrintAction(list.get(i));
+        }
     }
 
 }

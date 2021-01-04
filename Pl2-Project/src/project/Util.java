@@ -1,6 +1,10 @@
 package project;
 
+import database.PreviousActionsDB;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Util {
 
@@ -14,5 +18,18 @@ public class Util {
         System.out.printf("%-15.2f%-11.2f%-8d", p.getOrignalPrice(), p.getDiscount(), p.getAmount());
         System.out.printf("%-14s%-10d%-10s\n", p.getEPD(), p.getMinRange(), p.getpState());
 
+    }
+
+    public static void PrintActionHeader() {
+        System.out.printf("\n%-40s%-13s\n", "Action_Name", "Date");
+    }
+
+    public static void PrintAction(Action ac) {
+        System.out.printf("%-40s%-13s\n", ac.getActionName(), ac.getActionDate());
+    }
+
+    public static void registerAction(int eId, String actionName) {
+    	DateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        PreviousActionsDB.add_action(new Action(eId, actionName, format.format(new Date())));
     }
 }

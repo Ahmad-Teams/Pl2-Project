@@ -6,6 +6,7 @@
 package project;
 
 import database.EmployeeDB;
+import database.PreviousActionsDB;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -37,10 +38,11 @@ public class AdminEmployee extends Employee {
                     + "\nSearch for an employee.             (Enter 5)"// Search id or username // print value only
                     + "\nAlter your general information.     (Enter 6)"
                     + "\nAlter your User-Name and Password.  (Enter 7)"
-                    + "\nLogOut                              (Enter 8)\n");
+                    + "\nDisplay all your previous actions.  (Enter 8)"
+                    + "\nLogOut                              (Enter 9)\n");
             System.out.printf("?: ");
             c = input.nextLine().charAt(0);
-            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6' && c != '7' & c != '8') {
+            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6' && c != '7' && c != '8' && c != '9') {
                 System.out.println("Invaild Input!");
             }
 
@@ -66,9 +68,12 @@ public class AdminEmployee extends Employee {
                 case '7':
                     update_userName_password();
                     break;
+                case '8':
+                    displayPreviousActions();
+                    break;
             }
 
-        } while (c != '8');
+        } while (c != '9');
         System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }
@@ -120,12 +125,16 @@ public class AdminEmployee extends Employee {
 
         if (eType.equals("A")) {
             EmployeeDB.add_employee(new AdminEmployee(fName, lName, userName, password));
+            Util.registerAction(this.getId(), "Add-Admin_Employee:(" + fName + ").");
         } else if (eType.equals("M")) {
             EmployeeDB.add_employee(new MarktingEmployee(fName, lName, userName, password));
+            Util.registerAction(this.getId(), "Add-Markting_Employee:(" + fName + ").");
         } else if (eType.equals("S")) {
             EmployeeDB.add_employee(new SalesEmployee(fName, lName, userName, password));
+            Util.registerAction(this.getId(), "Add-Sales_Employee:(" + fName + ").");
         } else if (eType.equals("I")) {
             EmployeeDB.add_employee(new InventoryEmployee(fName, lName, userName, password));
+            Util.registerAction(this.getId(), "Add-Inventory_Employee:(" + fName + ").");
         }
         System.out.println("\nAdded!\n");
     }
@@ -137,6 +146,7 @@ public class AdminEmployee extends Employee {
         id = input.nextInt();
         EmployeeDB.delete_employee(id);
         System.out.println("\nDeleted!\n");
+        Util.registerAction(this.getId(), "Delete-Employee ID:(" + id + ").");
 
     }
 
@@ -193,7 +203,7 @@ public class AdminEmployee extends Employee {
             } while (c != '1' && c != '2' && c != '3' && c != '4');
             EmployeeDB.update_employee(id, fName, lName, userName, password, eType);
             System.out.println("\nUpdated!\n");
-
+            Util.registerAction(this.getId(), "Update-Employee ID:(" + id + ").");
         } else {
             System.out.println("\nNot Found!");
         }
@@ -228,6 +238,7 @@ public class AdminEmployee extends Employee {
         String lname = input.next();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
         System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
 
     void update_userName_password() {
@@ -239,6 +250,7 @@ public class AdminEmployee extends Employee {
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
         System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your Password.");
     }
 
     public void search() {
@@ -260,6 +272,14 @@ public class AdminEmployee extends Employee {
             }
         }
 
+    }
+
+    private void displayPreviousActions() {
+        ArrayList<Action> list = PreviousActionsDB.get_actions(this.getId());
+        Util.PrintActionHeader();
+        for (int i = 0; i < list.size(); i++) {
+            Util.PrintAction(list.get(i));
+        }
     }
 
 }

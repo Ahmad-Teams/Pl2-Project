@@ -129,6 +129,7 @@ public class SalesEmployee extends Employee {
         System.out.print("Enter the RProduct serial number: ");
         int psn = input.nextInt();
         OrderDB.add_order(new Order(psn, amount));
+        System.out.println("\nAdded!\n");
     }
 
     void delete_an_order() {
@@ -138,6 +139,7 @@ public class SalesEmployee extends Employee {
         int id = input.nextInt();
         if (OrderDB.isExisit(id)) {
             OrderDB.delete_order(id);
+            System.out.println("\nDeleted!\n");
         } else {
             System.out.println("\nOrder not found!");
         }
@@ -150,11 +152,13 @@ public class SalesEmployee extends Employee {
         String lname = input.next();
         String password = this.getPassword();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
+        System.out.println("\nUpdated!\n");
     }
 
     public void AlterPassword() {
         System.out.print("Enter the new password: ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+        System.out.println("\nUpdated!\n");
     }
 }

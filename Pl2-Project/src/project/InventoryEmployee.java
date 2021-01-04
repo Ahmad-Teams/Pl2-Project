@@ -120,6 +120,7 @@ public class InventoryEmployee extends Employee {
         int minRange = input.nextInt();
         Product d = new Product(name, OP, diss, amount, EPD, minRange);
         ProductDB.add_product(d);
+        System.out.println("\nAdded!\n");
     }
 
     public void newRProduct() {
@@ -139,6 +140,7 @@ public class InventoryEmployee extends Employee {
         int minRange = input.nextInt();
         Product d = new Product(name, OP, diss, amount, EPD, minRange);
         RProductDB.add_RProduct(d);
+        System.out.println("\nAdded!\n");
     }
 
     public void deleteProduct() {
@@ -146,6 +148,7 @@ public class InventoryEmployee extends Employee {
         System.out.printf("Enter Product Serial Number: ");
         sn = input.nextInt();
         ProductDB.delete_product(sn);
+        System.out.println("\nDeleted!\n");
     }
 
     public void deleteEProduct() {
@@ -153,6 +156,7 @@ public class InventoryEmployee extends Employee {
         System.out.printf("Enter Product Serial Number: ");
         sn = input.nextInt();
         ProductDB.delete_product(sn);
+        System.out.println("\nDeleted!\n");
     }
 
     public void deleteAllEProduct() {
@@ -160,6 +164,7 @@ public class InventoryEmployee extends Employee {
         for (int i = 0; i < list.size(); i++) {
             ProductDB.delete_product(list.get(i).getSN());
         }
+        System.out.println("\nAll Deleted!\n");
     }
 
     public void updateProduct() {
@@ -176,6 +181,7 @@ public class InventoryEmployee extends Employee {
                 double diss = input.nextDouble();
 
                 ProductDB.update_product(sn, diss);
+                System.out.println("\nUpdated!\n");
             } else if (choice == 2) {
                 input.nextLine();
                 System.out.printf("Enter new Name: ");
@@ -192,6 +198,7 @@ public class InventoryEmployee extends Employee {
                 System.out.printf("Enter the Minmum Range: ");
                 int minRange = input.nextInt();
                 ProductDB.update_product(sn, name, OP, diss, amount, EPD, minRange);
+                System.out.println("\nUpdated!\n");
             }
         } else {
             System.out.println("\nProduct not found!\n");
@@ -414,6 +421,7 @@ public class InventoryEmployee extends Employee {
             int sn = list.get(i).getSN();
             ProductDB.add_product(RProductDB.get_RProduct(sn));
             RProductDB.delete_RProduct(sn);
+            System.out.println("\nAll Returend!\n");
         }
     }
 
@@ -422,6 +430,7 @@ public class InventoryEmployee extends Employee {
         int sn = input.nextInt();
         ProductDB.add_product(RProductDB.get_RProduct(sn));
         RProductDB.delete_RProduct(sn);
+        System.out.println("\nReturend!\n");
     }
 
     public void manageSalesReturn() {
@@ -462,12 +471,14 @@ public class InventoryEmployee extends Employee {
         String lname = input.next();
         String password = this.getPassword();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
+        System.out.println("\nUpdated!\n");
     }
 
     public void alterPassword() {
         System.out.print("Enter the new password: ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+        System.out.println("\nUpdated!\n");
     }
 
     private void numOfNotifications() {

@@ -76,7 +76,6 @@ public class AdminEmployee extends Employee {
     private void Add_new_employee() {
         String fName;
         String lName;
-        String fullName;
         String userName;
         String password;
         String eType = "";
@@ -85,7 +84,6 @@ public class AdminEmployee extends Employee {
         fName = input.nextLine();
         System.out.print("Enter employee's last name: ");
         lName = input.nextLine();
-        fullName = fName + lName;
         System.out.print("Enter employee's username: ");
         userName = input.nextLine();
         System.out.print("Enter employee's password: ");
@@ -129,6 +127,7 @@ public class AdminEmployee extends Employee {
         } else if (eType.equals("I")) {
             EmployeeDB.add_employee(new InventoryEmployee(fName, lName, userName, password));
         }
+        System.out.println("\nAdded!\n");
     }
 
     private void Delete_an_employee() {
@@ -137,6 +136,8 @@ public class AdminEmployee extends Employee {
         System.out.print("Enter the id of the employee you want to delete: ");
         id = input.nextInt();
         EmployeeDB.delete_employee(id);
+        System.out.println("\nDeleted!\n");
+
     }
 
     private void Update_an_employee_information() {
@@ -191,6 +192,8 @@ public class AdminEmployee extends Employee {
                 }
             } while (c != '1' && c != '2' && c != '3' && c != '4');
             EmployeeDB.update_employee(id, fName, lName, userName, password, eType);
+            System.out.println("\nUpdated!\n");
+
         } else {
             System.out.println("\nNot Found!");
         }
@@ -224,6 +227,7 @@ public class AdminEmployee extends Employee {
         System.out.printf("Enter the new last name : ");
         String lname = input.next();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
+        System.out.println("\nUpdated!\n");
     }
 
     void update_userName_password() {
@@ -234,6 +238,7 @@ public class AdminEmployee extends Employee {
         System.out.printf("Enter password : ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
+        System.out.println("\nUpdated!\n");
     }
 
     public void search() {

@@ -62,7 +62,7 @@ public class InventoryEmployee extends Employee {
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
             c = input.nextLine();
-            if (!"0".equals(c) && !"1".equals(c) && !"2".equals(c) && !"3".equals(c) && !"4".equals(c) && !"5".equals(c) && !"6".equals(c) && !"7".equals(c) && !"8".equals(c) && !"9".equals(c) && !"10".equals(c) && !"11".equals(c) && !"12".equals(c)) {
+            if (!"0".equals(c) && !"1".equals(c) && !"2".equals(c) && !"3".equals(c) && !"4".equals(c) && !"5".equals(c) && !"6".equals(c) && !"7".equals(c) && !"8".equals(c) && !"9".equals(c) && !"10".equals(c) && !"11".equals(c) && !"12".equals(c) && !"13".equals(c)) {
                 System.out.println("Invaild Input!");
             }
 

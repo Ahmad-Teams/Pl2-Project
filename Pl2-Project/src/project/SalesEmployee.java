@@ -11,13 +11,9 @@ import database.OrderDB;
 import database.PreviousActionsDB;
 import database.RProductDB;
 import java.util.ArrayList;
-import java.util.Scanner;
-import project.Order;
-import project.Product;
 
 public class SalesEmployee extends Employee {
 
-    //Scanner input = new Scanner(System.in);
     public SalesEmployee(int id, String fName, String lName, String userName, String password) {
         super(id, fName, lName, userName, password, "S");
     }
@@ -43,7 +39,7 @@ public class SalesEmployee extends Employee {
                     + "\nMake an order.                      (Enter 4)"
                     + "\nDelete an order.                    (Enter 5)"
                     + "\nAlter your information.             (Enter 6)"
-                    + "\nAlter your password.                (Enter 7)"
+                    + "\nAlter your User-Name and Password.  (Enter 7)"
                     + "\nDisplay all your previous actions.  (Enter 8)"
                     + "\nLogOut.                             (Enter 9)\n");
             System.out.printf("?: ");
@@ -55,6 +51,10 @@ public class SalesEmployee extends Employee {
                 continue;
             }
 
+            if (c == 9) {
+                break;
+            }
+            
             switch (c) {
                 case 1:
                     search();
@@ -72,10 +72,10 @@ public class SalesEmployee extends Employee {
                     delete_an_order();
                     break;
                 case 6:
-                    AlterInformation();
+                    alterInformation();
                     break;
                 case 7:
-                    AlterPassword();
+                    alterUserNameAndPassword();
                     break;
                 case 8:
                     displayPreviousActions();
@@ -88,25 +88,18 @@ public class SalesEmployee extends Employee {
     }
 
     private void search() {
-        ArrayList<Product> list = new ArrayList<>();
-        list = ProductDB.get_products();
         System.out.print("Enter the serial number : ");
         int sn = Check.CheckSerialNumber();
         if (sn == -1) {
             System.out.println("No update happened");
         } else {
-            for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getSN() == sn) {
-                Util.PrintProductHeader();
-                Util.PrintProduct(list.get(i));
-             }
-           }
+            Util.PrintProductHeader();
+            Util.PrintProduct(ProductDB.get_Product(sn));
         }
     }
 
     private void print_list_Product() {
-        ArrayList<Product> list = new ArrayList<>();
-        list = ProductDB.get_products();
+        ArrayList<Product> list = ProductDB.get_products();
         Util.PrintProductHeader();
         for (int i = 0; i < list.size(); i++) {
             Util.PrintProduct(list.get(i));
@@ -114,8 +107,7 @@ public class SalesEmployee extends Employee {
     }
 
     private void print_list_Order() {
-        ArrayList<Order> list = new ArrayList<>();
-        list = OrderDB.get_orders();
+        ArrayList<Order> list = OrderDB.get_orders();
         System.out.printf("\n%-5s %-15s\n", "PSN", "AMOUNT");
         for (int i = 0; i < list.size(); i++) {
             System.out.printf("%-5s %-15s\n", list.get(i).getPSN(), list.get(i).getAmount());
@@ -135,7 +127,6 @@ public class SalesEmployee extends Employee {
             System.out.println("\nAdded!\n");
             Util.registerAction(this.getId(), "Add-Order SN:(" + psn + ") Amount:(" + amount + ").");
         }
-      }
     }
 
     private void delete_an_order() {
@@ -144,29 +135,30 @@ public class SalesEmployee extends Employee {
         if (id == -1) {
             System.out.println("No deletion happened");
         } else {
-                OrderDB.delete_order(id);
-                System.out.println("\nDeleted!");
-                Util.registerAction(this.getId(), "Delete-Order SN:(" + psn + ").");
+            OrderDB.delete_order(id);
+            System.out.println("\nDeleted!");
+            Util.registerAction(this.getId(), "Delete-Order SN:(" + id + ").");
         }
     }
 
-    public void AlterInformation() {
-        System.out.print("Enter the new frist name: ");
-        String fname = input.next();
-        System.out.print("Enter the new last name: ");
-        String lname = input.next();
-        String password = this.getPassword();
+    private void alterInformation() {
+        System.out.printf("Enter first name : ");
+        String fname = Check.CheckFname();
+        System.out.printf("Enter last name : ");
+        String lname = Check.CheckLname();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
         System.out.println("\nUpdated!\n");
         Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
 
-    public void AlterPassword() {
-        System.out.print("Enter the new password: ");
-        String password = input.next();
-        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+    void alterUserNameAndPassword() {
+        System.out.printf("Enter user name : ");
+        String username = Check.CheckNewUsername();
+        System.out.printf("Enter password : ");
+        String password = Check.CheckPassword();
+        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
         System.out.println("\nUpdated!\n");
-        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
+        Util.registerAction(this.getId(), "Update-Your User-Name & Password.");
     }
 
     private void displayPreviousActions() {

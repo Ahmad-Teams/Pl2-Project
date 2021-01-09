@@ -14,17 +14,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class InventoryEmployee extends Employee {
 
-
     final static int numOfDaysToGetCloseToExpire = 3; //to use it later in notifications
-
-    Scanner input = new Scanner(System.in);
 
     public InventoryEmployee(int id, String fName, String lName, String userName, String password) {
         super(id, fName, lName, userName, password, "I");
@@ -55,18 +51,20 @@ public class InventoryEmployee extends Employee {
                     + "\nManage the Sales Return.                    (Enter 8)"
                     + "\nShow All Sent Offers by Markting Dep.       (Enter 9)"
                     + "\nAlter your information.                     (Enter 10)"
-                    + "\nAlter your password.                        (Enter 11)"
+                    + "\nAlter your User-Name and Password.          (Enter 11)"
                     + "\nDisplay all your previous actions.          (Enter 12)"
                     + "\nLogOut.                                     (Enter 13)\n");
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
             c = Check.CheckNumber();
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10) {
+            if (c != 0 && c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10 && c != 11 && c != 12 && c != 13) {
                 System.out.println("Invaild Input!");
                 continue;
             }
-
+            if (c == 13) {
+                break;
+            }
             switch (c) {
                 case 0:
                     displayNotifications();
@@ -102,14 +100,14 @@ public class InventoryEmployee extends Employee {
                     alterInformation();
                     break;
                 case 11:
-                    alterPassword();
+                    alterUserNameAndPassword();
                     break;
                 case 12:
                     displayPreviousActions();
                     break;
             }
 
-        } while (!"13".equals(c));
+        } while (c != 13);
         System.out.printf("bey bey ,%s!\n", this.getfName());
         return 0;
     }
@@ -118,9 +116,9 @@ public class InventoryEmployee extends Employee {
         System.out.printf("Enter Product Name: ");
         String name = Check.CheckFname();
         System.out.printf("Enter Original Price: ");
-        int OP = Check.CheckNumber();
+        double OP = Check.CheckDoubleNumber();
         System.out.printf("Enter Discount: ");
-        int diss = Check.CheckNumber();
+        double diss = Check.CheckDoubleNumber();
         System.out.printf("Enter Amount: ");
         int amount = Check.CheckNumber();
         System.out.printf("Enter Expierd Date: ");
@@ -137,9 +135,9 @@ public class InventoryEmployee extends Employee {
         System.out.printf("Enter Product Name: ");
         String name = Check.CheckFname();
         System.out.printf("Enter Original Price: ");
-        int OP = Check.CheckNumber();
+        double OP = Check.CheckDoubleNumber();
         System.out.printf("Enter Discount: ");
-        int diss = Check.CheckNumber();
+        double diss = Check.CheckDoubleNumber();
         System.out.printf("Enter Amount: ");
         int amount = Check.CheckNumber();
         System.out.printf("Enter Expierd Date: ");
@@ -197,30 +195,30 @@ public class InventoryEmployee extends Employee {
         if (sn == -1) {
             System.out.println("No update happened");
         } else {
-                if (choice == 1) {
-                    System.out.printf("Enter  Discount: ");
-                    int diss = Check.CheckNumber();
-                    ProductDB.update_product(sn, diss);
-                    System.out.println("\nUpdated!\n");
-                    Util.registerAction(this.getId(), "Update-Product SN :(" + sn + ").");
-                } else if (choice == 2) {
-                    System.out.printf("Enter new Name: ");
-                    String name = Check.CheckFname();
-                    System.out.printf("Enter  Original Price: ");
-                    int OP = Check.CheckNumber();
-                    System.out.printf("Enter  Discount: ");
-                    int diss = Check.CheckNumber();
-                    System.out.printf("Enter Amount: ");
-                    int amount = Check.CheckNumber();
-                    //input.nextLine();
-                    System.out.printf("Enter Expier Date: ");
-                    String EPD = Check.CheckExpierdDate();
-                    System.out.printf("Enter the Minmum Range: ");
-                    int minRange = Check.CheckNumber();
-                    ProductDB.update_product(sn, name, OP, diss, amount, EPD, minRange);
-                    System.out.println("\nUpdated!\n");
-                    Util.registerAction(this.getId(), "Update-Product SN :(" + sn + ").");
-            } 
+            if (choice == 1) {
+                System.out.printf("Enter  Discount: ");
+                double diss = Check.CheckDoubleNumber();
+                ProductDB.update_product(sn, diss);
+                System.out.println("\nUpdated!\n");
+                Util.registerAction(this.getId(), "Update-Product SN :(" + sn + ").");
+            } else if (choice == 2) {
+                System.out.printf("Enter new Name: ");
+                String name = Check.CheckFname();
+                System.out.printf("Enter  Original Price: ");
+                double OP = Check.CheckDoubleNumber();
+                System.out.printf("Enter  Discount: ");
+                double diss = Check.CheckDoubleNumber();
+                System.out.printf("Enter Amount: ");
+                int amount = Check.CheckNumber();
+                //input.nextLine();
+                System.out.printf("Enter Expier Date: ");
+                String EPD = Check.CheckExpierdDate();
+                System.out.printf("Enter the Minmum Range: ");
+                int minRange = Check.CheckNumber();
+                ProductDB.update_product(sn, name, OP, diss, amount, EPD, minRange);
+                System.out.println("\nUpdated!\n");
+                Util.registerAction(this.getId(), "Update-Product SN :(" + sn + ").");
+            }
         }
     }
 
@@ -229,8 +227,7 @@ public class InventoryEmployee extends Employee {
     }
 
     public void listProduct() {
-        ArrayList<Product> list = new ArrayList<>();
-        list = ProductDB.get_products();
+        ArrayList<Product> list = ProductDB.get_products();
         Util.PrintProductHeader();
         for (int i = 0; i < list.size(); i++) {
             Util.PrintProduct(list.get(i));
@@ -238,8 +235,7 @@ public class InventoryEmployee extends Employee {
     }
 
     public void listRProduct() {
-        ArrayList<Product> list = new ArrayList<>();
-        list = RProductDB.get_RProducts();
+        ArrayList<Product> list = RProductDB.get_RProducts();
 
         Util.PrintProductHeader();
         for (int i = 0; i < list.size(); i++) {
@@ -262,51 +258,13 @@ public class InventoryEmployee extends Employee {
     }
 
     public void searchProduct() {
-        ArrayList<Product> list = new ArrayList<>();
-        list = ProductDB.get_products();
-
-        System.out.println("Search a product by its Name:          (Enter 1)");
-        System.out.println("Search a product by its Serial number: (Enter 2)\n?:");
-        int choice = input.nextInt();
-        if (choice == 1) {
-            int i, serial = -1;
-            input.nextLine();
-            System.out.print("Enter Product Name:");
-            String name = input.nextLine();
-            for (i = 0; i < list.size(); i++) {
-                if (name.equals(list.get(i).getName())) {
-                    serial = list.get(i).getSN();
-                }
-            }
-            if (ProductDB.isExsist(serial)) {
-                for (i = 0; i < list.size(); i++) {
-                    if (name.equals(list.get(i).getName())) {
-                        Util.PrintProductHeader();
-                        Util.PrintProduct(list.get(i));
-
-                    }
-                }
-            } else {
-                System.out.println("Product didn't Found!!");
-            }
-        } else if (choice == 2) {
-            int i;
-            System.out.print("Enter Product Serial Number:");
-            int Serial = input.nextInt();
-            if (ProductDB.isExsist(Serial)) {
-                for (i = 0; i < list.size(); i++) {
-                    if (Serial == list.get(i).getSN()) {
-                        Util.PrintProductHeader();
-                        Util.PrintProduct(list.get(i));
-
-                    }
-                }
-            } else {
-                System.out.println("Product didn't Found!!");
-            }
+        System.out.print("Enter the serial number : ");
+        int sn = Check.CheckSerialNumber();
+        if (sn == -1) {
+            System.out.println("No update happened");
         } else {
-            System.out.println("Invaild Input!");
-            searchProduct();
+            Util.PrintProductHeader();
+            Util.PrintProduct(ProductDB.get_Product(sn));
         }
     }
 
@@ -322,7 +280,8 @@ public class InventoryEmployee extends Employee {
             Pmillis = productDate.getTime();
 
         } catch (ParseException ex) {
-            Logger.getLogger(InventoryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InventoryEmployee.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         if (System.currentTimeMillis() > Pmillis) {
             return "E";
@@ -348,7 +307,8 @@ public class InventoryEmployee extends Employee {
             Pmillis2 = productDate2.getTime();
 
         } catch (ParseException ex) {
-            Logger.getLogger(InventoryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InventoryEmployee.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         if (Pmillis1 > Pmillis2) {
             return true;
@@ -377,7 +337,8 @@ public class InventoryEmployee extends Employee {
             }
 
         } catch (ParseException ex) {
-            Logger.getLogger(InventoryEmployee.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InventoryEmployee.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return closeToExpProducts;
     }
@@ -489,23 +450,24 @@ public class InventoryEmployee extends Employee {
         }
     }
 
-    public void alterInformation() {
-        System.out.print("Enter the new frist name: ");
-        String fname = input.next();
-        System.out.print("Enter the new last name: ");
-        String lname = input.next();
-        String password = this.getPassword();
+    private void alterInformation() {
+        System.out.printf("Enter first name : ");
+        String fname = Check.CheckFname();
+        System.out.printf("Enter last name : ");
+        String lname = Check.CheckLname();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
         System.out.println("\nUpdated!\n");
         Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
 
-    public void alterPassword() {
-        System.out.print("Enter the new password: ");
-        String password = input.next();
-        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+    void alterUserNameAndPassword() {
+        System.out.printf("Enter user name : ");
+        String username = Check.CheckNewUsername();
+        System.out.printf("Enter password : ");
+        String password = Check.CheckPassword();
+        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
         System.out.println("\nUpdated!\n");
-        Util.registerAction(this.getId(), "Update-Your Password.");
+        Util.registerAction(this.getId(), "Update-Your User-Name & Password.");
     }
 
     private void numOfNotifications() {
@@ -574,7 +536,7 @@ public class InventoryEmployee extends Employee {
                         + "\nExit                                   (Enter 5)\n"
                 );
                 System.out.printf("?: ");
-                c = input.nextInt();
+                c = Check.CheckNumber();
                 if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5) {
                     System.out.println("\nInvaild Input!\n");
                 }
@@ -593,7 +555,7 @@ public class InventoryEmployee extends Employee {
                         RejectSelectedSentOffer();
                         break;
                 }
-            } while (c != 5);
+            } while (c != 5 && !SentOffersDB.isEmpty());
         }
     }
 
@@ -629,23 +591,30 @@ public class InventoryEmployee extends Employee {
 
     private void AcceptSelectedSentOffer() {
         System.out.printf("Enter The Offer ID: ");
-        int id = input.nextInt();
-        Offer o = SentOffersDB.get_sent_offer(id);
-        Product p = ProductDB.get_Product(o.getPSN());
-        ProductDB.update_product(o.getPSN(), p.getDiscount() + o.getDiscount());
-        SentOffersDB.delete_sent_offer(o.getId());
-        System.out.println("\nAccepted!\n");
-        Util.registerAction(this.getId(), "Accept-Offer SN :(" + o.getPSN() + ") Discount :(" + o.getDiscount() + ").");
+        int id = Check.CheckOfferID();
+        if (id == -1) {
+            System.out.println("No Offer Accepted!");
+        } else {
+            Offer o = SentOffersDB.get_sent_offer(id);
+            Product p = ProductDB.get_Product(o.getPSN());
+            ProductDB.update_product(o.getPSN(), p.getDiscount() + o.getDiscount());
+            SentOffersDB.delete_sent_offer(o.getId());
+            System.out.println("\nAccepted!\n");
+            Util.registerAction(this.getId(), "Accept-Offer SN :(" + o.getPSN() + ") Discount :(" + o.getDiscount() + ").");
+        }
     }
 
     private void RejectSelectedSentOffer() {
-        int id;
         System.out.printf("Enter The Offer ID: ");
-        id = input.nextInt();
-        Offer o = SentOffersDB.get_sent_offer(id);
-        SentOffersDB.delete_sent_offer(o.getId());
-        System.out.println("\nRejected!\n");
-        Util.registerAction(this.getId(), "Reject-Offer SN :(" + o.getPSN() + ") Discount :(" + o.getDiscount() + ").");
+        int id = Check.CheckOfferID();
+        if (id == -1) {
+            System.out.println("No Offer Rejected!");
+        } else {
+            Offer o = SentOffersDB.get_sent_offer(id);
+            SentOffersDB.delete_sent_offer(o.getId());
+            System.out.println("\nRejected!\n");
+            Util.registerAction(this.getId(), "Reject-Offer SN :(" + o.getPSN() + ") Discount :(" + o.getDiscount() + ").");
+        }
     }
 
 }

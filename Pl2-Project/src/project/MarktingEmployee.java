@@ -11,7 +11,6 @@ import database.ProductDB;
 import database.RProductDB;
 import database.SentOffersDB;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MarktingEmployee extends Employee {
 
@@ -28,7 +27,6 @@ public class MarktingEmployee extends Employee {
         return "ME." + super.getTitle();
     }
 
-    //Scanner input = new Scanner(System.in);
     public int openList() {
         int c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
@@ -38,7 +36,7 @@ public class MarktingEmployee extends Employee {
                     + "\nMake products reports.                       (Enter 1)"
                     + "\nMake offer and send it to the Inventory Dep. (Enter 2)"
                     + "\nAlter your information.                      (Enter 3)"
-                    + "\nAlter your password.                         (Enter 4)"
+                    + "\nAlter your User-Name and Password.           (Enter 4)"
                     + "\nDisplay all your previous actions.           (Enter 5)"
                     + "\nLogOut.                                      (Enter 6)\n");
             System.out.printf("?: ");
@@ -49,6 +47,9 @@ public class MarktingEmployee extends Employee {
                 System.out.println("Invaild Input!");
                 continue;
             }
+            if (c == 6) {
+                break;
+            }
 
             switch (c) {
                 case 1:
@@ -57,12 +58,11 @@ public class MarktingEmployee extends Employee {
                 case 2:
                     Make_offer_and_send_it();
                     break;
-
                 case 3:
-                    AlterInformation();
+                    alterInformation();
                     break;
                 case 4:
-                    AlterPassword();
+                    alterUserNameAndPassword();
                     break;
                 case 5:
                     displayPreviousActions();
@@ -167,17 +167,16 @@ public class MarktingEmployee extends Employee {
 
     private void Make_offer_and_send_it() {
         System.out.printf("Enter the SN of the product : ");
-        int psn = Check.CheckSerialNumber(); // need to ask
-        if (sn == -1) {
+        int psn = Check.CheckSerialNumber();
+        if (psn == -1) {
             System.out.println("No offers made");
         } else {
             System.out.printf("Enter the discount : ");
-            double discount = input.nextDouble();
+            double discount = Check.CheckDoubleNumber();
             System.out.println("\nOffer Sent!");
-            SentOffersDB.add_sent_offer(new Offer(psn,discount));
+            SentOffersDB.add_sent_offer(new Offer(psn, discount));
             Util.registerAction(this.getId(), "Sent-Offer SN :(" + psn + ") Discount :(" + discount + ").");
         }
-
     }
 
     private void sortByPrice(ArrayList<Product> list) {
@@ -226,23 +225,24 @@ public class MarktingEmployee extends Employee {
         }
     }
 
-    public void AlterInformation() {
-        System.out.print("Enter the new frist name: ");
-        String fname = input.next();
-        System.out.print("Enter the new last name: ");
-        String lname = input.next();
-        String password = this.getPassword();
+    private void alterInformation() {
+        System.out.printf("Enter first name : ");
+        String fname = Check.CheckFname();
+        System.out.printf("Enter last name : ");
+        String lname = Check.CheckLname();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
         System.out.println("\nUpdated!\n");
         Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
 
-    public void AlterPassword() {
-        System.out.print("Enter the new password: ");
-        String password = input.next();
-        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+    void alterUserNameAndPassword() {
+        System.out.printf("Enter user name : ");
+        String username = Check.CheckNewUsername();
+        System.out.printf("Enter password : ");
+        String password = Check.CheckPassword();
+        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
         System.out.println("\nUpdated!\n");
-        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
+        Util.registerAction(this.getId(), "Update-Your User-Name & Password.");
     }
 
     private void displayPreviousActions() {

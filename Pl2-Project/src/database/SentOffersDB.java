@@ -98,4 +98,14 @@ public class SentOffersDB {
         }
         return false;
     }
+    
+    public static boolean isExist(int id) {
+        ArrayList<Offer> list = SentOffersDB.get_sent_offers();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

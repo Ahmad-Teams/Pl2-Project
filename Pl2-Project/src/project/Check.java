@@ -10,6 +10,7 @@ import database.EmployeeDB;
 import database.ProductDB;
 import database.OrderDB;
 import database.RProductDB;
+import database.SentOffersDB;
 import java.util.ArrayList;
 
 /**
@@ -34,7 +35,7 @@ public class Check {
                 System.out.print("Try again: ");
                 b = true;
             } catch (WronghName e) {
-                System.out.println("The First name must contain letters only (a->z or A->Z)");
+                System.out.println("The name must contain letters only (a->z or A->Z)");
                 System.out.print("Try again: ");
                 b = true;
             }
@@ -54,7 +55,7 @@ public class Check {
                 System.out.print("Try again: ");
                 b = true;
             } catch (WronghName e) {
-                System.out.println("The Last name must be letters only (a->z or A->Z)");
+                System.out.println("The name must be letters only (a->z or A->Z)");
                 System.out.print("Try again: ");
                 b = true;
             }
@@ -94,13 +95,34 @@ public class Check {
                 System.out.print("Try again: ");
                 b = true;
             } catch (InputMismatchException e) {
-                System.out.println("The number must be positive numbers only");
+                System.out.println("The Input must be positive numbers only");
                 System.out.print("Try again: ");
                 input.nextLine();
                 b = true;
             }
         } while (b);
         return Integer.parseInt(s);
+    }
+
+    public static double CheckDoubleNumber() {
+
+        do {
+            try {
+                s = input.nextDouble() + "";
+                IsNegative(s);
+                b = false;
+            } catch (NoInput e) {
+                System.out.println("Their is no input");
+                System.out.print("Try again: ");
+                b = true;
+            } catch (InputMismatchException e) {
+                System.out.println("The Input must be positive numbers only");
+                System.out.print("Try again: ");
+                input.nextLine();
+                b = true;
+            }
+        } while (b);
+        return Double.parseDouble(s);
     }
 
     public static int CheckID() {
@@ -123,11 +145,17 @@ public class Check {
             } catch (IDDoesNotExists e) {
                 char c;
                 System.out.println("The ID doesn't exists");
-                System.out.print("Try again (Y / N): ");
-                c = input.next().charAt(0);
-                if (c == 'N' || c == 'n') {
-                    return -1;
-                }
+                do {
+                    System.out.print("Try again (Y / N): ");
+                    c = input.next().charAt(0);
+                    if (c == 'N' || c == 'n') {
+                        return -1;
+                    }
+                    if (c == 'Y' || c == 'y') {
+                        break;
+                    }
+                } while (c != 'N' || c != 'n' || c != 'Y' || c != 'y');
+                System.out.print("Try again: ");
                 input.nextLine();
                 b = true;
             }
@@ -135,11 +163,27 @@ public class Check {
         return Integer.parseInt(s);
     }
 
+    public static String CheckPassword() {
+
+        do {
+            try {
+                s = input.next();
+                IsEmptyInput(s);
+                b = false;
+            } catch (NoInput e) {
+                System.out.println("Their is no input");
+                System.out.print("Try again: ");
+                b = true;
+            }
+        } while (b);
+        return s;
+    }
+
     public static String CheckNewUsername() {
 
         do {
             try {
-                s = input.nextLine();
+                s = input.next();
                 CheckScannedNewUserName(s);
                 b = false;
             } catch (NoInput e) {
@@ -163,7 +207,7 @@ public class Check {
 
         do {
             try {
-                s = input.nextLine();
+                s = input.next();
                 CheckScannedExpierdDate(s);
                 b = false;
             } catch (NoInput e) {
@@ -203,11 +247,17 @@ public class Check {
             } catch (IDDoesNotExists e) {
                 char c;
                 System.out.println("The serial number doesn't exists");
-                System.out.print("Try again (Y / N): ");
-                c = input.next().charAt(0);
-                if (c == 'N' || c == 'n') {
-                    return -1;
-                }
+                do {
+                    System.out.print("Try again (Y / N): ");
+                    c = input.next().charAt(0);
+                    if (c == 'N' || c == 'n') {
+                        return -1;
+                    }
+                    if (c == 'Y' || c == 'y') {
+                        break;
+                    }
+                } while (c != 'N' || c != 'n' || c != 'Y' || c != 'y');
+                System.out.print("Try again: ");
                 input.nextLine();
                 b = true;
             }
@@ -235,11 +285,17 @@ public class Check {
             } catch (IDDoesNotExists e) {
                 char c;
                 System.out.println("The serial number doesn't exists");
-                System.out.print("Try again (Y / N): ");
-                c = input.next().charAt(0);
-                if (c == 'N' || c == 'n') {
-                    return -1;
-                }
+                do {
+                    System.out.print("Try again (Y / N): ");
+                    c = input.next().charAt(0);
+                    if (c == 'N' || c == 'n') {
+                        return -1;
+                    }
+                    if (c == 'Y' || c == 'y') {
+                        break;
+                    }
+                } while (c != 'N' || c != 'n' || c != 'Y' || c != 'y');
+                System.out.print("Try again: ");
                 input.nextLine();
                 b = true;
             }
@@ -267,11 +323,54 @@ public class Check {
             } catch (IDDoesNotExists e) {
                 char c;
                 System.out.println("The ID doesn't exists");
-                System.out.print("Try again (Y / N): ");
-                c = input.next().charAt(0);
-                if (c == 'N' || c == 'n') {
-                    return -1;
-                }
+                do {
+                    System.out.print("Try again (Y / N): ");
+                    c = input.next().charAt(0);
+                    if (c == 'N' || c == 'n') {
+                        return -1;
+                    }
+                    if (c == 'Y' || c == 'y') {
+                        break;
+                    }
+                } while (c != 'N' || c != 'n' || c != 'Y' || c != 'y');
+                System.out.print("Try again: ");
+                input.nextLine();
+                b = true;
+            }
+        } while (b);
+        return Integer.parseInt(s);
+    }
+
+    public static int CheckOfferID() {
+        do {
+            try {
+                s = input.nextInt() + "";
+                IsNegative(s);
+                SearchOfferID(s);
+                b = false;
+            } catch (NoInput e) {
+                System.out.println("Their is no input");
+                System.out.print("Try again: ");
+                b = true;
+            } catch (InputMismatchException e) {
+                System.out.println("The ID must be positive numbers only");
+                System.out.print("Try again: ");
+                input.nextLine();
+                b = true;
+            } catch (IDDoesNotExists e) {
+                char c;
+                System.out.println("The ID doesn't exists");
+                do {
+                    System.out.print("Try again (Y / N): ");
+                    c = input.next().charAt(0);
+                    if (c == 'N' || c == 'n') {
+                        return -1;
+                    }
+                    if (c == 'Y' || c == 'y') {
+                        break;
+                    }
+                } while (c != 'N' || c != 'n' || c != 'Y' || c != 'y');
+                System.out.print("Try again: ");
                 input.nextLine();
                 b = true;
             }
@@ -320,14 +419,6 @@ public class Check {
         if (!EmployeeDB.isExist(Integer.parseInt(s))) {
             throw new IDDoesNotExists();
         }
-//        ArrayList<Employee> list = new ArrayList<>();
-//        list = EmployeeDB.get_employees();
-//        for (int i = 0; i < list.size(); i++) {
-//            if (list.get(i).getId() == Integer.parseInt(s)) {
-//                return;
-//            }
-//        }
-//        throw new IDDoesNotExists();
     }
 
     private static void SearchSN(String s) throws NoInput, IDDoesNotExists {
@@ -335,14 +426,6 @@ public class Check {
         if (!ProductDB.isExist(Integer.parseInt(s))) {
             throw new IDDoesNotExists();
         }
-//        ArrayList<Product> list = new ArrayList<>();
-//        list = ProductDB.get_products();
-//        for (int i = 0; i < list.size(); i++) {
-//            if (list.get(i).getSN() == Integer.parseInt(s)) {
-//                return;
-//            }
-//        }
-//        throw new IDDoesNotExists();
     }
 
     private static void SearchOrderID(String s) throws NoInput, IDDoesNotExists {
@@ -350,14 +433,13 @@ public class Check {
         if (!OrderDB.isExist(Integer.parseInt(s))) {
             throw new IDDoesNotExists();
         }
-//        ArrayList<Order> list = new ArrayList<>();
-//        list = OrderDB.get_orders();
-//        for (int i = 0; i < list.size(); i++) {
-//            if (list.get(i).getId() == Integer.parseInt(s)) {
-//                return;
-//            }
-//        }
-//        throw new IDDoesNotExists();
+    }
+
+    private static void SearchOfferID(String s) throws NoInput, IDDoesNotExists {
+        IsEmptyInput(s);
+        if (!SentOffersDB.isExist(Integer.parseInt(s))) {
+            throw new IDDoesNotExists();
+        }
     }
 
     private static void SearchRPSN(String s) throws NoInput, IDDoesNotExists {

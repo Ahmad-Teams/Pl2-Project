@@ -6,10 +6,7 @@
 package project;
 
 import database.EmployeeDB;
-import database.OrderDB;
-import database.ProductDB;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -30,7 +27,11 @@ public class project {
         do {
             System.out.printf("\nMain Menu:\nLogin (Enter 1)\nExit  (Enter 0)\n?:");
             c = Check.CheckNumber();
-            if (c != 1) {
+            if (c != 0 && c != 1) {
+                System.out.println("Invaild Input!");
+                continue;
+            }
+            if (c == 0) {
                 break;
             }
             System.out.printf("\nEnter User-Name: ");
@@ -42,8 +43,7 @@ public class project {
                 continue;
             }
 
-            ArrayList<Employee> list = new ArrayList<>();
-            list = EmployeeDB.get_employees();
+            ArrayList<Employee> list = EmployeeDB.get_employees();
 
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getUserName().equals(username) && list.get(i).getPassword().equals(password)) {
@@ -64,8 +64,8 @@ public class project {
                         salesEmp.openList();
                     }
                 }
-            }            
-        } while (c == 1);
+            }
+        } while (c != 0);
         System.out.println("Exit!");
     }
 
@@ -79,5 +79,5 @@ public class project {
         }
         return false;
     }
-    
+
 }

@@ -14,7 +14,7 @@ public class Employee {
     private int id;
     private String fName;
     private String lName;
-    private String fullName;
+    private String title;
     private String userName;
     private String password;
     private String eType;//A for Admin M for Markting I for inventory S for sales 
@@ -28,7 +28,7 @@ public class Employee {
         this.userName = userName;
         this.password = password;
         this.eType = eType;
-        this.fullName = this.fName + this.lName;
+        this.title = this.fName + this.lName;
     }
 
     public Employee(int id, String fName, String lName, String userName, String password, String eType) {
@@ -38,7 +38,7 @@ public class Employee {
         this.userName = userName;
         this.password = password;
         this.eType = eType;
-        this.fullName = this.fName + " " + this.lName;
+        this.title = this.fName + " " + this.lName;
     }
 
     public int getId() {
@@ -49,8 +49,8 @@ public class Employee {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getTitle() {
+        return title;
     }
 
     public String getfName() {

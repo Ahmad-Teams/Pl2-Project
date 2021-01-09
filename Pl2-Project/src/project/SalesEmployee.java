@@ -8,6 +8,7 @@ package project;
 import database.EmployeeDB;
 import database.ProductDB;
 import database.OrderDB;
+import database.PreviousActionsDB;
 import database.RProductDB;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -26,29 +27,30 @@ public class SalesEmployee extends Employee {
     }
 
     @Override
-    public String getFullName() {
-        return "SE." + super.getFullName();
+    public String getTitle() {
+        return "SE." + super.getTitle();
     }
 
     public int openList() {
-        ProductDB.update_products_states();
-        RProductDB.update_RProducts_states();
-
         int c;
-        System.out.println("\nHello ," + this.getfName() + "!");
+        System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
-            System.out.printf("\nSales Menu:"
-                    + "\nSearch for a product.              (Enter 1)"
-                    + "\nList all products.                 (Enter 2)"
-                    + "\nList all orders.                   (Enter 3)"
-                    + "\nMake an order.                     (Enter 4)"
-                    + "\nDelete an order.                   (Enter 5)"
-                    + "\nAlter your information.            (Enter 6)"//fname lname
-                    + "\nLogOut                             (Enter 7)\n");
-            System.out.printf("?: ");
-            c = Check.CheckNumber();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7) {
+            System.out.printf("\nSales Menu:"
+                    + "\nSearch for a Product.               (Enter 1)"
+                    + "\nList all Products.                  (Enter 2)"
+                    + "\nList all orders.                    (Enter 3)"
+                    + "\nMake an order.                      (Enter 4)"
+                    + "\nDelete an order.                    (Enter 5)"
+                    + "\nAlter your information.             (Enter 6)"
+                    + "\nAlter your password.                (Enter 7)"
+                    + "\nDisplay all your previous actions.  (Enter 8)"
+                    + "\nLogOut.                             (Enter 9)\n");
+            System.out.printf("?: ");
+            ProductDB.update_products_states();
+            RProductDB.update_RProducts_states();
+            c = Check.CheckNumber();
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9) {
                 System.out.println("Invaild Input!");
                 continue;
             }
@@ -70,12 +72,18 @@ public class SalesEmployee extends Employee {
                     delete_an_order();
                     break;
                 case 6:
-                    update_info();
+                    AlterInformation();
+                    break;
+                case 7:
+                    AlterPassword();
+                    break;
+                case 8:
+                    displayPreviousActions();
                     break;
             }
 
-        } while (c != 7);
-        System.out.println("bey bey ," + this.getfName() + "!");
+        } while (c != 9);
+        System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }
 
@@ -87,31 +95,21 @@ public class SalesEmployee extends Employee {
         if (sn == -1) {
             System.out.println("No update happened");
         } else {
-            int c = 0;                  //??????
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getSN() == sn) {
-                    System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
-                    System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-                    System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-                    System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
-                }
-
-            }
-            if (c == 0) {                  //??????
-                System.out.printf("\nNot found\n");
-            }
+            if (list.get(i).getSN() == sn) {
+                Util.PrintProductHeader();
+                Util.PrintProduct(list.get(i));
+             }
+           }
         }
-
     }
 
     private void print_list_Product() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
-        System.out.printf("%-6s%-10s%-10s%-15s%-10s%-10s%-15s&-10s%-10s\n", "SN", "Name", "Price", "Orignal price", "Disscount", "Amount", "Expier data", "Min Range", "State");
+        Util.PrintProductHeader();
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-6s%-10s%-10d", list.get(i).getSN(), list.get(i).getName(), list.get(i).getPrice());
-            System.out.printf("%-15d%-10d%-10d", list.get(i).getOrignalPrice(), list.get(i).getDiscount(), list.get(i).getAmount());
-            System.out.printf("%-15s%-10s%-10s\n", list.get(i).getEPD(), list.get(i).getMinRange(), list.get(i).getpState());
+            Util.PrintProduct(list.get(i));
         }
     }
 
@@ -133,40 +131,49 @@ public class SalesEmployee extends Employee {
         if (psn == -1) {
             System.out.println("No update happened");
         } else {
-            Order O = new Order(psn, amount);
-            OrderDB.add_order(O);
+            OrderDB.add_order(new Order(psn, amount));
+            System.out.println("\nAdded!\n");
+            Util.registerAction(this.getId(), "Add-Order SN:(" + psn + ") Amount:(" + amount + ").");
         }
-    }
-
-    private void update_info() {
-        System.out.print("Enter the ID: ");         //why is this here ??? he should change his informations only ???
-        int id = Check.CheckID();
-        if (id == -1) {
-            System.out.println("No update happened");
-        } else {
-            System.out.print("Enter the frist name: ");
-            String fname = Check.CheckFname();
-            System.out.print("Enter the last name: ");
-            String lname = Check.CheckFname();
-            EmployeeDB.update_employee_info(id, fname, lname);
-        }
+      }
     }
 
     private void delete_an_order() {
-//        ArrayList<Order> list = new ArrayList<>();                //why is this here ??? it's not used
-//        list = OrderDB.get_orders();
         System.out.printf("Enter the order id: ");
         int id = Check.CheckOrderID();
         if (id == -1) {
             System.out.println("No deletion happened");
         } else {
-            if (OrderDB.isExist(id)) {
                 OrderDB.delete_order(id);
                 System.out.println("\nDeleted!");
-            } else {
-                System.out.println("\nOrder not found!");
-            }
+                Util.registerAction(this.getId(), "Delete-Order SN:(" + psn + ").");
         }
     }
 
+    public void AlterInformation() {
+        System.out.print("Enter the new frist name: ");
+        String fname = input.next();
+        System.out.print("Enter the new last name: ");
+        String lname = input.next();
+        String password = this.getPassword();
+        EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
+        System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
+    }
+
+    public void AlterPassword() {
+        System.out.print("Enter the new password: ");
+        String password = input.next();
+        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), this.getUserName(), password, this.getEType());
+        System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
+    }
+
+    private void displayPreviousActions() {
+        ArrayList<Action> list = PreviousActionsDB.get_actions(this.getId());
+        Util.PrintActionHeader();
+        for (int i = 0; i < list.size(); i++) {
+            Util.PrintAction(list.get(i));
+        }
+    }
 }

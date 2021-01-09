@@ -6,6 +6,7 @@
 package project;
 
 import database.EmployeeDB;
+import database.PreviousActionsDB;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,14 +21,14 @@ public class AdminEmployee extends Employee {
     }
 
     @Override
-    public String getFullName() {
-        return "AD." + super.getFullName();
+    public String getTitle() {
+        return "AD." + super.getTitle();
     }
 
     public int openList() {
         Scanner input = new Scanner(System.in);
-        int c;
-        System.out.println("\nHello ," + this.getfName() + "!");
+        char c;
+        System.out.println("\nHello ," + this.getfName() + "!\n");
         do {
             System.out.printf("\nAdminstration Menu:"
                     + "\nAdd a new employee.                 (Enter 1)"
@@ -37,48 +38,52 @@ public class AdminEmployee extends Employee {
                     + "\nSearch for an employee.             (Enter 5)"// Search id or username // print value only
                     + "\nAlter your general information.     (Enter 6)"
                     + "\nAlter your User-Name and Password.  (Enter 7)"
-                    + "\nLogOut                              (Enter 8)\n");
+                    + "\nDisplay all your previous actions.  (Enter 8)"
+                    + "\nLogOut                              (Enter 9)\n");
             System.out.printf("?: ");
             c = Check.CheckNumber();
 
-            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 & c != 8) {
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9) {
+
                 System.out.println("Invaild Input!");
                 continue;
             }
 
             switch (c) {
-                case 1:
+                case '1':
                     Add_new_employee();
                     break;
-                case 2:
+                case '2':
                     Delete_an_employee();
                     break;
-                case 3:
+                case '3':
                     Update_an_employee_information();
                     break;
-                case 4:
+                case '4':
                     list_all_employees();
                     break;
-                case 5:
+                case '5':
                     search();
                     break;
-                case 6:
+                case '6':
                     update_general_info();
                     break;
-                case 7:
-                    update_general();
+                case '7':
+                    update_userName_password();
+                    break;
+                case '8':
+                    displayPreviousActions();
                     break;
             }
 
-        } while (c != 8);
-        System.out.println("bey bey ," + this.getfName() + "!");
+        } while (c != '9');
+        System.out.println("bey bey ," + this.getfName() + "!\n");
         return 0;
     }
 
     private void Add_new_employee() {
         String fName;
         String lName;
-        //String fullName;
         String userName;
         String password;
         String eType = "";
@@ -87,12 +92,11 @@ public class AdminEmployee extends Employee {
         fName = Check.CheckFname();
         System.out.print("Enter employee's last name: ");
         lName = Check.CheckLname();
-        //fullName = fName + lName;
         System.out.print("Enter employee's username: ");
         userName = Check.CheckNewUsername();
         System.out.print("Enter employee's password: ");
         password = input.nextLine();
-        int c;
+        char c;
         do {
             System.out.printf("\nEmployee Type:"
                     + "\nAminstration Departement.   (Enter 1)"
@@ -102,38 +106,41 @@ public class AdminEmployee extends Employee {
             );
             System.out.printf("?: ");
             c = Check.CheckNumber();
-
             if (c != 1 && c != 2 && c != 3 && c != 4) {
                 System.out.println("Invaild Input!");
                 continue;
             }
 
             switch (c) {
-                case 1:
+                case '1':
                     eType = "A";
                     break;
-                case 2:
+                case '2':
                     eType = "M";
                     break;
-                case 3:
+                case '3':
                     eType = "I";
                     break;
-                case 4:
+                case '4':
                     eType = "S";
                     break;
             }
-        } while (c != 1 && c != 2 && c != 3 && c != 4);
+        } while (c != '1' && c != '2' && c != '3' && c != '4');
 
         if (eType.equals("A")) {
             EmployeeDB.add_employee(new AdminEmployee(fName, lName, userName, password));
+            Util.registerAction(this.getId(), "Add-Admin_Employee:(" + fName + ").");
         } else if (eType.equals("M")) {
             EmployeeDB.add_employee(new MarktingEmployee(fName, lName, userName, password));
+            Util.registerAction(this.getId(), "Add-Markting_Employee:(" + fName + ").");
         } else if (eType.equals("S")) {
             EmployeeDB.add_employee(new SalesEmployee(fName, lName, userName, password));
+            Util.registerAction(this.getId(), "Add-Sales_Employee:(" + fName + ").");
         } else if (eType.equals("I")) {
             EmployeeDB.add_employee(new InventoryEmployee(fName, lName, userName, password));
+            Util.registerAction(this.getId(), "Add-Inventory_Employee:(" + fName + ").");
         }
-        System.out.printf("\n%s is Added!\n", fName);
+        System.out.println("\nAdded!\n");
     }
 
     private void Delete_an_employee() {
@@ -145,6 +152,8 @@ public class AdminEmployee extends Employee {
             System.out.println("No deletion happened");
         } else {
             EmployeeDB.delete_employee(id);
+            System.out.println("\nDeleted!\n");
+            Util.registerAction(this.getId(), "Delete-Employee ID:(" + id + ").");
         }
     }
 
@@ -172,7 +181,7 @@ public class AdminEmployee extends Employee {
             userName = Check.CheckNewUsername();
             System.out.print("Enter employee's password: ");
             password = input.next();
-            int c;
+            char c;
             do {
                 System.out.printf("\nEmployee Type:"
                         + "\nAminstration Departement.   (Enter 1)"
@@ -182,51 +191,48 @@ public class AdminEmployee extends Employee {
                 );
                 System.out.printf("?: ");
                 c = Check.CheckNumber();
-
                 if (c != 1 && c != 2 && c != 3 && c != 4) {
                     System.out.println("Invaild Input!");
                     continue;
                 }
 
                 switch (c) {
-                    case 1:
+                    case '1':
                         eType = "A";
                         break;
-                    case 2:
+                    case '2':
                         eType = "M";
                         break;
-                    case 3:
+                    case '3':
                         eType = "I";
                         break;
-                    case 4:
+                    case '4':
                         eType = "S";
                         break;
                 }
-            } while (c != 1 && c != 2 && c != 3 && c != 4);
+            } while (c != '1' && c != '2' && c != '3' && c != '4');
             EmployeeDB.update_employee(id, fName, lName, userName, password, eType);
-        }
-//        } else {
-//            System.out.println("\nNot Found!");
-//        }
+            System.out.println("\nUpdated!\n");
+            Util.registerAction(this.getId(), "Update-Employee ID:(" + id + ").");
     }
 
     private void list_all_employees() {
         ArrayList<Employee> list = new ArrayList<>();
         list = EmployeeDB.get_employees();
-        System.out.printf("\n%-5s %-20s %-15s %-15s %-15s %-15s %-10s \n", "ID", "Name", "First Name", "Last Name", "User Name", "Password", "Employee Type");
+        System.out.printf("\n%-5s %-20s %-15s %-15s %-15s %-15s %-10s \n", "ID", "Title", "First Name", "Last Name", "User Name", "Password", "Employee Type");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) instanceof AdminEmployee) {
                 AdminEmployee emp = (AdminEmployee) list.get(i);
-                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getTitle(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
             } else if (list.get(i) instanceof SalesEmployee) {
                 SalesEmployee emp = (SalesEmployee) list.get(i);
-                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getTitle(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
             } else if (list.get(i) instanceof MarktingEmployee) {
                 MarktingEmployee emp = (MarktingEmployee) list.get(i);
-                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getTitle(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
             } else if (list.get(i) instanceof InventoryEmployee) {
                 InventoryEmployee emp = (InventoryEmployee) list.get(i);
-                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getFullName(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
+                System.out.printf("%-5d %-20s %-15s %-15s %-15s %-15s %-10s \n", emp.getId(), emp.getTitle(), emp.getfName(), emp.getlName(), emp.getUserName(), emp.getPassword(), emp.getEType());
             }
         }
     }
@@ -237,17 +243,20 @@ public class AdminEmployee extends Employee {
         String fname = Check.CheckFname();
         System.out.printf("Enter last name : ");
         String lname = Check.CheckLname();
-        EmployeeDB.update_employee_info(this.getId(), fname, lname);
+        EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
+        System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
-
-    private void update_general() {
-
+              
+    void update_userName_password() {
         Scanner input = new Scanner(System.in);
         System.out.printf("Enter user name : ");
         String username = Check.CheckNewUsername();
         System.out.printf("Enter password : ");
         String password = input.next();
-        EmployeeDB.update_employee(this.getId(), username, password);
+        EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
+        System.out.println("\nUpdated!\n");
+        Util.registerAction(this.getId(), "Update-Your User-Name & Password.");
     }
 
     public void search() {
@@ -272,6 +281,14 @@ public class AdminEmployee extends Employee {
             }
         }
 
+    }
+
+    private void displayPreviousActions() {
+        ArrayList<Action> list = PreviousActionsDB.get_actions(this.getId());
+        Util.PrintActionHeader();
+        for (int i = 0; i < list.size(); i++) {
+            Util.PrintAction(list.get(i));
+        }
     }
 
 }

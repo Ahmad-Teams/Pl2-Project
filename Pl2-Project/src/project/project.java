@@ -22,6 +22,7 @@ public class project {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
         Scanner input = new Scanner(System.in);
         System.out.printf("\nHyper Market Management System\n");
         String username, password;
@@ -32,7 +33,6 @@ public class project {
             if (c != 1) {
                 break;
             }
-            
             System.out.printf("\nEnter User-Name: ");
             username = Check.CheckUsername();
             System.out.printf("Enter Password : ");
@@ -64,10 +64,8 @@ public class project {
                         salesEmp.openList();
                     }
                 }
-            }
-            
+            }            
         } while (c == 1);
-        
         System.out.println("Exit!");
     }
 

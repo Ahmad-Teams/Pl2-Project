@@ -26,12 +26,12 @@ public class Order {
         this.id = id;
     }
 
-    public Order(int id ,int PSN, int amount) {
+    public Order(int id, int PSN, int amount) {
         this.id = id;
         this.PSN = PSN;
         this.amount = amount;
     }
-    
+
     public Order(int PSN, int amount) {
         this.PSN = PSN;
         this.amount = amount;

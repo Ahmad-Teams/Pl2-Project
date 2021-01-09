@@ -28,8 +28,7 @@ public class MarktingEmployee extends Employee {
         return "ME." + super.getTitle();
     }
 
-    Scanner input = new Scanner(System.in);
-
+    //Scanner input = new Scanner(System.in);
     public int openList() {
         int c;
         System.out.println("\nHello ," + this.getfName() + "!\n");
@@ -45,12 +44,10 @@ public class MarktingEmployee extends Employee {
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
-
-            c = input.nextInt();
-            input.nextLine();
-
+            c = Check.CheckNumber();
             if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6) {
                 System.out.println("Invaild Input!");
+                continue;
             }
 
             switch (c) {
@@ -60,6 +57,7 @@ public class MarktingEmployee extends Employee {
                 case 2:
                     Make_offer_and_send_it();
                     break;
+
                 case 3:
                     AlterInformation();
                     break;
@@ -88,10 +86,11 @@ public class MarktingEmployee extends Employee {
                     + "\nList products ordered by the Price.  (Enter 6)"
                     + "\nExit.                                (Enter 7)\n");
             System.out.printf("?: ");
-            c = input.nextInt();
+            c = Check.CheckNumber();
 
             if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7) {
                 System.out.println("Invaild Input!");
+                continue;
             }
 
             switch (c) {
@@ -133,7 +132,7 @@ public class MarktingEmployee extends Employee {
 
     private void makeReportByHasPriceGreaterThan() {
         System.out.printf("Enter the price : ");
-        int price = input.nextInt();
+        int price = Check.CheckNumber();
         ArrayList<Product> list = ProductDB.get_products();
 
         Util.PrintProductHeader();
@@ -148,7 +147,7 @@ public class MarktingEmployee extends Employee {
 
     private void makeReportByHasPriceLessThan() {
         System.out.printf("Enter the price : ");
-        int price = input.nextInt();
+        int price = Check.CheckNumber();
         ArrayList<Product> list = ProductDB.get_products();
         Util.PrintProductHeader();
 
@@ -168,12 +167,17 @@ public class MarktingEmployee extends Employee {
 
     private void Make_offer_and_send_it() {
         System.out.printf("Enter the SN of the product : ");
-        int psn = input.nextInt();
-        System.out.printf("Enter the discount : ");
-        double discount = input.nextDouble();
-        System.out.println("\nOffer Sent!");
-        SentOffersDB.add_sent_offer(new Offer(psn,discount));
-        Util.registerAction(this.getId(), "Sent-Offer SN :(" + psn + ") Discount :(" + discount + ").");
+        int psn = Check.CheckSerialNumber(); // need to ask
+        if (sn == -1) {
+            System.out.println("No offers made");
+        } else {
+            System.out.printf("Enter the discount : ");
+            double discount = input.nextDouble();
+            System.out.println("\nOffer Sent!");
+            SentOffersDB.add_sent_offer(new Offer(psn,discount));
+            Util.registerAction(this.getId(), "Sent-Offer SN :(" + psn + ") Discount :(" + discount + ").");
+        }
+
     }
 
     private void sortByPrice(ArrayList<Product> list) {

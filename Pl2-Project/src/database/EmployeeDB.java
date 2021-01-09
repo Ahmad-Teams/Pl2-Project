@@ -134,7 +134,7 @@ public class EmployeeDB {
         return new Employee();
     }
 
-    public static boolean isExisit(int id) {
+    public static boolean isExist(int id) {
         ArrayList<Employee> list = EmployeeDB.get_employees();
 
         for (int i = 0; i < list.size(); i++) {

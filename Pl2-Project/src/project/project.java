@@ -26,20 +26,20 @@ public class project {
         Scanner input = new Scanner(System.in);
         System.out.printf("\nHyper Market Management System\n");
         String username, password;
-        char c;
+        int c;
         do {
             System.out.printf("\nMain Menu:\nLogin (Enter 1)\nExit  (Enter 0)\n?:");
-            c = input.nextLine().charAt(0);
-            if (c == '0') {
+            c = Check.CheckNumber();
+            if (c != 1) {
                 break;
             }
-
             System.out.printf("\nEnter User-Name: ");
-            username = input.nextLine();
+            username = Check.CheckUsername();
             System.out.printf("Enter Password : ");
             password = input.nextLine();
             if (!userExsist(username, password)) {
                 System.out.println("User Not Found!");
+                continue;
             }
 
             ArrayList<Employee> list = new ArrayList<>();
@@ -64,10 +64,8 @@ public class project {
                         salesEmp.openList();
                     }
                 }
-            }
-
-        } while (c == '1');
-
+            }            
+        } while (c == 1);
         System.out.println("Exit!");
     }
 
@@ -81,5 +79,5 @@ public class project {
         }
         return false;
     }
-
+    
 }

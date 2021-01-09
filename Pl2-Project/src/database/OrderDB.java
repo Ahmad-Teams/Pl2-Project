@@ -110,7 +110,7 @@ public class OrderDB {
         return new Order();
     }
 
-    public static boolean isExisit(int id) {
+    public static boolean isExist(int id) {
         ArrayList<Order> list = OrderDB.get_orders();
 
         for (int i = 0; i < list.size(); i++) {

@@ -41,9 +41,12 @@ public class AdminEmployee extends Employee {
                     + "\nDisplay all your previous actions.  (Enter 8)"
                     + "\nLogOut                              (Enter 9)\n");
             System.out.printf("?: ");
-            c = input.nextLine().charAt(0);
-            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6' && c != '7' && c != '8' && c != '9') {
+            c = Check.CheckNumber();
+
+            if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9) {
+
                 System.out.println("Invaild Input!");
+                continue;
             }
 
             switch (c) {
@@ -86,11 +89,11 @@ public class AdminEmployee extends Employee {
         String eType = "";
         Scanner input = new Scanner(System.in);
         System.out.print("Enter employee's first name: ");
-        fName = input.nextLine();
+        fName = Check.CheckFname();
         System.out.print("Enter employee's last name: ");
-        lName = input.nextLine();
+        lName = Check.CheckLname();
         System.out.print("Enter employee's username: ");
-        userName = input.nextLine();
+        userName = Check.CheckNewUsername();
         System.out.print("Enter employee's password: ");
         password = input.nextLine();
         char c;
@@ -102,9 +105,10 @@ public class AdminEmployee extends Employee {
                     + "\nSales Departement.          (Enter 4)\n"
             );
             System.out.printf("?: ");
-            c = input.nextLine().charAt(0);
-            if (c != '1' && c != '2' && c != '3' && c != '4') {
+            c = Check.CheckNumber();
+            if (c != 1 && c != 2 && c != 3 && c != 4) {
                 System.out.println("Invaild Input!");
+                continue;
             }
 
             switch (c) {
@@ -143,11 +147,14 @@ public class AdminEmployee extends Employee {
         int id;
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the id of the employee you want to delete: ");
-        id = input.nextInt();
-        EmployeeDB.delete_employee(id);
-        System.out.println("\nDeleted!\n");
-        Util.registerAction(this.getId(), "Delete-Employee ID:(" + id + ").");
-
+        id = Check.CheckID();
+        if (id == -1) {
+            System.out.println("No deletion happened");
+        } else {
+            EmployeeDB.delete_employee(id);
+            System.out.println("\nDeleted!\n");
+            Util.registerAction(this.getId(), "Delete-Employee ID:(" + id + ").");
+        }
     }
 
     private void Update_an_employee_information() {
@@ -160,15 +167,18 @@ public class AdminEmployee extends Employee {
         String eType = "";
         Scanner input = new Scanner(System.in);
         System.out.print("Enter employee's id: ");
-        id = input.nextInt();
-        if (EmployeeDB.isExisit(id)) {
+        id = Check.CheckID();
+        if (id == -1) {
+            System.out.println("No update happened");
+        } else {
+//        if (EmployeeDB.isExist(id)) {
             System.out.print("Enter employee's first name: ");
-            fName = input.next();
+            fName = Check.CheckFname();
             System.out.print("Enter employee's last name: ");
-            lName = input.next();
+            lName = Check.CheckLname();
             //fullName=fName+lName;
             System.out.print("Enter employee's username: ");
-            userName = input.next();
+            userName = Check.CheckNewUsername();
             System.out.print("Enter employee's password: ");
             password = input.next();
             char c;
@@ -180,10 +190,10 @@ public class AdminEmployee extends Employee {
                         + "\nSales Departement.          (Enter 4)\n"
                 );
                 System.out.printf("?: ");
-                c = input.nextLine().charAt(0);
-
+                c = Check.CheckNumber();
                 if (c != 1 && c != 2 && c != 3 && c != 4) {
                     System.out.println("Invaild Input!");
+                    continue;
                 }
 
                 switch (c) {
@@ -204,9 +214,6 @@ public class AdminEmployee extends Employee {
             EmployeeDB.update_employee(id, fName, lName, userName, password, eType);
             System.out.println("\nUpdated!\n");
             Util.registerAction(this.getId(), "Update-Employee ID:(" + id + ").");
-        } else {
-            System.out.println("\nNot Found!");
-        }
     }
 
     private void list_all_employees() {
@@ -230,22 +237,21 @@ public class AdminEmployee extends Employee {
         }
     }
 
-    void update_general_info() {
+    private void update_general_info() {
         Scanner input = new Scanner(System.in);
-        System.out.printf("Enter the new first name : ");
-        String fname = input.next();
-        System.out.printf("Enter the new last name : ");
-        String lname = input.next();
+        System.out.printf("Enter first name : ");
+        String fname = Check.CheckFname();
+        System.out.printf("Enter last name : ");
+        String lname = Check.CheckLname();
         EmployeeDB.update_employee(this.getId(), fname, lname, this.getUserName(), this.getPassword(), this.getEType());
         System.out.println("\nUpdated!\n");
         Util.registerAction(this.getId(), "Update-Your First-Name & Last-Name.");
     }
-
+              
     void update_userName_password() {
-
         Scanner input = new Scanner(System.in);
         System.out.printf("Enter user name : ");
-        String username = input.next();
+        String username = Check.CheckNewUsername();
         System.out.printf("Enter password : ");
         String password = input.next();
         EmployeeDB.update_employee(this.getId(), this.getfName(), this.getlName(), username, password, this.getEType());
@@ -258,17 +264,20 @@ public class AdminEmployee extends Employee {
         ArrayList<Employee> list = new ArrayList<>();
         list = EmployeeDB.get_employees();
         System.out.printf("Enter id : ");
-        int id = input.nextInt();
+        int id = Check.CheckID();
+        if (id == -1) {
+            System.out.println("No search happened");
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getId() == id) {
+                    System.out.println("id : \t" + list.get(i).getId());
+                    System.out.println("first name : \t" + list.get(i).getfName());
+                    System.out.println("last name : \t" + list.get(i).getlName());
+                    System.out.println("user name : \t" + list.get(i).getUserName());
+                    System.out.println("password : \t" + list.get(i).getfName());
+                    System.out.println("employee type : " + list.get(i).getEType());
 
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId() == id) {
-                System.out.println("id : \t" + list.get(i).getId());
-                System.out.println("first name : \t" + list.get(i).getfName());
-                System.out.println("last name : \t" + list.get(i).getlName());
-                System.out.println("user name : \t" + list.get(i).getUserName());
-                System.out.println("password : \t" + list.get(i).getfName());
-                System.out.println("employee type : " + list.get(i).getEType());
-
+                }
             }
         }
 

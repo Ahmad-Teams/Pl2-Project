@@ -17,8 +17,7 @@ import project.Product;
 
 public class SalesEmployee extends Employee {
 
-    Scanner input = new Scanner(System.in);
-
+    //Scanner input = new Scanner(System.in);
     public SalesEmployee(int id, String fName, String lName, String userName, String password) {
         super(id, fName, lName, userName, password, "S");
     }
@@ -50,12 +49,10 @@ public class SalesEmployee extends Employee {
             System.out.printf("?: ");
             ProductDB.update_products_states();
             RProductDB.update_RProducts_states();
-
-            c = input.nextInt();
-            input.nextLine();
-
+            c = Check.CheckNumber();
             if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9) {
                 System.out.println("Invaild Input!");
+                continue;
             }
 
             switch (c) {
@@ -90,26 +87,24 @@ public class SalesEmployee extends Employee {
         return 0;
     }
 
-    void search() {
+    private void search() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
         System.out.print("Enter the serial number : ");
-        int sn = input.nextInt();
-        int c = 0;
-        for (int i = 0; i < list.size(); i++) {
+        int sn = Check.CheckSerialNumber();
+        if (sn == -1) {
+            System.out.println("No update happened");
+        } else {
+            for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getSN() == sn) {
                 Util.PrintProductHeader();
                 Util.PrintProduct(list.get(i));
-            }
-
+             }
+           }
         }
-        if (c == 0) {
-            System.out.printf("\nnot found\n");
-        }
-
     }
 
-    void print_list_Product() {
+    private void print_list_Product() {
         ArrayList<Product> list = new ArrayList<>();
         list = ProductDB.get_products();
         Util.PrintProductHeader();
@@ -118,7 +113,7 @@ public class SalesEmployee extends Employee {
         }
     }
 
-    void print_list_Order() {
+    private void print_list_Order() {
         ArrayList<Order> list = new ArrayList<>();
         list = OrderDB.get_orders();
         System.out.printf("\n%-5s %-15s\n", "PSN", "AMOUNT");
@@ -128,28 +123,31 @@ public class SalesEmployee extends Employee {
         }
     }
 
-    void make_an_order() {
+    private void make_an_order() {
         System.out.print("Enter the amount: ");
-        int amount = input.nextInt();
-        System.out.print("Enter the RProduct serial number: ");
-        int psn = input.nextInt();
-        OrderDB.add_order(new Order(psn, amount));
-        System.out.println("\nAdded!\n");
-        Util.registerAction(this.getId(), "Add-Order SN:(" + psn + ") Amount:(" + amount + ").");
+        int amount = Check.CheckNumber();
+        System.out.print("Enter the product serial number: ");
+        int psn = Check.CheckSerialNumber();
+        if (psn == -1) {
+            System.out.println("No update happened");
+        } else {
+            OrderDB.add_order(new Order(psn, amount));
+            System.out.println("\nAdded!\n");
+            Util.registerAction(this.getId(), "Add-Order SN:(" + psn + ") Amount:(" + amount + ").");
+        }
+      }
     }
 
-    void delete_an_order() {
-        ArrayList<Order> list = new ArrayList<>();
-        list = OrderDB.get_orders();
+    private void delete_an_order() {
         System.out.printf("Enter the order id: ");
-        int psn = input.nextInt();
-        if (OrderDB.isExisit(psn)) {
-            OrderDB.delete_order(psn);
-            System.out.println("\nDeleted!\n");
+        int id = Check.CheckOrderID();
+        if (id == -1) {
+            System.out.println("No deletion happened");
         } else {
-            System.out.println("\nOrder not found!");
+                OrderDB.delete_order(id);
+                System.out.println("\nDeleted!");
+                Util.registerAction(this.getId(), "Delete-Order SN:(" + psn + ").");
         }
-        Util.registerAction(this.getId(), "Delete-Order SN:(" + psn + ").");
     }
 
     public void AlterInformation() {

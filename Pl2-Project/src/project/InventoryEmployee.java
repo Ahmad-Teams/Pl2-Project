@@ -17,8 +17,7 @@ import java.util.logging.Logger;
 
 public class InventoryEmployee extends Employee {
 
-    Scanner input = new Scanner(System.in);
-
+    //Scanner input = new Scanner(System.in);
     public InventoryEmployee(int id, String fName, String lName, String userName, String password) {
         super(id, fName, lName, userName, password, "I");
     }
@@ -36,7 +35,7 @@ public class InventoryEmployee extends Employee {
         ProductDB.update_products_states();
         RProductDB.update_RProducts_states();
 
-        Scanner input = new Scanner(System.in);
+        //Scanner input = new Scanner(System.in);
         int c;
         System.out.println("\nHello ," + this.getfName() + "!");
         do {
@@ -52,11 +51,11 @@ public class InventoryEmployee extends Employee {
                     + "\nAlter your information.                     (Enter 9)"
                     + "\nLogOut                                      (Enter 10)\n");
             System.out.printf("?: ");
-            c = input.nextInt();
-            input.nextLine();
+            c = Check.CheckNumber();
 
             if (c != 1 && c != 2 && c != 3 && c != 4 && c != 5 && c != 6 && c != 7 && c != 8 && c != 9 && c != 10) {
                 System.out.println("Invaild Input!");
+                continue;
             }
 
             switch (c) {
@@ -75,7 +74,7 @@ public class InventoryEmployee extends Employee {
                 case 5:
                     listProduct();
                     break;
-                case 6:
+                case 6:             // where is the method ????
                     break;
                 case 7:
                     ManageDamagesItems();
@@ -83,8 +82,7 @@ public class InventoryEmployee extends Employee {
                 case 8:
                     ManageSalesReturn();
                     break;
-                case 9:
-
+                case 9:             // where is the method ????
                     break;
             }
 
@@ -95,18 +93,17 @@ public class InventoryEmployee extends Employee {
 
     public void newProduct() {
         System.out.printf("Enter Product Name: ");
-        String name = input.nextLine();
+        String name = Check.CheckFname();
         System.out.printf("Enter Original Price: ");
-        int OP = input.nextInt();
+        int OP = Check.CheckNumber();
         System.out.printf("Enter Discount: ");
-        int diss = input.nextInt();
+        int diss = Check.CheckNumber();
         System.out.printf("Enter Amount: ");
-        int amount = input.nextInt();
-        input.nextLine();
+        int amount = Check.CheckNumber();
         System.out.printf("Enter Expierd Date: ");
-        String EPD = input.nextLine();
+        String EPD = Check.CheckExpierdDate();
         System.out.printf("Enter the Minmum Range: ");
-        int minRange = input.nextInt();
+        int minRange = Check.CheckNumber();
         Product d = new Product(name, OP, diss, amount, EPD, minRange);
         ProductDB.add_product(d);
         System.out.println("\nAdded!");
@@ -114,18 +111,17 @@ public class InventoryEmployee extends Employee {
 
     public void newRProduct() {
         System.out.printf("Enter Product Name: ");
-        String name = input.nextLine();
+        String name = Check.CheckFname();
         System.out.printf("Enter Original Price: ");
-        int OP = input.nextInt();
+        int OP = Check.CheckNumber();
         System.out.printf("Enter Discount: ");
-        int diss = input.nextInt();
+        int diss = Check.CheckNumber();
         System.out.printf("Enter Amount: ");
-        int amount = input.nextInt();
-        input.nextLine();
+        int amount = Check.CheckNumber();
         System.out.printf("Enter Expierd Date: ");
-        String EPD = input.nextLine();
+        String EPD = Check.CheckExpierdDate(); // Need to ask
         System.out.printf("Enter the Minmum Range: ");
-        int minRange = input.nextInt();
+        int minRange = Check.CheckNumber(); // Need to ask
         Product d = new Product(name, OP, diss, amount, EPD, minRange);
         RProductDB.add_RProduct(d);
         System.out.println("\nAdded!");
@@ -134,17 +130,25 @@ public class InventoryEmployee extends Employee {
     public void deleteProduct() {
         int sn;
         System.out.printf("Enter Product Serial Number: ");
-        sn = input.nextInt();
-        ProductDB.delete_product(sn);
-        System.out.println("\nDeleted!\n");
+        sn = Check.CheckSerialNumber(); // Need to ask
+        if (sn == -1) {
+            System.out.println("No deletion happened");
+        } else {
+            ProductDB.delete_product(sn);
+            System.out.println("\nDeleted!\n");
+        }
     }
 
     public void deleteEProduct() {
         int sn;
         System.out.printf("Enter Product Serial Number: ");
-        sn = input.nextInt();
-        ProductDB.delete_product(sn);
-        System.out.println("\nDeleted!\n");
+        sn = Check.CheckSerialNumber(); // Need to ask
+        if (sn == -1) {
+            System.out.println("No deletion happened");
+        } else {
+            ProductDB.delete_product(sn);
+            System.out.println("\nDeleted!\n");
+        }
     }
 
     public void deleteAllEProduct() {
@@ -158,42 +162,46 @@ public class InventoryEmployee extends Employee {
     public void updateProduct() {
         System.out.printf("if you want to update discount only. (Enter 1)\n"
                 + "for update all product info.         (Enter 2)\n?: ");
-        int choice = input.nextInt();
+        int choice = Check.CheckNumber();
         System.out.printf("Enter Product Serial Number: ");
-        int sn = input.nextInt();
-
-        if (ProductDB.isExsist(sn)) {
-            if (choice == 1) {
-
-                System.out.printf("Enter  Discount: ");
-                int diss = input.nextInt();
-
-                ProductDB.update_product(sn, diss);
-                System.out.println("\nUpdated!\n");
-            } else if (choice == 2) {
-                input.nextLine();
-                System.out.printf("Enter new Name: ");
-                String name = input.nextLine();
-                System.out.printf("Enter  Original Price: ");
-                int OP = input.nextInt();
-                System.out.printf("Enter  Discount: ");
-                int diss = input.nextInt();
-                System.out.printf("Enter Amount: ");
-                int amount = input.nextInt();
-                input.nextLine();
-                System.out.printf("Enter Expier Date: ");
-                String EPD = input.nextLine();
-                System.out.printf("Enter the Minmum Range: ");
-                int minRange = input.nextInt();
-                ProductDB.update_product(sn, name, OP, diss, amount, EPD, minRange);
-                System.out.println("\nUpdated!\n");
-            }
+        int sn = Check.CheckSerialNumber();
+        if (sn == -1) {
+            System.out.println("No update happened");
         } else {
-            System.out.println("\nProduct not found!\n");
+
+            if (ProductDB.isExist(sn)) {        //this condition will be ometed
+                if (choice == 1) {
+
+                    System.out.printf("Enter  Discount: ");
+                    int diss = Check.CheckNumber();
+
+                    ProductDB.update_product(sn, diss);
+                    System.out.println("\nUpdated!\n");
+                } else if (choice == 2) {
+                    //input.nextLine();
+                    System.out.printf("Enter new Name: ");
+                    String name = Check.CheckFname();
+                    System.out.printf("Enter  Original Price: ");
+                    int OP = Check.CheckNumber();
+                    System.out.printf("Enter  Discount: ");
+                    int diss = Check.CheckNumber();
+                    System.out.printf("Enter Amount: ");
+                    int amount = Check.CheckNumber();
+                    //input.nextLine();
+                    System.out.printf("Enter Expier Date: ");
+                    String EPD = Check.CheckExpierdDate();
+                    System.out.printf("Enter the Minmum Range: ");
+                    int minRange = Check.CheckNumber();
+                    ProductDB.update_product(sn, name, OP, diss, amount, EPD, minRange);
+                    System.out.println("\nUpdated!\n");
+                }
+            } else {                         //this condition will be ometed
+                System.out.println("\nProduct not found!\n");
+            }
         }
     }
 
-    public static void add_offer(int sn, int discount) {
+    public static void add_offer(int sn, int discount) {        //what is this method made for ??????
         ProductDB.update_product(sn, discount);
     }
 
@@ -267,11 +275,11 @@ public class InventoryEmployee extends Employee {
                         + "\nExit                                 (Enter 3)\n"
                 );
                 System.out.printf("?: ");
-                c = input.nextInt();
-                input.nextLine();
+                c = Check.CheckNumber();
 
                 if (c != 1 && c != 2 && c != 3) {
                     System.out.println("\nInvaild Input!\n");
+                    continue;
                 }
 
                 switch (c) {
@@ -298,10 +306,14 @@ public class InventoryEmployee extends Employee {
 
     public void returnSlectedItemToInventory() {
         System.out.printf("Enter the serial number: ");
-        int sn = input.nextInt();
-        ProductDB.add_product(RProductDB.get_RProduct(sn));
-        RProductDB.delete_RProduct(sn);
-        System.out.println("\nReturned!\n");
+        int sn = Check.Check_RP_SerialNumber();
+        if (sn == -1) {
+            System.out.println("Nothing returned");
+        } else {
+            ProductDB.add_product(RProductDB.get_RProduct(sn));
+            RProductDB.delete_RProduct(sn);
+            System.out.println("\nReturned!\n");
+        }
     }
 
     public void ManageSalesReturn() {
@@ -316,11 +328,11 @@ public class InventoryEmployee extends Employee {
                         + "\nExit                                   (Enter 3)\n"
                 );
                 System.out.printf("?: ");
-                c = input.nextInt();
-                input.nextLine();
+                c = Check.CheckNumber();
 
                 if (c != 1 && c != 2 && c != 3) {
                     System.out.println("\nInvaild Input!\n");
+                    continue;
                 }
 
                 switch (c) {

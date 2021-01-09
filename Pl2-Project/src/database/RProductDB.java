@@ -129,7 +129,7 @@ public class RProductDB {
         return list;
     }
     
-    public static boolean isExsist(int sn) {
+    public static boolean isExist(int sn) {
         ArrayList<Product> list = RProductDB.get_RProducts();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getSN() == sn) {

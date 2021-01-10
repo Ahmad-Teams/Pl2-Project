@@ -149,8 +149,7 @@ public class AdminEmployee extends Employee {
         if (id == -1) {
             System.out.println("No deletion happened");
         } else {
-            Employee e = EmployeeDB.get_employee(id);
-            if (e.getId() == id) {
+            if (this.getId() == id) {
                 System.out.println("\nYou Can`t remove your self!\n");
                 return;
             }

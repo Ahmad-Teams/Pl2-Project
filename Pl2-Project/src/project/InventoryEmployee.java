@@ -187,8 +187,9 @@ public class InventoryEmployee extends Employee {
     }
 
     public void updateProduct() {
-        System.out.printf("If you want to update discount only. (Enter 1)\n"
-                + "For update all product info.         (Enter 2)\n?: ");
+        System.out.printf("For update the discount only.        (Enter 1)\n"
+                        + "For update all product info.         (Enter 2)\n"
+                        + "?: ");
         int choice = Check.CheckNumber();
         System.out.printf("Enter Product Serial Number: ");
         int sn = Check.CheckSerialNumber();

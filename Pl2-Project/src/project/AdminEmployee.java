@@ -37,7 +37,7 @@ public class AdminEmployee extends Employee {
                     + "\nAlter your general information.     (Enter 6)"
                     + "\nAlter your User-Name and Password.  (Enter 7)"
                     + "\nDisplay all your previous actions.  (Enter 8)"
-                    + "\nLogOut                              (Enter 9)\n");
+                    + "\nLogOut.                             (Enter 9)\n");
             System.out.printf("?: ");
             c = Check.CheckNumber();
 
@@ -149,6 +149,11 @@ public class AdminEmployee extends Employee {
         if (id == -1) {
             System.out.println("No deletion happened");
         } else {
+            Employee e = EmployeeDB.get_employee(id);
+            if (e.getId() == id) {
+                System.out.println("\nYou Can`t remove your self!\n");
+                return;
+            }
             EmployeeDB.delete_employee(id);
             System.out.println("\nDeleted!\n");
             Util.registerAction(this.getId(), "Delete-Employee ID:(" + id + ").");

@@ -1,22 +1,14 @@
 package database;
 
-import static database.EmployeeDB.connect;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import project.Order;
 import java.util.ArrayList;
-import project.AdminEmployee;
-import project.Employee;
-import project.InventoryEmployee;
-import project.MarktingEmployee;
-import project.Product;
-import project.SalesEmployee;
 
 public class OrderDB {
 

@@ -54,7 +54,7 @@ public class SalesEmployee extends Employee {
             if (c == 9) {
                 break;
             }
-            
+
             switch (c) {
                 case 1:
                     search();
@@ -108,9 +108,11 @@ public class SalesEmployee extends Employee {
 
     private void print_list_Order() {
         ArrayList<Order> list = OrderDB.get_orders();
-        System.out.printf("\n%-5s %-15s\n", "PSN", "AMOUNT");
+        System.out.printf("\n%-5s %-5s %-15s\n", "ID", "PSN", "AMOUNT");
+        Order o;
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%-5s %-15s\n", list.get(i).getPSN(), list.get(i).getAmount());
+            o = list.get(i);
+            System.out.printf("%-5d %-5d %-15d\n", o.getId(), o.getPSN(), o.getAmount());
             System.out.println();
         }
     }
@@ -123,6 +125,11 @@ public class SalesEmployee extends Employee {
         if (psn == -1) {
             System.out.println("No update happened");
         } else {
+            Product p = ProductDB.get_Product(psn);
+            if (amount > p.getAmount()) {
+                System.out.println("\nOnly (" + p.getAmount() + ") piece is available.\n");
+                return;
+            }
             OrderDB.add_order(new Order(psn, amount));
             System.out.println("\nAdded!\n");
             Util.registerAction(this.getId(), "Add-Order SN:(" + psn + ") Amount:(" + amount + ").");

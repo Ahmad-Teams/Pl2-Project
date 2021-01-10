@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import project.Employee;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import project.AdminEmployee;
 import project.InventoryEmployee;
 import project.MarktingEmployee;
-import project.Order;
 import project.SalesEmployee;
 
 public class EmployeeDB {

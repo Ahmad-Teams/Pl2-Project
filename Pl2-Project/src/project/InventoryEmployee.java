@@ -205,9 +205,9 @@ public class InventoryEmployee extends Employee {
             } else if (choice == 2) {
                 System.out.printf("Enter new Name: ");
                 String name = Check.CheckFname();
-                System.out.printf("Enter  Original Price: ");
+                System.out.printf("Enter Original Price: ");
                 double OP = Check.CheckDoubleNumber();
-                System.out.printf("Enter  Discount: ");
+                System.out.printf("Enter Discount: ");
                 double diss = Check.CheckDoubleNumber();
                 System.out.printf("Enter Amount: ");
                 int amount = Check.CheckNumber();
@@ -262,7 +262,7 @@ public class InventoryEmployee extends Employee {
         System.out.print("Enter the serial number : ");
         int sn = Check.CheckSerialNumber();
         if (sn == -1) {
-            System.out.println("No update happened");
+            System.out.println("No search happened");
         } else {
             Util.PrintProductHeader();
             Util.PrintProduct(ProductDB.get_Product(sn));
@@ -392,7 +392,7 @@ public class InventoryEmployee extends Employee {
                         deleteEProduct();
                         break;
                 }
-            } while (c != 3);
+            } while (c != 3 && !list.isEmpty());
         }
     }
 
@@ -447,7 +447,7 @@ public class InventoryEmployee extends Employee {
                         ReturnSlectedItemToInventory();
                         break;
                 }
-            } while (c != 3);
+            } while (c != 3 && !RProductDB.isEmpty());
         }
     }
 

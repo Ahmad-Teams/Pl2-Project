@@ -91,7 +91,7 @@ public class SalesEmployee extends Employee {
         System.out.print("Enter the serial number : ");
         int sn = Check.CheckSerialNumber();
         if (sn == -1) {
-            System.out.println("No update happened");
+            System.out.println("No search happened");
         } else {
             Util.PrintProductHeader();
             Util.PrintProduct(ProductDB.get_Product(sn));
@@ -123,7 +123,7 @@ public class SalesEmployee extends Employee {
         System.out.print("Enter the product serial number: ");
         int psn = Check.CheckSerialNumber();
         if (psn == -1) {
-            System.out.println("No update happened");
+            System.out.println("No order happened");
         } else {
             Product p = ProductDB.get_Product(psn);
             if (amount > p.getAmount()) {
